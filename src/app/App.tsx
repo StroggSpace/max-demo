@@ -2,8 +2,6 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 import { AppProviders } from '@/app/AppProviders';
-import { routeMeta } from '@/app/routes';
-import { AppHeader } from '@/widgets/AppHeader';
 import { TabBar } from '@/widgets/TabBar';
 import { Toaster } from '@/shared/ui/toast/Toaster';
 import { LoadingState } from '@/shared/ui/kit';
@@ -23,16 +21,13 @@ const SettingsPage = lazy(() =>
 
 function Shell() {
   const { pathname } = useLocation();
-  const meta = routeMeta[pathname] ?? routeMeta['/'];
   const showTabBar = pathname !== '/settings';
 
   return (
     <div className="shell">
-      <AppHeader title={meta.title} subtitle={meta.subtitle} back={meta.back} />
-
       <main className="main">
         <div className="mainInner">
-          <Suspense fallback={<LoadingState title="Открываем раздел" />}>
+          <Suspense fallback={<LoadingState />}>
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/tasks" element={<TasksPage />} />

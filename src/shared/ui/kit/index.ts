@@ -1,4 +1,5 @@
 export { Card } from './Card';
+export { PageTitle } from './PageTitle';
 export { ListCard } from './ListCard';
 export { Section } from './Section';
 export { Progress } from './Progress';

@@ -2,7 +2,7 @@
   flex: 0 0 auto;
   padding-bottom: env(safe-area-inset-bottom);
   background: var(--background-local-tab-bar-i-os, var(--background-surface-ground));
-  border-top: 1px solid var(--stroke-secondary);
+  border-top: 1px solid var(--stroke-subtle);
 }
 
 .inner {

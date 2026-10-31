@@ -32,3 +32,8 @@
 .stateOff {
   color: var(--text-tertiary);
 }
+
+.gear {
+  width: 22px;
+  height: 22px;
+}

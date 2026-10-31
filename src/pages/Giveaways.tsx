@@ -3,7 +3,7 @@ import { FaceSmileIcon, TrophyIcon } from '@heroicons/react/24/outline';
 import { Button, CellSimple, Flex, Typography } from '@maxhub/max-ui';
 
 import { Lottie } from '@/shared/ui/Lottie';
-import { Card, Chip, Hero, ListCard, Progress, Section, StateGate, kit } from '@/shared/ui/kit';
+import { Card, Chip, Hero, ListCard, PageTitle, Progress, Section, StateGate, kit } from '@/shared/ui/kit';
 import { useSectionScenario } from '@/features/scenario/useSectionScenario';
 import { useGiveawayTicker } from '@/features/giveaway/useGiveawayTicker';
 import { scenarios } from '@/scenarios';
@@ -30,7 +30,7 @@ export function GiveawaysPage() {
   const join = () => {
     if (giveaway.joined) return;
     setGiveaway({ joined: true });
-    pushFeed('Вы участвуете в розыгрыше', true);
+    pushFeed('Вы', 'участвуете в розыгрыше');
     toast.success('Заявка принята', 'Результат придёт в этот чат');
   };
 
@@ -50,6 +50,7 @@ export function GiveawaysPage() {
 
   return (
     <div className={styles.page}>
+      <PageTitle title="Розыгрыши" subtitle="Промо-механики и призы" />
       <StateGate emptyTitle="Розыгрышей пока нет" emptyText="Следующий розыгрыш анонсируем в канале бренда.">
         {showConfetti ? (
           <Lottie src="/lottie/confetti.lottie" className={styles.confetti} loop={false} />

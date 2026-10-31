@@ -4,6 +4,21 @@
   gap: var(--page-gap);
 }
 
+.top {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-size-m);
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+}
+
 .label {
   display: block;
   margin-bottom: var(--spacing-size-m);

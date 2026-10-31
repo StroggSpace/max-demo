@@ -8,7 +8,6 @@ import { useDemoStore } from '@/store/demo';
  */
 export function useGiveawayTicker() {
   const phase = useDemoStore((s) => s.giveaway.phase);
-  const speed = useDemoStore((s) => s.speed);
 
   useEffect(() => {
     if (phase !== 'countdown') return;
@@ -17,8 +16,8 @@ export function useGiveawayTicker() {
       const current = useDemoStore.getState().giveaway;
       if (current.phase !== 'countdown' || current.secondsLeft <= 0) return;
       useDemoStore.getState().setGiveaway({ secondsLeft: current.secondsLeft - 1 });
-    }, 1000 / speed);
+    }, 1000);
 
     return () => window.clearInterval(timer);
-  }, [phase, speed]);
+  }, [phase]);
 }

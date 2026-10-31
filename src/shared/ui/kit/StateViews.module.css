@@ -28,3 +28,66 @@
   max-width: 320px;
   color: var(--text-secondary);
 }
+
+/* Skeleton */
+.skeleton {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--size-border-radius-semantic-border-radius-paper);
+  background: var(--background-surface-tertiary);
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(255 255 255 / 35%),
+    transparent
+  );
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.skeletonPage {
+  display: flex;
+  flex-direction: column;
+  gap: var(--page-gap);
+}
+
+.skTitle {
+  height: 28px;
+  width: 40%;
+}
+
+.skBalance {
+  height: 132px;
+  border-radius: var(--size-border-radius-semantic-border-radius-card);
+}
+
+.skHero {
+  height: 160px;
+  border-radius: var(--size-border-radius-semantic-border-radius-promo);
+}
+
+.skRows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size-m);
+  padding: var(--spacing-size-xs);
+  border-radius: var(--size-border-radius-semantic-border-radius-card);
+  background: var(--background-surface-card);
+}
+
+.skRow {
+  height: 48px;
+}

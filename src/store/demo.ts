@@ -6,6 +6,7 @@ export type DemoStateMode = 'normal' | 'loading' | 'empty' | 'error';
 export type SectionId = 'home' | 'tasks' | 'giveaways' | 'shop' | 'profile';
 export type GiveawayPhase = 'idle' | 'lobby' | 'countdown' | 'result';
 export type GiveawayResult = 'win' | 'lose' | null;
+export type FeedKind = 'win' | 'reward';
 
 export interface Task {
   id: string;
@@ -19,8 +20,10 @@ export interface Task {
 
 export interface FeedItem {
   id: string;
-  text: string;
-  accent?: boolean;
+  name: string;
+  action: string;
+  time: string;
+  kind?: FeedKind;
 }
 
 export interface Reward {
@@ -35,8 +38,6 @@ export interface Reward {
 interface DemoState {
   theme: Theme;
   autoplay: boolean;
-  speed: number;
-  disabled: Record<string, boolean>;
   demoState: DemoStateMode;
 
   balance: number;
@@ -61,9 +62,7 @@ interface DemoState {
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
   setAutoplay: (value: boolean) => void;
-  setSpeed: (value: number) => void;
   setDemoState: (value: DemoStateMode) => void;
-  toggleSection: (id: SectionId) => void;
 
   resetHome: () => void;
   resetTasks: () => void;
@@ -74,7 +73,7 @@ interface DemoState {
 
   addPoints: (value: number) => void;
   addXp: (value: number) => void;
-  pushFeed: (text: string, accent?: boolean) => void;
+  pushFeed: (name: string, action: string, kind?: FeedKind) => void;
   advanceTask: (index: number, by?: number) => void;
   completeTask: (index: number) => void;
   setGiveaway: (patch: Partial<DemoState['giveaway']>) => void;
@@ -131,9 +130,9 @@ const initialRewards: Reward[] = [
 ];
 
 const initialFeed: FeedItem[] = [
-  { id: 'f1', text: 'Анна получила 200 баллов за покупку' },
-  { id: 'f2', text: 'Игорь выиграл сертификат 1000 ₽', accent: true },
-  { id: 'f3', text: 'Новый сезон: «Весенний марафон»', accent: true },
+  { id: 'f1', name: 'Анна', action: 'получила 200 баллов за покупку', time: '5 мин' },
+  { id: 'f2', name: 'Игорь', action: 'выиграл сертификат 1000 ₽', time: '18 мин', kind: 'win' },
+  { id: 'f3', name: 'Марафон', action: 'новый сезон «Весенний марафон»', time: '1 ч' },
 ];
 
 const baseGiveaway: DemoState['giveaway'] = {
@@ -150,8 +149,6 @@ export const useDemoStore = create<DemoState>()(
     (set, get) => ({
       theme: 'light',
       autoplay: true,
-      speed: 1,
-      disabled: {},
       demoState: 'normal',
 
       balance: 1240,
@@ -168,13 +165,9 @@ export const useDemoStore = create<DemoState>()(
       setTheme: (theme) => set({ theme }),
       toggleTheme: () => set({ theme: get().theme === 'light' ? 'dark' : 'light' }),
       setAutoplay: (autoplay) => set({ autoplay }),
-      setSpeed: (speed) => set({ speed }),
       setDemoState: (demoState) => set({ demoState }),
-      toggleSection: (id) =>
-        set((s) => ({ disabled: { ...s.disabled, [id]: !s.disabled[id] } })),
 
-      resetHome: () =>
-        set({ balance: 1240, level: 3, xp: 140, xpMax: 300, feed: initialFeed }),
+      resetHome: () => set({ balance: 1240, level: 3, xp: 140, xpMax: 300, feed: initialFeed }),
       resetTasks: () => set({ tasks: initialTasks.map((t) => ({ ...t })) }),
       resetGiveaway: () => set({ giveaway: { ...baseGiveaway } }),
       resetShop: () => set({ rewards: initialRewards.map((r) => ({ ...r })), balance: 1240 }),
@@ -202,9 +195,18 @@ export const useDemoStore = create<DemoState>()(
           }
           return { xp: total };
         }),
-      pushFeed: (text, accent) =>
+      pushFeed: (name, action, kind) =>
         set((s) => ({
-          feed: [{ id: `f-${Date.now()}-${Math.random()}`, text, accent }, ...s.feed].slice(0, 12),
+          feed: [
+            {
+              id: `f-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+              name,
+              action,
+              time: 'только что',
+              kind,
+            },
+            ...s.feed,
+          ].slice(0, 12),
         })),
 
       advanceTask: (index, by = 1) =>
@@ -242,13 +244,7 @@ export const useDemoStore = create<DemoState>()(
     }),
     {
       name: 'max-demo',
-      partialize: (s) => ({
-        theme: s.theme,
-        autoplay: s.autoplay,
-        speed: s.speed,
-        disabled: s.disabled,
-        demoState: s.demoState,
-      }),
+      partialize: (s) => ({ theme: s.theme, autoplay: s.autoplay, demoState: s.demoState }),
     },
   ),
 );

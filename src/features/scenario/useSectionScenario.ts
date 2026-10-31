@@ -5,13 +5,12 @@ import type { Scenario } from '@/scenarios/types';
 
 /**
  * Проигрывает сценарий раздела в демо-времени.
- * Управление — только на странице настроек: автоплей, скорость, отключение раздела.
+ * Включается только в обычном состоянии при включённом автоплее.
  */
 export function useSectionScenario(scenario: Scenario) {
   const autoplay = useDemoStore((s) => s.autoplay);
-  const disabled = useDemoStore((s) => s.disabled[scenario.id] ?? false);
   const demoState = useDemoStore((s) => s.demoState);
-  const enabled = autoplay && !disabled && demoState === 'normal';
+  const enabled = autoplay && demoState === 'normal';
 
   const start = useCallback(() => {
     scenario.reset();
@@ -21,7 +20,7 @@ export function useSectionScenario(scenario: Scenario) {
     let raf = 0;
 
     const loop = () => {
-      const elapsed = (performance.now() - startedAt) * useDemoStore.getState().speed;
+      const elapsed = performance.now() - startedAt;
 
       scenario.steps.forEach((step, index) => {
         if (elapsed >= step.at && !done.has(index)) {

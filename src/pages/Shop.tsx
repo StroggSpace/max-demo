@@ -1,7 +1,7 @@
 import { Button, Flex, Grid, Typography } from '@maxhub/max-ui';
 
 import { Lottie } from '@/shared/ui/Lottie';
-import { Balance, Card, Section, StateGate } from '@/shared/ui/kit';
+import { Balance, Card, PageTitle, Section, StateGate } from '@/shared/ui/kit';
 import { useSectionScenario } from '@/features/scenario/useSectionScenario';
 import { scenarios } from '@/scenarios';
 import { useDemoStore } from '@/store/demo';
@@ -21,7 +21,7 @@ export function ShopPage() {
     if (!reward || reward.owned || balance < reward.price) return;
     platform.haptic('light');
     buyReward(id);
-    pushFeed(`Вы обменяли баллы на «${reward.title}»`, true);
+    pushFeed('Вы', `обменяли баллы на «${reward.title}»`, 'reward');
     toast.reward('Награда ваша', reward.title);
   };
 
@@ -29,6 +29,7 @@ export function ShopPage() {
 
   return (
     <div className={styles.page}>
+      <PageTitle title="Магазин" subtitle="Награды за баллы" />
       <StateGate emptyTitle="Наград пока нет" emptyText="Партнёрские награды появятся к старту акции.">
         <Card>
           <Flex justify="space-between" align="center">

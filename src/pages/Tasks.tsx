@@ -1,7 +1,7 @@
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import { Flex, Typography } from '@maxhub/max-ui';
 
-import { Balance, Card, Chip, Progress, Section, StateGate } from '@/shared/ui/kit';
+import { Balance, Card, Chip, PageTitle, Progress, Section, StateGate } from '@/shared/ui/kit';
 import { useSectionScenario } from '@/features/scenario/useSectionScenario';
 import { scenarios } from '@/scenarios';
 import { useDemoStore } from '@/store/demo';
@@ -16,6 +16,7 @@ export function TasksPage() {
 
   return (
     <div className={styles.page}>
+      <PageTitle title="Задания" subtitle="Выполняйте и получайте баллы" />
       <StateGate emptyTitle="Заданий пока нет" emptyText="Новые задания появятся в следующем сезоне акции.">
         <Card>
           <Flex justify="space-between" align="center">

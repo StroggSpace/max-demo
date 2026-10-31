@@ -142,5 +142,28 @@
 }
 
 .listCard > * + * {
-  border-top: 1px solid var(--stroke-secondary);
+  border-top: 1px solid var(--stroke-subtle);
+}
+
+.pageTitle {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-size-m);
+}
+
+.pageTitleText {
+  min-width: 0;
+}
+
+.pageTitleHeading {
+  margin: 0;
+}
+
+.pageTitleSubtitle {
+  color: var(--text-secondary);
+}
+
+.pageTitleRight {
+  flex: none;
 }

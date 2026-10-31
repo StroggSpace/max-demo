@@ -1,13 +1,21 @@
 import { useNavigate } from 'react-router-dom';
-import { Button, CellSimple, Flex, Typography } from '@maxhub/max-ui';
+import { GiftIcon, TrophyIcon } from '@heroicons/react/24/solid';
+import { Avatar, Button, Flex, Typography } from '@maxhub/max-ui';
 
 import { Lottie } from '@/shared/ui/Lottie';
-import { Balance, Card, Chip, Hero, ListCard, Progress, Section, StateGate, kit } from '@/shared/ui/kit';
+import { Balance, Card, Chip, Hero, ListCard, PageTitle, Progress, Section, StateGate, kit } from '@/shared/ui/kit';
 import { useSectionScenario } from '@/features/scenario/useSectionScenario';
 import { useGiveawayTicker } from '@/features/giveaway/useGiveawayTicker';
 import { scenarios } from '@/scenarios';
 import { useDemoStore } from '@/store/demo';
 import styles from './Home.module.css';
+
+const gradients = ['blue', 'purple', 'green', 'orange', 'red'] as const;
+
+function gradientFor(name: string) {
+  const code = name.charCodeAt(0);
+  return gradients[code % gradients.length];
+}
 
 function formatTime(total: number) {
   const safe = Math.max(0, total);
@@ -32,6 +40,7 @@ export function HomePage() {
 
   return (
     <div className={styles.page}>
+      <PageTitle title="Главная" subtitle="Демо мини-приложения MAX" />
       <StateGate emptyTitle="Пока нет активности" emptyText="Как только начнётся акция, здесь появятся баллы и события.">
         <Card>
           <Flex direction="column" align="stretch" gap={12}>
@@ -87,19 +96,46 @@ export function HomePage() {
           </Button>
         </Hero>
 
-        <Section title="Лента" after="обновляется вживую">
+        <Section
+          title="Лента"
+          after={
+            <span className={styles.live}>
+              <i className={styles.liveDot} />
+              Live
+            </span>
+          }
+        >
           <ListCard>
             {feed.map((item) => (
-              <CellSimple
-                key={item.id}
-                before={
-                  <span
-                    className={styles.feedDot}
-                    data-accent={item.accent ? 'true' : undefined}
+              <div className={styles.feedItem} key={item.id}>
+                <Avatar.Container size={36} form="circle">
+                  <Avatar.Image
+                    src=""
+                    fallback={item.name[0]}
+                    fallbackGradient={gradientFor(item.name)}
                   />
-                }
-                title={item.text}
-              />
+                </Avatar.Container>
+
+                <div className={styles.feedBody}>
+                  <div className={styles.feedLine}>
+                    <span className={styles.feedName}>{item.name}</span>
+                    <span className={styles.feedAction}>{item.action}</span>
+                  </div>
+                  <Typography.Body variant="small" className={styles.feedTime}>
+                    {item.time}
+                  </Typography.Body>
+                </div>
+
+                {item.kind ? (
+                  <span className={styles.feedKind}>
+                    {item.kind === 'win' ? (
+                      <TrophyIcon className={styles.feedKindIcon} />
+                    ) : (
+                      <GiftIcon className={styles.feedKindIcon} />
+                    )}
+                  </span>
+                ) : null}
+              </div>
             ))}
           </ListCard>
         </Section>

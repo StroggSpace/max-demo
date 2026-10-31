@@ -1,9 +1,28 @@
 import type { ReactNode } from 'react';
 import { ExclamationTriangleIcon, InboxIcon } from '@heroicons/react/24/outline';
-import { Button, Spinner, Typography } from '@maxhub/max-ui';
+import { Button, Typography } from '@maxhub/max-ui';
 
 import { useDemoStore } from '@/store/demo';
 import styles from './StateViews.module.css';
+
+function Skeleton({ className }: { className?: string }) {
+  return <span className={[styles.skeleton, className].filter(Boolean).join(' ')} />;
+}
+
+export function LoadingState() {
+  return (
+    <div className={styles.skeletonPage} role="status" aria-label="Загружаем">
+      <Skeleton className={styles.skTitle} />
+      <Skeleton className={styles.skBalance} />
+      <Skeleton className={styles.skHero} />
+      <div className={styles.skRows}>
+        <Skeleton className={styles.skRow} />
+        <Skeleton className={styles.skRow} />
+        <Skeleton className={styles.skRow} />
+      </div>
+    </div>
+  );
+}
 
 interface StateProps {
   title: string;
@@ -27,17 +46,6 @@ function StateLayout({ title, text, icon, action }: StateProps) {
   );
 }
 
-export function LoadingState({ title = 'Загружаем данные' }: { title?: string }) {
-  return (
-    <div className={styles.state} role="status">
-      <Spinner size={28} appearance="themed" />
-      <Typography.Body variant="small" className={styles.text}>
-        {title}
-      </Typography.Body>
-    </div>
-  );
-}
-
 export function EmptyState({
   title = 'Пока ничего нет',
   text = 'Здесь появятся данные, как только начнётся акция.',
@@ -46,11 +54,7 @@ export function EmptyState({
   text?: string;
 }) {
   return (
-    <StateLayout
-      title={title}
-      text={text}
-      icon={<InboxIcon className={styles.iconGlyph} />}
-    />
+    <StateLayout title={title} text={text} icon={<InboxIcon className={styles.iconGlyph} />} />
   );
 }
 

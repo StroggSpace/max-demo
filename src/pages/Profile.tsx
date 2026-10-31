@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   BoltIcon,
   ClipboardDocumentCheckIcon,
+  Cog6ToothIcon,
   GiftIcon,
   ShoppingBagIcon,
   StarIcon,
@@ -13,10 +15,11 @@ import {
   CellSimple,
   Flex,
   Grid,
+  IconButton,
   Typography,
 } from '@maxhub/max-ui';
 
-import { Card, Chip, ListCard, Section, Stat, StateGate } from '@/shared/ui/kit';
+import { Card, Chip, ListCard, PageTitle, Section, Stat, StateGate } from '@/shared/ui/kit';
 import { useSectionScenario } from '@/features/scenario/useSectionScenario';
 import { scenarios } from '@/scenarios';
 import { useDemoStore } from '@/store/demo';
@@ -34,6 +37,7 @@ const achievements = [
 ];
 
 export function ProfilePage() {
+  const navigate = useNavigate();
   useSectionScenario(scenarios.profile);
   const unlocked = useDemoStore((s) => s.achievements);
   const balance = useDemoStore((s) => s.balance);
@@ -58,6 +62,20 @@ export function ProfilePage() {
 
   return (
     <div className={styles.page}>
+      <PageTitle
+        title="Профиль"
+        subtitle="Личный кабинет участника"
+        right={
+          <IconButton
+            size="medium"
+            mode="secondary"
+            aria-label="Настройки"
+            onClick={() => navigate('/settings')}
+          >
+            <Cog6ToothIcon className={styles.gear} />
+          </IconButton>
+        }
+      />
       <StateGate emptyTitle="Профиль пока пустой" emptyText="Данные появятся после первого входа в акцию.">
         <Card>
           <Flex align="center" gap={12}>
