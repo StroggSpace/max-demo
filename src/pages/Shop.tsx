@@ -1,11 +1,20 @@
-import { Button } from '@maxhub/max-ui';
+import { Button, Flex, Grid, Panel, Typography } from '@maxhub/max-ui';
 
 import { AppHeader } from '@/widgets/AppHeader';
+import { Lottie } from '@/shared/ui/Lottie';
 import { ScenarioControls } from '@/features/scenario/ScenarioControls';
 import { useSectionScenario } from '@/features/scenario/useSectionScenario';
 import { scenarios } from '@/scenarios';
 import { useDemoStore } from '@/store/demo';
 import { platform } from '@/platform';
+import { toast } from '@/shared/ui/toast/toastStore';
+import styles from './Shop.module.css';
+
+const cardStyle = {
+  padding: 14,
+  borderRadius: 'var(--size-border-radius-semantic-border-radius-card)',
+  background: 'var(--background-surface-card)',
+} as const;
 
 export function ShopPage() {
   const scenario = useSectionScenario(scenarios.shop);
@@ -20,46 +29,66 @@ export function ShopPage() {
     platform.haptic('light');
     buyReward(id);
     pushFeed(`Вы обменяли баллы на «${reward.title}»`, true);
+    toast.reward('Награда ваша', reward.title);
   };
 
   return (
     <div>
       <AppHeader title="Магазин" subtitle={`Доступно ${balance.toLocaleString('ru-RU')} баллов`} />
 
-      <section className="card card--flat">
-        <div className="row row--between">
-          <div>
-            <div className="small muted">Ваш баланс</div>
-            <div className="balance" style={{ fontSize: 30, marginTop: 4 }}>
+      <Panel style={{ ...cardStyle, marginTop: 12, padding: 16 }}>
+        <Flex justify="space-between" align="center">
+          <Flex direction="column" gap={4}>
+            <Typography.Body variant="small" style={{ color: 'var(--text-secondary)' }}>
+              Ваш баланс
+            </Typography.Body>
+            <div className="balance" style={{ fontSize: 30 }}>
               {balance.toLocaleString('ru-RU')}
               <small>баллов</small>
             </div>
-          </div>
-          <span className="chip chip--accent">Партнёрские награды</span>
-        </div>
-      </section>
+          </Flex>
+          <Lottie src="/lottie/coins.lottie" className={styles.coins} />
+        </Flex>
+      </Panel>
 
-      <section className="section">
-        <div className="section__head">
-          <h2 className="section__title">Награды</h2>
-          <span className="tiny muted">{rewards.filter((item) => item.owned).length} получено</span>
-        </div>
+      <Flex justify="space-between" align="center" style={{ margin: '20px 4px 10px' }}>
+        <Typography.Title variant="small-strong">Награды</Typography.Title>
+        <Typography.Body variant="small" style={{ color: 'var(--text-tertiary)' }}>
+          {rewards.filter((item) => item.owned).length} получено
+        </Typography.Body>
+      </Flex>
 
-        <div className="grid">
-          {rewards.map((reward) => {
-            const affordable = balance >= reward.price;
-            return (
-              <article
-                key={reward.id}
-                className={`reward ${reward.owned ? 'reward--owned' : ''}`}
-              >
-                <div className="reward__emoji">{reward.emoji}</div>
-                <div className="reward__title">{reward.title}</div>
-                <div className="tiny muted">{reward.subtitle}</div>
+      <Grid cols={2} gap={10}>
+        {rewards.map((reward) => {
+          const affordable = balance >= reward.price;
+          return (
+            <Panel
+              key={reward.id}
+              style={{
+                ...cardStyle,
+                minHeight: 172,
+                background: reward.owned
+                  ? 'var(--background-surface-secondary)'
+                  : 'var(--background-surface-card)',
+              }}
+            >
+              <Flex direction="column" gap={6} style={{ height: '100%' }}>
+                <span className={styles.emoji}>{reward.emoji}</span>
+                <Typography.Title variant="small-strong">{reward.title}</Typography.Title>
+                <Typography.Body variant="small" style={{ color: 'var(--text-secondary)' }}>
+                  {reward.subtitle}
+                </Typography.Body>
 
-                <div className="reward__price">
+                <div style={{ flex: 1 }} />
+
+                <Typography.Label
+                  variant="small-strong"
+                  style={{
+                    color: reward.owned ? 'var(--text-tertiary)' : 'var(--text-themed)',
+                  }}
+                >
                   {reward.owned ? 'Получено' : `${reward.price.toLocaleString('ru-RU')} баллов`}
-                </div>
+                </Typography.Label>
 
                 <Button
                   size="small"
@@ -70,11 +99,11 @@ export function ShopPage() {
                 >
                   {reward.owned ? 'В инвентаре' : affordable ? 'Обменять' : 'Не хватает'}
                 </Button>
-              </article>
-            );
-          })}
-        </div>
-      </section>
+              </Flex>
+            </Panel>
+          );
+        })}
+      </Grid>
 
       <ScenarioControls scenario={scenario} />
     </div>

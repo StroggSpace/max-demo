@@ -5,6 +5,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { TabBar } from '@/widgets/TabBar';
 import { DemoPanel } from '@/features/demo-panel/DemoPanel';
 import { ErrorBoundary } from '@/shared/ui/ErrorBoundary';
+import { Toaster } from '@/shared/ui/toast/Toaster';
 import { HomePage } from '@/pages/Home';
 import { TasksPage } from '@/pages/Tasks';
 import { GiveawaysPage } from '@/pages/Giveaways';
@@ -20,7 +21,7 @@ export function App() {
   }, [theme]);
 
   return (
-    <MaxUI colorScheme={theme}>
+    <MaxUI colorScheme={theme} className="appRoot">
       <BrowserRouter>
         <div className="app">
           <ErrorBoundary>
@@ -36,6 +37,7 @@ export function App() {
         </div>
 
         <TabBar />
+        <Toaster />
         <DemoPanel />
       </BrowserRouter>
     </MaxUI>

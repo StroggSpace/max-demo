@@ -1,0 +1,56 @@
+- generic [ref=f7e3]:
+  - generic [ref=f7e5]:
+    - generic [ref=f7e6]:
+      - generic [ref=f7e7]:
+        - heading "Розыгрыши" [level=1] [ref=f7e8]
+        - generic [ref=f7e9]: "Баланс: 2 240 баллов"
+      - button "Тёмная тема" [ref=f7e10] [cursor=pointer]
+      - button "Настройки демо" [ref=f7e15] [cursor=pointer]
+    - generic [ref=f7e20]:
+      - generic [ref=f7e21]: Приз
+      - paragraph [ref=f7e22]: Сертификат 1000 ₽
+      - generic [ref=f7e23]:
+        - generic [ref=f7e24]:
+          - generic [ref=f7e25]: 00:00
+          - text: до конца приёма заявок
+        - generic [ref=f7e26]:
+          - generic [ref=f7e27]: "312"
+          - generic [ref=f7e28]: участников
+      - button "Вы участвуете" [disabled] [ref=f7e90]
+    - generic [ref=f7e94]:
+      - generic [ref=f7e95]: Вы выиграли
+      - generic [ref=f7e96]: Сертификат 1000 ₽ уже на вашем балансе
+    - generic [ref=f7e37]:
+      - generic [ref=f7e38]: Скоро
+      - generic [ref=f7e39]: ещё 2 розыгрыша
+    - generic [ref=f7e41]:
+      - generic [ref=f7e42]:
+        - generic [ref=f7e43]:
+          - generic [ref=f7e44]: Кофе на месяц
+          - generic [ref=f7e45]: старт через 2 дня · 480 участников
+        - generic [ref=f7e46]: скоро
+      - generic [ref=f7e48]:
+        - generic [ref=f7e49]:
+          - generic [ref=f7e50]: Мерч бренда
+          - generic [ref=f7e51]: старт 1 мая · 213 участников
+        - generic [ref=f7e52]: скоро
+    - generic [ref=f7e54]:
+      - generic [ref=f7e56]: Сценарий завершён
+      - button "Продолжить" [ref=f7e97] [cursor=pointer]
+      - button "Заново" [ref=f7e62] [cursor=pointer]
+      - button "×1" [ref=f7e67] [cursor=pointer]
+  - navigation "Разделы демо" [ref=f7e69]:
+    - link "Главная" [ref=f7e70] [cursor=pointer]:
+      - /url: /
+    - link "Задания" [ref=f7e74] [cursor=pointer]:
+      - /url: /tasks
+    - link "Розыгрыши" [ref=f7e78] [cursor=pointer]:
+      - /url: /giveaways
+    - link "Магазин" [ref=f7e82] [cursor=pointer]:
+      - /url: /shop
+    - link "Профиль" [ref=f7e86] [cursor=pointer]:
+      - /url: /profile
+  - status [ref=f7e100] [cursor=pointer]:
+    - generic [ref=f7e104]:
+      - generic [ref=f7e105]: Вы выиграли!
+      - generic [ref=f7e106]: Сертификат 1000 ₽

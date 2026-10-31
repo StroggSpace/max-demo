@@ -1,0 +1,48 @@
+- generic [ref=e3]:
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - heading "Главная" [level=1] [ref=e8]
+        - generic [ref=e9]: Демо мини-приложения MAX
+      - button "Тёмная тема" [ref=e10] [cursor=pointer]
+      - button "Настройки демо" [ref=e15] [cursor=pointer]
+    - generic [ref=e20]:
+      - generic [ref=e21]:
+        - generic [ref=e22]: Ваш баланс
+        - generic [ref=e23]: Уровень 3
+      - generic [ref=e26]:
+        - text: 1 240
+        - generic [ref=e27]: баллов
+      - generic [ref=e33]:
+        - generic [ref=e34]: 140 из 300 XP
+        - generic [ref=e35]: до уровня 4
+    - generic [ref=e36]:
+      - generic [ref=e37]: Активный розыгрыш
+      - paragraph [ref=e38]: Сертификат 1000 ₽
+      - generic [ref=e39]:
+        - generic [ref=e40]:
+          - generic [ref=e41]: 00:42
+          - text: до конца приёма заявок
+        - generic [ref=e42]: 128 участников
+      - button "Открыть розыгрыш" [ref=e43] [cursor=pointer]
+    - generic "Лента" [ref=e45]: обновляется вживую
+    - generic [ref=e48]:
+      - generic [ref=e49]: Анна получила 200 баллов за покупку
+      - generic [ref=e54]: Игорь выиграл сертификат 1000 ₽
+      - generic [ref=e59]: "Новый сезон: «Весенний марафон»"
+    - generic [ref=e64]:
+      - generic [ref=e66]: Сценарий играет
+      - button "Пауза" [ref=e67] [cursor=pointer]
+      - button "Заново" [ref=e72] [cursor=pointer]
+      - button "×1" [ref=e77] [cursor=pointer]
+  - navigation "Разделы демо" [ref=e79]:
+    - link "Главная" [ref=e80] [cursor=pointer]:
+      - /url: /
+    - link "Задания" [ref=e84] [cursor=pointer]:
+      - /url: /tasks
+    - link "Розыгрыши" [ref=e88] [cursor=pointer]:
+      - /url: /giveaways
+    - link "Магазин" [ref=e92] [cursor=pointer]:
+      - /url: /shop
+    - link "Профиль" [ref=e96] [cursor=pointer]:
+      - /url: /profile

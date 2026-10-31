@@ -1,0 +1,50 @@
+- generic [ref=f10e3]:
+  - generic [ref=f10e5]:
+    - generic [ref=f10e6]:
+      - generic [ref=f10e7]:
+        - heading "Главная" [level=1] [ref=f10e8]
+        - generic [ref=f10e9]: Демо мини-приложения MAX
+      - button "Тёмная тема" [ref=f10e10] [cursor=pointer]
+      - button "Настройки демо" [ref=f10e15] [cursor=pointer]
+    - generic [ref=f10e20]:
+      - generic [ref=f10e21]:
+        - generic [ref=f10e22]: Ваш баланс
+        - generic [ref=f10e23]: Уровень 3
+      - generic [ref=f10e26]:
+        - text: 1 240
+        - generic [ref=f10e27]: баллов
+      - generic [ref=f10e33]:
+        - generic [ref=f10e34]: 140 из 300 XP
+        - generic [ref=f10e35]: до уровня 4
+    - generic [ref=f10e36]:
+      - generic [ref=f10e37]: Активный розыгрыш
+      - paragraph [ref=f10e38]: Сертификат 1000 ₽
+      - generic [ref=f10e39]:
+        - generic [ref=f10e40]:
+          - generic [ref=f10e41]: 00:42
+          - text: до конца приёма заявок
+        - generic [ref=f10e42]: 128 участников
+      - button "Открыть розыгрыш" [ref=f10e43] [cursor=pointer]
+    - generic [ref=f10e45]:
+      - generic [ref=f10e46]: Лента
+      - generic [ref=f10e47]: обновляется вживую
+    - generic [ref=f10e49]:
+      - generic [ref=f10e50]: Анна получила 200 баллов за покупку
+      - generic [ref=f10e55]: Игорь выиграл сертификат 1000 ₽
+      - generic [ref=f10e60]: "Новый сезон: «Весенний марафон»"
+    - generic [ref=f10e65]:
+      - generic [ref=f10e67]: Сценарий играет
+      - button "Пауза" [ref=f10e68] [cursor=pointer]
+      - button "Заново" [ref=f10e73] [cursor=pointer]
+      - button "×1" [ref=f10e78] [cursor=pointer]
+  - navigation "Разделы демо" [ref=f10e80]:
+    - link "Главная" [ref=f10e81] [cursor=pointer]:
+      - /url: /
+    - link "Задания" [ref=f10e85] [cursor=pointer]:
+      - /url: /tasks
+    - link "Розыгрыши" [ref=f10e89] [cursor=pointer]:
+      - /url: /giveaways
+    - link "Магазин" [ref=f10e93] [cursor=pointer]:
+      - /url: /shop
+    - link "Профиль" [ref=f10e97] [cursor=pointer]:
+      - /url: /profile

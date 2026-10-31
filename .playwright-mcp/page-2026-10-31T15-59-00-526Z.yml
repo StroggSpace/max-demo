@@ -1,0 +1,55 @@
+- generic [ref=f2e3]:
+  - generic [ref=f2e5]:
+    - generic [ref=f2e6]:
+      - generic [ref=f2e7]:
+        - heading "Главная" [level=1] [ref=f2e8]
+        - generic [ref=f2e9]: Демо мини-приложения MAX
+      - button "Тёмная тема" [ref=f2e10] [cursor=pointer]
+      - button "Настройки демо" [ref=f2e15] [cursor=pointer]
+    - generic [ref=f2e20]:
+      - generic [ref=f2e21]:
+        - generic [ref=f2e22]: Ваш баланс
+        - generic [ref=f2e23]: Уровень 3
+      - generic [ref=f2e26]:
+        - text: 1 440
+        - generic [ref=f2e27]: баллов
+      - generic [ref=f2e33]:
+        - generic [ref=f2e34]: 270 из 300 XP
+        - generic [ref=f2e35]: до уровня 4
+    - generic [ref=f2e36]:
+      - generic [ref=f2e37]: Активный розыгрыш
+      - paragraph [ref=f2e38]: Сертификат 1000 ₽
+      - generic [ref=f2e39]:
+        - generic [ref=f2e40]:
+          - generic [ref=f2e41]: 00:42
+          - text: до конца приёма заявок
+        - generic [ref=f2e42]: 128 участников
+      - button "Открыть розыгрыш" [ref=f2e43] [cursor=pointer]
+    - generic [ref=f2e45]:
+      - generic [ref=f2e46]: Лента
+      - generic [ref=f2e47]: обновляется вживую
+    - generic [ref=f2e49]:
+      - generic [ref=f2e101]: Вы открыли приложение
+      - generic [ref=f2e50]: Анна получила 200 баллов за покупку
+      - generic [ref=f2e55]: Игорь выиграл сертификат 1000 ₽
+      - generic [ref=f2e60]: "Новый сезон: «Весенний марафон»"
+    - generic [ref=f2e65]:
+      - generic [ref=f2e67]: Сценарий играет
+      - button "Пауза" [ref=f2e68] [cursor=pointer]
+      - button "Заново" [ref=f2e73] [cursor=pointer]
+      - button "×1" [ref=f2e78] [cursor=pointer]
+  - navigation "Разделы демо" [ref=f2e80]:
+    - link "Главная" [ref=f2e81] [cursor=pointer]:
+      - /url: /
+    - link "Задания" [ref=f2e85] [cursor=pointer]:
+      - /url: /tasks
+    - link "Розыгрыши" [ref=f2e89] [cursor=pointer]:
+      - /url: /giveaways
+    - link "Магазин" [ref=f2e93] [cursor=pointer]:
+      - /url: /shop
+    - link "Профиль" [ref=f2e97] [cursor=pointer]:
+      - /url: /profile
+  - status [ref=f2e106] [cursor=pointer]:
+    - generic [ref=f2e110]:
+      - generic [ref=f2e111]: +120 баллов
+      - generic [ref=f2e112]: Бонус за вход в приложение

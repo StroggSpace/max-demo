@@ -1,0 +1,10 @@
+.coins {
+  width: 56px;
+  height: 56px;
+  flex: none;
+}
+
+.emoji {
+  font-size: 26px;
+  line-height: 1;
+}

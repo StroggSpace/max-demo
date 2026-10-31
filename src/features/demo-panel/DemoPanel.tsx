@@ -1,4 +1,14 @@
 import { useEffect } from 'react';
+import { XMarkIcon } from '@heroicons/react/24/outline';
+import {
+  Button,
+  CellList,
+  CellSimple,
+  Flex,
+  IconButton,
+  Switch,
+  Typography,
+} from '@maxhub/max-ui';
 
 import { useDemoStore, type SectionId } from '@/store/demo';
 import { useUiStore } from '@/app/ui';
@@ -40,93 +50,104 @@ export function DemoPanel() {
   return (
     <div className={styles.overlay} role="dialog" aria-modal="true" onClick={close}>
       <div className={styles.sheet} onClick={(event) => event.stopPropagation()}>
-        <div className={styles.head}>
-          <div>
-            <div className={styles.title}>Настройки демо</div>
-            <div className={styles.subtitle}>Скрытая панель · тройной тап по заголовку</div>
-          </div>
-          <button type="button" className={styles.close} onClick={close} aria-label="Закрыть">
-            ✕
-          </button>
-        </div>
+        <Flex align="center" gap={8} style={{ padding: '4px 16px 0' }}>
+          <Flex direction="column" gap={2} style={{ flex: 1 }}>
+            <Typography.Title variant="medium-strong">Настройки демо</Typography.Title>
+            <Typography.Body variant="small" style={{ color: 'var(--text-secondary)' }}>
+              Скрытая панель · тройной тап по заголовку
+            </Typography.Body>
+          </Flex>
+          <IconButton size="small" mode="secondary" onClick={close} aria-label="Закрыть">
+            <XMarkIcon style={{ width: 18, height: 18 }} />
+          </IconButton>
+        </Flex>
 
         <div className={styles.group}>
-          <div className={styles.groupTitle}>Тема</div>
-          <div className={styles.segmented}>
+          <Typography.Label variant="small-caps" style={{ color: 'var(--text-tertiary)' }}>
+            Тема
+          </Typography.Label>
+          <Flex gap={6} style={{ marginTop: 8 }}>
             {(['light', 'dark'] as const).map((value) => (
-              <button
+              <Button
                 key={value}
-                type="button"
-                className={`${styles.segment} ${theme === value ? styles.segmentActive : ''}`}
+                size="small"
+                mode={theme === value ? 'primary' : 'secondary'}
+                stretched
                 onClick={() => setTheme(value)}
               >
                 {value === 'light' ? 'Светлая' : 'Тёмная'}
-              </button>
+              </Button>
             ))}
-          </div>
+          </Flex>
         </div>
 
         <div className={styles.group}>
-          <div className={styles.groupTitle}>Автопроигрывание</div>
-          <label className={styles.switchRow}>
-            <span className={styles.switchLabel}>Сценарии на разделах</span>
-            <input
-              type="checkbox"
-              checked={autoplay}
-              onChange={(event) => setAutoplay(event.target.checked)}
-            />
-          </label>
-          <div className={styles.hint}>
-            Пользователь тронул экран — сценарий встаёт на паузу.
-          </div>
-        </div>
-
-        <div className={styles.group}>
-          <div className={styles.groupTitle}>Скорость</div>
-          <div className={styles.segmented}>
+          <Typography.Label variant="small-caps" style={{ color: 'var(--text-tertiary)' }}>
+            Скорость
+          </Typography.Label>
+          <Flex gap={6} style={{ marginTop: 8 }}>
             {[1, 2, 4].map((value) => (
-              <button
+              <Button
                 key={value}
-                type="button"
-                className={`${styles.segment} ${speed === value ? styles.segmentActive : ''}`}
+                size="small"
+                mode={speed === value ? 'primary' : 'secondary'}
+                stretched
                 onClick={() => setSpeed(value)}
               >
                 ×{value}
-              </button>
+              </Button>
             ))}
-          </div>
+          </Flex>
         </div>
+
+        <CellList mode="island" filled style={{ marginTop: 16 }}>
+          <CellSimple
+            title="Автопроигрывание"
+            subtitle="Сценарии запускаются при входе в раздел"
+            after={
+              <Switch
+                checked={autoplay}
+                onChange={(event) => setAutoplay(event.target.checked)}
+              />
+            }
+          />
+        </CellList>
 
         <div className={styles.group}>
-          <div className={styles.groupTitle}>Отключить сценарии</div>
-          <div className={styles.toggles}>
-            {sections.map((section) => {
-              const isDisabled = Boolean(disabled[section.id]);
-              return (
-                <button
-                  key={section.id}
-                  type="button"
-                  className={`${styles.toggle} ${isDisabled ? styles.toggleOff : ''}`}
-                  onClick={() => toggleSection(section.id)}
-                >
-                  <span>{section.title}</span>
-                  <span className={styles.toggleState}>{isDisabled ? 'выкл' : 'вкл'}</span>
-                </button>
-              );
-            })}
-          </div>
+          <Typography.Label variant="small-caps" style={{ color: 'var(--text-tertiary)' }}>
+            Сценарии по разделам
+          </Typography.Label>
         </div>
 
-        <button
-          type="button"
-          className={styles.reset}
-          onClick={() => {
-            resetAll();
-            close();
-          }}
-        >
-          Сбросить данные демо
-        </button>
+        <CellList mode="island" filled>
+          {sections.map((section) => (
+            <CellSimple
+              key={section.id}
+              title={section.title}
+              after={
+                <Switch
+                  checked={!disabled[section.id]}
+                  onChange={() => toggleSection(section.id)}
+                />
+              }
+            />
+          ))}
+        </CellList>
+
+        <div style={{ padding: '20px 16px calc(8px + env(safe-area-inset-bottom))' }}>
+          <Button
+            size="medium"
+            mode="secondary"
+            appearance="negative"
+            stretched
+            onClick={() => {
+              resetAll();
+              close();
+            }}
+          >
+            Сбросить данные демо
+          </Button>
+        </div>
       </div>
     </div>
   );

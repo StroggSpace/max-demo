@@ -1,4 +1,13 @@
 import { useNavigate } from 'react-router-dom';
+import {
+  Button,
+  CellHeader,
+  CellList,
+  CellSimple,
+  Flex,
+  Panel,
+  Typography,
+} from '@maxhub/max-ui';
 
 import { AppHeader } from '@/widgets/AppHeader';
 import { Lottie } from '@/shared/ui/Lottie';
@@ -15,6 +24,12 @@ function formatTime(total: number) {
   const seconds = safe % 60;
   return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 }
+
+const cardStyle = {
+  padding: 16,
+  borderRadius: 'var(--size-border-radius-semantic-border-radius-card)',
+  background: 'var(--background-surface-card)',
+} as const;
 
 export function HomePage() {
   const navigate = useNavigate();
@@ -34,68 +49,95 @@ export function HomePage() {
     <div>
       <AppHeader title="Главная" subtitle="Демо мини-приложения MAX" />
 
-      <section className="card">
-        <div className="row row--between">
-          <span className="small muted">Ваш баланс</span>
-          <span className="chip chip--accent">Уровень {level}</span>
-        </div>
+      <Panel style={{ ...cardStyle, marginTop: 12 }}>
+        <Flex justify="space-between" align="center">
+          <Typography.Body variant="small" style={{ color: 'var(--text-secondary)' }}>
+            Ваш баланс
+          </Typography.Body>
+          <Flex
+            align="center"
+            gap={6}
+            style={{
+              padding: '4px 10px',
+              borderRadius: 999,
+              background: 'var(--background-accent-themed)',
+              color: 'var(--text-contrast-static)',
+            }}
+          >
+            <Typography.Label variant="small-strong">Уровень {level}</Typography.Label>
+          </Flex>
+        </Flex>
 
-        <div className="balance" style={{ marginTop: 10 }}>
-          {balance.toLocaleString('ru-RU')}
-          <small>баллов</small>
-        </div>
+        <Flex align="flex-end" justify="space-between" gap={8}>
+          <div className="balance" style={{ marginTop: 10 }}>
+            {balance.toLocaleString('ru-RU')}
+            <small>баллов</small>
+          </div>
+          <Lottie src="/lottie/coins.lottie" className={styles.coins} />
+        </Flex>
 
         <div className="progress" style={{ marginTop: 16 }}>
           <div className="progress__bar" style={{ width: `${progress}%` }} />
         </div>
 
-        <div className="row row--between small muted" style={{ marginTop: 8 }}>
-          <span>
+        <Flex justify="space-between" style={{ marginTop: 8 }}>
+          <Typography.Body variant="small" style={{ color: 'var(--text-secondary)' }}>
             {xp} из {xpMax} XP
-          </span>
-          <span>до уровня {level + 1}</span>
-        </div>
-      </section>
+          </Typography.Body>
+          <Typography.Body variant="small" style={{ color: 'var(--text-secondary)' }}>
+            до уровня {level + 1}
+          </Typography.Body>
+        </Flex>
+      </Panel>
 
-      <section className="section">
-        <div className="hero">
-          <Lottie src="/lottie/pulse.json" className={styles.pulse} />
-          <div className={styles.heroLabel}>Активный розыгрыш</div>
-          <p className="hero__prize">{giveaway.prize}</p>
+      <div className="hero" style={{ marginTop: 16 }}>
+        <div className="hero__label">Активный розыгрыш</div>
+        <p className="hero__prize">{giveaway.prize}</p>
 
-          <div className={styles.heroBottom}>
-            <div>
-              <div className="hero__timer">{formatTime(giveaway.secondsLeft)}</div>
-              <div className="tiny" style={{ opacity: 0.8, marginTop: 4 }}>
-                до конца приёма заявок
-              </div>
-            </div>
-            <div className="small" style={{ textAlign: 'right', opacity: 0.9 }}>
-              {giveaway.participants} участников
-            </div>
+        <Flex align="flex-end" justify="space-between" style={{ marginTop: 12 }}>
+          <div>
+            <div className="hero__timer">{formatTime(giveaway.secondsLeft)}</div>
+            <Typography.Body variant="small" style={{ opacity: 0.8 }}>
+              до конца приёма заявок
+            </Typography.Body>
           </div>
+          <Typography.Body variant="small" style={{ opacity: 0.9 }}>
+            {giveaway.participants} участников
+          </Typography.Body>
+        </Flex>
 
-          <button type="button" className={styles.cta} onClick={() => navigate('/giveaways')}>
-            Открыть розыгрыш
-          </button>
-        </div>
-      </section>
+        <Button
+          mode="primary"
+          appearance="contrast-static"
+          stretched
+          style={{ marginTop: 16 }}
+          onClick={() => navigate('/giveaways')}
+        >
+          Открыть розыгрыш
+        </Button>
+      </div>
 
-      <section className="section">
-        <div className="section__head">
-          <h2 className="section__title">Лента</h2>
-          <span className="tiny muted">обновляется вживую</span>
-        </div>
-
-        <div className="feed">
-          {feed.map((item) => (
-            <div className="feed__item" key={item.id}>
-              <span className={`feed__dot ${item.accent ? 'feed__dot--accent' : ''}`} />
-              <span>{item.text}</span>
-            </div>
-          ))}
-        </div>
-      </section>
+      <CellHeader after="обновляется вживую" style={{ marginTop: 20 }}>
+        Лента
+      </CellHeader>
+      <CellList mode="island" filled>
+        {feed.map((item) => (
+          <CellSimple
+            key={item.id}
+            before={
+              <span
+                className={styles.feedDot}
+                style={{
+                  background: item.accent
+                    ? 'var(--background-accent-themed)'
+                    : 'var(--background-surface-tertiary)',
+                }}
+              />
+            }
+            title={item.text}
+          />
+        ))}
+      </CellList>
 
       <ScenarioControls scenario={scenario} />
     </div>

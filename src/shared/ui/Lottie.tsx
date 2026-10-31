@@ -8,8 +8,8 @@ interface Props {
 }
 
 /**
- * Обёртка над Lottie. Если ассета нет — тихо ничего не рендерит,
- * чтобы демо не падало без анимации.
+ * Lottie-анимация (.lottie). Ассеты лежат в public/lottie.
+ * При prefers-reduced-motion анимация не запускается.
  */
 export function Lottie({ src, className, loop = true, autoplay = true }: Props) {
   if (!src) return null;

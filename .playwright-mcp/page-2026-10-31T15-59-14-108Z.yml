@@ -1,0 +1,72 @@
+- generic [ref=f3e3]:
+  - generic [ref=f3e5]:
+    - generic [ref=f3e6]:
+      - generic [ref=f3e7]:
+        - heading "Задания" [level=1] [ref=f3e8]
+        - generic [ref=f3e9]: Выполняйте и получайте баллы
+      - button "Тёмная тема" [ref=f3e10] [cursor=pointer]
+      - button "Настройки демо" [ref=f3e15] [cursor=pointer]
+    - generic [ref=f3e21]:
+      - generic [ref=f3e22]:
+        - generic [ref=f3e23]: Выполнено
+        - generic [ref=f3e24]:
+          - text: "0"
+          - generic [ref=f3e25]: из 4
+      - generic [ref=f3e29]:
+        - generic [ref=f3e30]: Заработано
+        - generic [ref=f3e31]:
+          - text: "+0"
+          - generic [ref=f3e32]: баллов
+    - generic [ref=f3e33]:
+      - generic [ref=f3e34]:
+        - generic [ref=f3e35]:
+          - generic [ref=f3e36]:
+            - generic [ref=f3e37]: Подписаться на канал бренда
+            - generic [ref=f3e38]: Проверяем автоматически
+          - generic [ref=f3e39]: "+50"
+        - generic [ref=f3e41]:
+          - generic [ref=f3e42]: 0 / 1
+          - generic [ref=f3e43]: В процессе
+      - generic [ref=f3e44]:
+        - generic [ref=f3e45]:
+          - generic [ref=f3e46]:
+            - generic [ref=f3e47]: Пригласить друга
+            - generic [ref=f3e48]: Начисляем после первого входа
+          - generic [ref=f3e49]: "+150"
+        - generic [ref=f3e51]:
+          - generic [ref=f3e52]: 0 / 1
+          - generic [ref=f3e53]: В процессе
+      - generic [ref=f3e54]:
+        - generic [ref=f3e55]:
+          - generic [ref=f3e56]:
+            - generic [ref=f3e57]: Сделать 3 покупки
+            - generic [ref=f3e58]: Любая сумма, засчитываем чек
+          - generic [ref=f3e59]: "+200"
+        - generic [ref=f3e61]:
+          - generic [ref=f3e62]: 0 / 3
+          - generic [ref=f3e63]: В процессе
+      - generic [ref=f3e64]:
+        - generic [ref=f3e65]:
+          - generic [ref=f3e66]:
+            - generic [ref=f3e67]: Заполнить профиль
+            - generic [ref=f3e68]: Имя и телефон уже есть
+          - generic [ref=f3e69]: "+30"
+        - generic [ref=f3e71]:
+          - generic [ref=f3e72]: 0 / 1
+          - generic [ref=f3e73]: В процессе
+    - generic [ref=f3e74]:
+      - generic [ref=f3e76]: Сценарий играет
+      - button "Пауза" [ref=f3e77] [cursor=pointer]
+      - button "Заново" [ref=f3e82] [cursor=pointer]
+      - button "×1" [ref=f3e87] [cursor=pointer]
+  - navigation "Разделы демо" [ref=f3e89]:
+    - link "Главная" [ref=f3e90] [cursor=pointer]:
+      - /url: /
+    - link "Задания" [ref=f3e94] [cursor=pointer]:
+      - /url: /tasks
+    - link "Розыгрыши" [ref=f3e98] [cursor=pointer]:
+      - /url: /giveaways
+    - link "Магазин" [ref=f3e102] [cursor=pointer]:
+      - /url: /shop
+    - link "Профиль" [ref=f3e106] [cursor=pointer]:
+      - /url: /profile

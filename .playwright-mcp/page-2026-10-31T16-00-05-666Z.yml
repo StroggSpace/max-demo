@@ -1,0 +1,80 @@
+- generic [ref=f6e3]:
+  - generic [ref=f6e5]:
+    - generic [ref=f6e6]:
+      - generic [ref=f6e7]:
+        - heading "Профиль" [level=1] [ref=f6e8]
+        - generic [ref=f6e9]: Личный кабинет участника
+      - button "Тёмная тема" [ref=f6e10] [cursor=pointer]
+      - button "Настройки демо" [ref=f6e15] [cursor=pointer]
+    - generic [ref=f6e21]:
+      - generic [ref=f6e22]: И
+      - generic [ref=f6e26]:
+        - generic [ref=f6e27]: Игорь
+        - generic [ref=f6e28]: Уровень 3 · 1 240 баллов
+      - generic [ref=f6e29]: MAX ID
+    - generic [ref=f6e30]:
+      - generic [ref=f6e31]:
+        - generic [ref=f6e32]: "0"
+        - generic [ref=f6e33]: заданий
+      - generic [ref=f6e34]:
+        - generic [ref=f6e35]: "0"
+        - generic [ref=f6e36]: достижений
+      - generic [ref=f6e37]:
+        - generic [ref=f6e38]: "3"
+        - generic [ref=f6e39]: уровень
+    - generic [ref=f6e40]: Приглашение
+    - generic [ref=f6e44]:
+      - generic [ref=f6e45]:
+        - generic [ref=f6e46]: MAX-DEMO-2026
+        - generic [ref=f6e47]: За каждого друга — 150 баллов после первого входа
+      - button "Копировать" [ref=f6e49] [cursor=pointer]
+    - generic [ref=f6e51]:
+      - generic [ref=f6e52]: Достижения
+      - generic [ref=f6e53]: 0 из 6
+    - generic [ref=f6e55]:
+      - generic [ref=f6e56]:
+        - generic [ref=f6e60]:
+          - generic [ref=f6e61]: Первый вход
+          - generic [ref=f6e62]: Открыть приложение
+        - generic [ref=f6e63]: закрыто
+      - generic [ref=f6e65]:
+        - generic [ref=f6e69]:
+          - generic [ref=f6e70]: Первые задания
+          - generic [ref=f6e71]: Выполнить 2 задания
+        - generic [ref=f6e72]: закрыто
+      - generic [ref=f6e74]:
+        - generic [ref=f6e78]:
+          - generic [ref=f6e79]: Участник розыгрыша
+          - generic [ref=f6e80]: Подать заявку
+        - generic [ref=f6e81]: закрыто
+      - generic [ref=f6e83]:
+        - generic [ref=f6e87]:
+          - generic [ref=f6e88]: Первый выигрыш
+          - generic [ref=f6e89]: Выиграть приз
+        - generic [ref=f6e90]: закрыто
+      - generic [ref=f6e92]:
+        - generic [ref=f6e96]:
+          - generic [ref=f6e97]: Первый обмен
+          - generic [ref=f6e98]: Обменять баллы
+        - generic [ref=f6e99]: закрыто
+      - generic [ref=f6e101]:
+        - generic [ref=f6e105]:
+          - generic [ref=f6e106]: Активный пользователь
+          - generic [ref=f6e107]: Заходить 7 дней подряд
+        - generic [ref=f6e108]: закрыто
+    - generic [ref=f6e110]:
+      - generic [ref=f6e112]: Сценарий играет
+      - button "Пауза" [ref=f6e113] [cursor=pointer]
+      - button "Заново" [ref=f6e118] [cursor=pointer]
+      - button "×1" [ref=f6e123] [cursor=pointer]
+  - navigation "Разделы демо" [ref=f6e125]:
+    - link "Главная" [ref=f6e126] [cursor=pointer]:
+      - /url: /
+    - link "Задания" [ref=f6e130] [cursor=pointer]:
+      - /url: /tasks
+    - link "Розыгрыши" [ref=f6e134] [cursor=pointer]:
+      - /url: /giveaways
+    - link "Магазин" [ref=f6e138] [cursor=pointer]:
+      - /url: /shop
+    - link "Профиль" [ref=f6e142] [cursor=pointer]:
+      - /url: /profile
