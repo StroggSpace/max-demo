@@ -1,4 +1,7 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
+import { Button, Typography } from '@maxhub/max-ui';
+
+import { Card } from '@/shared/ui/kit';
 
 interface Props {
   children: ReactNode;
@@ -27,20 +30,19 @@ export class ErrorBoundary extends Component<Props, State> {
     if (!this.state.error) return this.props.children;
 
     return (
-      <div className="card" style={{ marginTop: 24 }}>
-        <div style={{ fontSize: 16, fontWeight: 700 }}>Раздел не загрузился</div>
-        <div className="small muted" style={{ marginTop: 6 }}>
+      <Card>
+        <Typography.Title variant="medium-strong">Раздел не загрузился</Typography.Title>
+        <Typography.Body variant="small" style={{ color: 'var(--text-secondary)' }}>
           {this.state.error.message}
-        </div>
-        <button
-          type="button"
-          className="chip chip--accent"
-          style={{ border: 0, marginTop: 12, height: 32, cursor: 'pointer' }}
+        </Typography.Body>
+        <Button
+          size="small"
+          mode="secondary"
           onClick={() => window.location.reload()}
         >
           Перезагрузить
-        </button>
-      </div>
+        </Button>
+      </Card>
     );
   }
 }

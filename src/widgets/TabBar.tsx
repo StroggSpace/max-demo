@@ -20,17 +20,19 @@ const items = [
 export function TabBar() {
   return (
     <nav className={styles.bar} aria-label="Разделы демо">
-      {items.map(({ to, label, Icon }) => (
-        <NavLink
-          key={to}
-          to={to}
-          end={to === '/'}
-          className={({ isActive }) => `${styles.item} ${isActive ? styles.active : ''}`}
-        >
-          <Icon className={styles.icon} />
-          <span>{label}</span>
-        </NavLink>
-      ))}
+      <div className={styles.inner}>
+        {items.map(({ to, label, Icon }) => (
+          <NavLink
+            key={to}
+            to={to}
+            end={to === '/'}
+            className={({ isActive }) => `${styles.item} ${isActive ? styles.active : ''}`}
+          >
+            <Icon className={styles.icon} />
+            <span className={styles.label}>{label}</span>
+          </NavLink>
+        ))}
+      </div>
     </nav>
   );
 }

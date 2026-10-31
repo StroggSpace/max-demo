@@ -1,17 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import {
-  Button,
-  CellHeader,
-  CellList,
-  CellSimple,
-  Flex,
-  Panel,
-  Typography,
-} from '@maxhub/max-ui';
+import { Button, CellSimple, Flex, Typography } from '@maxhub/max-ui';
 
-import { AppHeader } from '@/widgets/AppHeader';
 import { Lottie } from '@/shared/ui/Lottie';
-import { ScenarioControls } from '@/features/scenario/ScenarioControls';
+import { Balance, Card, Chip, Hero, ListCard, Progress, Section, StateGate, kit } from '@/shared/ui/kit';
 import { useSectionScenario } from '@/features/scenario/useSectionScenario';
 import { useGiveawayTicker } from '@/features/giveaway/useGiveawayTicker';
 import { scenarios } from '@/scenarios';
@@ -25,15 +16,9 @@ function formatTime(total: number) {
   return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 }
 
-const cardStyle = {
-  padding: 16,
-  borderRadius: 'var(--size-border-radius-semantic-border-radius-card)',
-  background: 'var(--background-surface-card)',
-} as const;
-
 export function HomePage() {
   const navigate = useNavigate();
-  const scenario = useSectionScenario(scenarios.home);
+  useSectionScenario(scenarios.home);
   useGiveawayTicker();
 
   const balance = useDemoStore((s) => s.balance);
@@ -43,103 +28,82 @@ export function HomePage() {
   const feed = useDemoStore((s) => s.feed);
   const giveaway = useDemoStore((s) => s.giveaway);
 
-  const progress = Math.min(100, Math.round((xp / xpMax) * 100));
+  const progress = (xp / xpMax) * 100;
 
   return (
-    <div>
-      <AppHeader title="Главная" subtitle="Демо мини-приложения MAX" />
+    <div className={styles.page}>
+      <StateGate emptyTitle="Пока нет активности" emptyText="Как только начнётся акция, здесь появятся баллы и события.">
+        <Card>
+          <Flex direction="column" align="stretch" gap={12}>
+            <Flex justify="space-between" align="center">
+              <Typography.Body variant="small" className={styles.muted}>
+                Ваш баланс
+              </Typography.Body>
+              <Chip tone="accent">Уровень {level}</Chip>
+            </Flex>
 
-      <Panel style={{ ...cardStyle, marginTop: 12 }}>
-        <Flex justify="space-between" align="center">
-          <Typography.Body variant="small" style={{ color: 'var(--text-secondary)' }}>
-            Ваш баланс
-          </Typography.Body>
-          <Flex
-            align="center"
-            gap={6}
-            style={{
-              padding: '4px 10px',
-              borderRadius: 999,
-              background: 'var(--background-accent-themed)',
-              color: 'var(--text-contrast-static)',
-            }}
-          >
-            <Typography.Label variant="small-strong">Уровень {level}</Typography.Label>
+            <div className={styles.balanceRow}>
+              <Balance value={balance} />
+              <Lottie src="/lottie/coins.lottie" className={styles.coins} />
+            </div>
+
+            <Progress value={progress} />
+
+            <Flex justify="space-between">
+              <Typography.Body variant="small" className={styles.muted}>
+                {xp} из {xpMax} XP
+              </Typography.Body>
+              <Typography.Body variant="small" className={styles.muted}>
+                до уровня {level + 1}
+              </Typography.Body>
+            </Flex>
           </Flex>
-        </Flex>
+        </Card>
 
-        <Flex align="flex-end" justify="space-between" gap={8}>
-          <div className="balance" style={{ marginTop: 10 }}>
-            {balance.toLocaleString('ru-RU')}
-            <small>баллов</small>
-          </div>
-          <Lottie src="/lottie/coins.lottie" className={styles.coins} />
-        </Flex>
+        <Hero>
+          <div className={kit.heroLabel}>Активный розыгрыш</div>
+          <p className={kit.heroPrize}>{giveaway.prize}</p>
 
-        <div className="progress" style={{ marginTop: 16 }}>
-          <div className="progress__bar" style={{ width: `${progress}%` }} />
-        </div>
-
-        <Flex justify="space-between" style={{ marginTop: 8 }}>
-          <Typography.Body variant="small" style={{ color: 'var(--text-secondary)' }}>
-            {xp} из {xpMax} XP
-          </Typography.Body>
-          <Typography.Body variant="small" style={{ color: 'var(--text-secondary)' }}>
-            до уровня {level + 1}
-          </Typography.Body>
-        </Flex>
-      </Panel>
-
-      <div className="hero" style={{ marginTop: 16 }}>
-        <div className="hero__label">Активный розыгрыш</div>
-        <p className="hero__prize">{giveaway.prize}</p>
-
-        <Flex align="flex-end" justify="space-between" style={{ marginTop: 12 }}>
-          <div>
-            <div className="hero__timer">{formatTime(giveaway.secondsLeft)}</div>
-            <Typography.Body variant="small" style={{ opacity: 0.8 }}>
-              до конца приёма заявок
+          <Flex align="flex-end" justify="space-between" className={styles.heroBottom}>
+            <div>
+              <div className={kit.heroTimer}>{formatTime(giveaway.secondsLeft)}</div>
+              <Typography.Body variant="small" className={kit.heroMeta}>
+                до конца приёма заявок
+              </Typography.Body>
+            </div>
+            <Typography.Body variant="small" className={kit.heroMeta}>
+              {giveaway.participants} участников
             </Typography.Body>
-          </div>
-          <Typography.Body variant="small" style={{ opacity: 0.9 }}>
-            {giveaway.participants} участников
-          </Typography.Body>
-        </Flex>
+          </Flex>
 
-        <Button
-          mode="primary"
-          appearance="contrast-static"
-          stretched
-          style={{ marginTop: 16 }}
-          onClick={() => navigate('/giveaways')}
-        >
-          Открыть розыгрыш
-        </Button>
-      </div>
+          <Button
+            mode="primary"
+            appearance="contrast-static"
+            stretched
+            className={styles.heroButton}
+            onClick={() => navigate('/giveaways')}
+          >
+            Открыть розыгрыш
+          </Button>
+        </Hero>
 
-      <CellHeader after="обновляется вживую" style={{ marginTop: 20 }}>
-        Лента
-      </CellHeader>
-      <CellList mode="island" filled>
-        {feed.map((item) => (
-          <CellSimple
-            key={item.id}
-            before={
-              <span
-                className={styles.feedDot}
-                style={{
-                  background: item.accent
-                    ? 'var(--background-accent-themed)'
-                    : 'var(--background-surface-tertiary)',
-                }}
+        <Section title="Лента" after="обновляется вживую">
+          <ListCard>
+            {feed.map((item) => (
+              <CellSimple
+                key={item.id}
+                before={
+                  <span
+                    className={styles.feedDot}
+                    data-accent={item.accent ? 'true' : undefined}
+                  />
+                }
+                title={item.text}
               />
-            }
-            title={item.text}
-          />
-        ))}
-      </CellList>
-
-      <ScenarioControls scenario={scenario} />
+            ))}
+          </ListCard>
+        </Section>
+      </StateGate>
     </div>
   );
 }

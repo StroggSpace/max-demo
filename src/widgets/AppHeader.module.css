@@ -1,14 +1,18 @@
 .header {
-  position: sticky;
-  top: 0;
-  z-index: 20;
+  flex: 0 0 auto;
+  padding-top: env(safe-area-inset-top);
+  background: var(--background-surface-ground);
+  border-bottom: 1px solid var(--stroke-secondary);
+}
+
+.inner {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin: 0 -16px;
-  padding: calc(12px + env(safe-area-inset-top)) 16px 10px;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(14px);
+  gap: var(--spacing-size-xs);
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--spacing-size-m) var(--spacing-size2xl);
 }
 
 .text {
@@ -18,32 +22,16 @@
 
 .title {
   margin: 0;
-  font-size: 22px;
-  font-weight: 750;
-  letter-spacing: -0.02em;
-  user-select: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .subtitle {
-  margin: 2px 0 0;
-  font-size: 12px;
-  color: var(--muted);
+  color: var(--text-secondary);
 }
 
-.button {
-  width: 36px;
-  height: 36px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
-  font-size: 16px;
-  cursor: pointer;
-  flex: none;
-}
-
-.button:active {
-  transform: scale(0.94);
+.icon {
+  width: 22px;
+  height: 22px;
 }

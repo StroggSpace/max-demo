@@ -1,78 +1,70 @@
-import { useRef } from 'react';
-import { EllipsisHorizontalIcon, MoonIcon, SunIcon } from '@heroicons/react/24/outline';
-import { Flex, IconButton, Typography } from '@maxhub/max-ui';
+import { ArrowLeftIcon, Cog6ToothIcon, MoonIcon, SunIcon } from '@heroicons/react/24/outline';
+import { IconButton, Typography } from '@maxhub/max-ui';
+import { useNavigate } from 'react-router-dom';
 
 import { useDemoStore } from '@/store/demo';
-import { useUiStore } from '@/app/ui';
+import styles from './AppHeader.module.css';
 
 interface Props {
   title: string;
   subtitle?: string;
+  back?: boolean;
 }
 
-export function AppHeader({ title, subtitle }: Props) {
+export function AppHeader({ title, subtitle, back }: Props) {
+  const navigate = useNavigate();
   const theme = useDemoStore((s) => s.theme);
   const toggleTheme = useDemoStore((s) => s.toggleTheme);
-  const openPanel = useUiStore((s) => s.openPanel);
-  const taps = useRef<number[]>([]);
-
-  const handleSecretTap = () => {
-    const now = Date.now();
-    taps.current = [...taps.current.filter((time) => now - time < 700), now];
-    if (taps.current.length >= 3) {
-      taps.current = [];
-      openPanel();
-    }
-  };
 
   return (
-    <Flex
-      align="center"
-      gap={4}
-      style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 20,
-        margin: '0 -16px',
-        padding: `calc(10px + env(safe-area-inset-top)) 12px 10px`,
-        background: 'var(--background-surface-ground)',
-        borderBottom: '1px solid var(--stroke-secondary)',
-      }}
-    >
-      <Flex direction="column" gap={2} style={{ flex: 1, minWidth: 0, paddingLeft: 4 }}>
-        <Typography.Title variant="large-strong" asChild>
-          <h1 style={{ margin: 0 }} onClick={handleSecretTap}>
-            {title}
-          </h1>
-        </Typography.Title>
-        {subtitle ? (
-          <Typography.Body variant="small" style={{ color: 'var(--text-secondary)' }}>
-            {subtitle}
-          </Typography.Body>
+    <header className={styles.header}>
+      <div className={styles.inner}>
+        {back ? (
+          <IconButton
+            size="medium"
+            mode="tertiary"
+            aria-label="Назад"
+            onClick={() => navigate(-1)}
+          >
+            <ArrowLeftIcon className={styles.icon} />
+          </IconButton>
         ) : null}
-      </Flex>
 
-      <IconButton
-        size="medium"
-        mode="tertiary"
-        onClick={toggleTheme}
-        aria-label={theme === 'light' ? 'Тёмная тема' : 'Светлая тема'}
-      >
-        {theme === 'light' ? (
-          <MoonIcon style={{ width: 22, height: 22 }} />
-        ) : (
-          <SunIcon style={{ width: 22, height: 22 }} />
-        )}
-      </IconButton>
+        <div className={styles.text}>
+          <Typography.Title variant="large-strong" asChild>
+            <h1 className={styles.title}>{title}</h1>
+          </Typography.Title>
+          {subtitle ? (
+            <Typography.Body variant="small" className={styles.subtitle}>
+              {subtitle}
+            </Typography.Body>
+          ) : null}
+        </div>
 
-      <IconButton
-        size="medium"
-        mode="tertiary"
-        onClick={openPanel}
-        aria-label="Настройки демо"
-      >
-        <EllipsisHorizontalIcon style={{ width: 24, height: 24 }} />
-      </IconButton>
-    </Flex>
+        <IconButton
+          size="medium"
+          mode="tertiary"
+          aria-label={theme === 'light' ? 'Тёмная тема' : 'Светлая тема'}
+          onClick={toggleTheme}
+        >
+          {theme === 'light' ? (
+            <MoonIcon className={styles.icon} />
+          ) : (
+            <SunIcon className={styles.icon} />
+          )}
+        </IconButton>
+
+        {!back ? (
+          <IconButton
+            size="medium"
+            mode="tertiary"
+            aria-label="Настройки демо"
+            onClick={() => navigate('/settings')}
+          >
+            <Cog6ToothIcon className={styles.icon} />
+          </IconButton>
+        ) : null}
+      </div>
+    </header>
   );
 }

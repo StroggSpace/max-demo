@@ -1,3 +1,10 @@
+:root {
+  --app-max-width: 1024px;
+  --content-max-width: 640px;
+  --page-gutter: 16px;
+  --page-gap: 16px;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -5,14 +12,16 @@
 html,
 body,
 #root {
-  min-height: 100%;
+  height: 100%;
 }
 
 body {
   margin: 0;
-  background: #eef0f4;
+  overflow: hidden;
+  background: #e9ebef;
   font-family: var(--family-base, system-ui, sans-serif);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 html[data-theme='dark'] body {
@@ -20,98 +29,50 @@ html[data-theme='dark'] body {
 }
 
 .appRoot {
-  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  height: 100dvh;
   background: var(--background-surface-ground);
   color: var(--text-primary);
 }
 
-.app {
-  position: relative;
-  width: 100%;
-  max-width: 430px;
-  margin: 0 auto;
-  padding: 0 16px calc(92px + env(safe-area-inset-bottom));
-}
-
-@media (min-width: 520px) {
-  .app {
-    margin: 24px auto;
-    min-height: calc(100dvh - 48px);
-    border-radius: 28px;
-    overflow: hidden;
-    box-shadow: 0 18px 48px rgb(0 0 0 / 18%);
-  }
-}
-
-.balance {
+.shell {
   display: flex;
-  align-items: baseline;
-  gap: 8px;
-  font-size: 40px;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1;
-}
-
-.balance small {
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 0;
-  color: var(--text-secondary);
-}
-
-.progress {
-  height: 8px;
-  border-radius: 999px;
-  background: var(--background-surface-tertiary);
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--app-max-width);
+  height: 100dvh;
   overflow: hidden;
+  background: var(--background-surface-ground);
 }
 
-.progress__bar {
-  height: 100%;
-  border-radius: inherit;
-  background: var(--background-accent-themed);
-  transition: width 0.35s ease;
+.main {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
 }
 
-.hero {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--size-border-radius-semantic-border-radius-card, 20px);
-  padding: 18px;
-  color: var(--text-contrast-static);
-  background: var(--gradient-blue);
+.mainInner {
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--page-gutter) var(--page-gutter) 28px;
 }
 
-.hero__prize {
-  margin: 6px 0 0;
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
+@media (min-width: 560px) {
+  .appRoot {
+    padding: 16px;
+  }
 
-.hero__timer {
-  font-variant-numeric: tabular-nums;
-  font-size: 34px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1;
-}
-
-.hero__label {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  opacity: 0.78;
-}
-
-/* Lottie-оверлей поверх экрана */
-.confetti-layer {
-  position: absolute;
-  inset: 0;
-  z-index: 15;
-  pointer-events: none;
+  .shell {
+    height: calc(100dvh - 32px);
+    border: 1px solid var(--stroke-secondary);
+    border-radius: 24px;
+    box-shadow: 0 24px 60px rgb(0 0 0 / 18%);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

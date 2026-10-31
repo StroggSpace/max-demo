@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export type Theme = 'light' | 'dark';
+export type DemoStateMode = 'normal' | 'loading' | 'empty' | 'error';
 export type SectionId = 'home' | 'tasks' | 'giveaways' | 'shop' | 'profile';
 export type GiveawayPhase = 'idle' | 'lobby' | 'countdown' | 'result';
 export type GiveawayResult = 'win' | 'lose' | null;
@@ -36,6 +37,7 @@ interface DemoState {
   autoplay: boolean;
   speed: number;
   disabled: Record<string, boolean>;
+  demoState: DemoStateMode;
 
   balance: number;
   level: number;
@@ -60,6 +62,7 @@ interface DemoState {
   toggleTheme: () => void;
   setAutoplay: (value: boolean) => void;
   setSpeed: (value: number) => void;
+  setDemoState: (value: DemoStateMode) => void;
   toggleSection: (id: SectionId) => void;
 
   resetHome: () => void;
@@ -149,6 +152,7 @@ export const useDemoStore = create<DemoState>()(
       autoplay: true,
       speed: 1,
       disabled: {},
+      demoState: 'normal',
 
       balance: 1240,
       level: 3,
@@ -165,6 +169,7 @@ export const useDemoStore = create<DemoState>()(
       toggleTheme: () => set({ theme: get().theme === 'light' ? 'dark' : 'light' }),
       setAutoplay: (autoplay) => set({ autoplay }),
       setSpeed: (speed) => set({ speed }),
+      setDemoState: (demoState) => set({ demoState }),
       toggleSection: (id) =>
         set((s) => ({ disabled: { ...s.disabled, [id]: !s.disabled[id] } })),
 
@@ -237,7 +242,13 @@ export const useDemoStore = create<DemoState>()(
     }),
     {
       name: 'max-demo',
-      partialize: (s) => ({ theme: s.theme, autoplay: s.autoplay, speed: s.speed }),
+      partialize: (s) => ({
+        theme: s.theme,
+        autoplay: s.autoplay,
+        speed: s.speed,
+        disabled: s.disabled,
+        demoState: s.demoState,
+      }),
     },
   ),
 );

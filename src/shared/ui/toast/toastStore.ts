@@ -22,7 +22,7 @@ export const useToastStore = create<ToastState>((set) => ({
       items: [
         ...state.items,
         { id: `t-${Date.now()}-${Math.random().toString(16).slice(2)}`, title, description, kind },
-      ].slice(-4),
+      ].slice(-1),
     })),
   dismiss: (id) => set((state) => ({ items: state.items.filter((item) => item.id !== id) })),
 }));

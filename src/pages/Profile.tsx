@@ -10,22 +10,19 @@ import {
 import {
   Avatar,
   Button,
-  CellHeader,
-  CellList,
   CellSimple,
   Flex,
   Grid,
-  Panel,
   Typography,
 } from '@maxhub/max-ui';
 
-import { AppHeader } from '@/widgets/AppHeader';
-import { ScenarioControls } from '@/features/scenario/ScenarioControls';
+import { Card, Chip, ListCard, Section, Stat, StateGate } from '@/shared/ui/kit';
 import { useSectionScenario } from '@/features/scenario/useSectionScenario';
 import { scenarios } from '@/scenarios';
 import { useDemoStore } from '@/store/demo';
 import { platform } from '@/platform';
 import { toast } from '@/shared/ui/toast/toastStore';
+import styles from './Profile.module.css';
 
 const achievements = [
   { title: 'Первый вход', hint: 'Открыть приложение', Icon: StarIcon },
@@ -36,14 +33,8 @@ const achievements = [
   { title: 'Активный пользователь', hint: 'Заходить 7 дней подряд', Icon: BoltIcon },
 ];
 
-const cardStyle = {
-  padding: 14,
-  borderRadius: 'var(--size-border-radius-semantic-border-radius-card)',
-  background: 'var(--background-surface-card)',
-} as const;
-
 export function ProfilePage() {
-  const scenario = useSectionScenario(scenarios.profile);
+  useSectionScenario(scenarios.profile);
   const unlocked = useDemoStore((s) => s.achievements);
   const balance = useDemoStore((s) => s.balance);
   const level = useDemoStore((s) => s.level);
@@ -66,104 +57,80 @@ export function ProfilePage() {
   };
 
   return (
-    <div>
-      <AppHeader title="Профиль" subtitle="Личный кабинет участника" />
+    <div className={styles.page}>
+      <StateGate emptyTitle="Профиль пока пустой" emptyText="Данные появятся после первого входа в акцию.">
+        <Card>
+          <Flex align="center" gap={12}>
+            <Avatar.Container size={56} form="circle">
+              <Avatar.Image src="" fallback={user.firstName.slice(0, 1)} fallbackGradient="blue" />
+            </Avatar.Container>
 
-      <Panel style={{ ...cardStyle, marginTop: 12, padding: 16 }}>
-        <Flex align="center" gap={12}>
-          <Avatar.Container size={56} form="circle">
-            <Avatar.Image src="" fallback={user.firstName.slice(0, 1)} fallbackGradient="blue" />
-          </Avatar.Container>
+            <Flex direction="column" gap={4} className={styles.grow}>
+              <Typography.Title variant="medium-strong">
+                {user.firstName} {user.lastName}
+              </Typography.Title>
+              <Typography.Body variant="small" className={styles.muted}>
+                Уровень {level} · {balance.toLocaleString('ru-RU')} баллов
+              </Typography.Body>
+            </Flex>
 
-          <Flex direction="column" gap={2} style={{ flex: 1, minWidth: 0 }}>
-            <Typography.Title variant="medium-strong">
-              {user.firstName} {user.lastName}
-            </Typography.Title>
-            <Typography.Body variant="small" style={{ color: 'var(--text-secondary)' }}>
-              Уровень {level} · {balance.toLocaleString('ru-RU')} баллов
-            </Typography.Body>
+            <Chip tone="accent">MAX ID</Chip>
           </Flex>
+        </Card>
 
-          <Typography.Label
-            variant="small-caps"
-            style={{
-              padding: '4px 8px',
-              borderRadius: 8,
-              background: 'var(--background-accent-themed)',
-              color: 'var(--text-contrast-static)',
-            }}
-          >
-            MAX ID
-          </Typography.Label>
-        </Flex>
-      </Panel>
+        <Grid cols={3} gap={8}>
+          <Stat value={completed} label="заданий" />
+          <Stat value={unlocked.length} label="достижений" />
+          <Stat value={level} label="уровень" />
+        </Grid>
 
-      <Grid cols={3} gap={8} style={{ marginTop: 12 }}>
-        {[
-          { value: completed, label: 'заданий' },
-          { value: unlocked.length, label: 'достижений' },
-          { value: level, label: 'уровень' },
-        ].map((stat) => (
-          <Panel key={stat.label} style={{ ...cardStyle, textAlign: 'center' }}>
-            <Typography.Title variant="large-strong">{stat.value}</Typography.Title>
-            <Typography.Body variant="small" style={{ color: 'var(--text-secondary)' }}>
-              {stat.label}
-            </Typography.Body>
-          </Panel>
-        ))}
-      </Grid>
+        <Section title="Приглашение">
+          <Card>
+            <Flex justify="space-between" align="center" gap={12}>
+              <Flex direction="column" gap={4} className={styles.grow}>
+                <Typography.Title variant="small-strong">{code}</Typography.Title>
+                <Typography.Body variant="small" className={styles.muted}>
+                  За каждого друга — 150 баллов после первого входа
+                </Typography.Body>
+              </Flex>
 
-      <CellHeader style={{ marginTop: 20 }}>Приглашение</CellHeader>
-      <CellList mode="island" filled>
-        <CellSimple
-          title={code}
-          subtitle="За каждого друга — 150 баллов после первого входа"
-          after={
-            <Button size="small" mode={copied ? 'secondary' : 'primary'} onClick={copy}>
-              {copied ? 'Готово' : 'Копировать'}
-            </Button>
-          }
-        />
-      </CellList>
+              <Button size="small" mode={copied ? 'secondary' : 'primary'} onClick={copy}>
+                {copied ? 'Готово' : 'Копировать'}
+              </Button>
+            </Flex>
+          </Card>
+        </Section>
 
-      <CellHeader
-        after={`${unlocked.length} из ${achievements.length}`}
-        style={{ marginTop: 20 }}
-      >
-        Достижения
-      </CellHeader>
-      <CellList mode="island" filled>
-        {achievements.map(({ title, hint, Icon }) => {
-          const isUnlocked = unlocked.includes(title);
-          return (
-            <CellSimple
-              key={title}
-              title={title}
-              subtitle={hint}
-              before={
-                <Icon
-                  style={{
-                    width: 22,
-                    height: 22,
-                    color: isUnlocked ? 'var(--icon-themed)' : 'var(--icon-tertiary)',
-                  }}
+        <Section title="Достижения" after={`${unlocked.length} из ${achievements.length}`}>
+          <ListCard>
+            {achievements.map(({ title, hint, Icon }) => {
+              const isUnlocked = unlocked.includes(title);
+
+              return (
+                <CellSimple
+                  key={title}
+                  title={title}
+                  subtitle={hint}
+                  disabled={!isUnlocked}
+                  before={
+                    <Icon
+                      className={isUnlocked ? styles.iconOn : styles.iconOff}
+                    />
+                  }
+                  after={
+                    <Typography.Label
+                      variant="small-caps"
+                      className={isUnlocked ? styles.stateOn : styles.stateOff}
+                    >
+                      {isUnlocked ? 'открыто' : 'закрыто'}
+                    </Typography.Label>
+                  }
                 />
-              }
-              after={
-                <Typography.Label
-                  variant="small-caps"
-                  style={{ color: isUnlocked ? 'var(--text-positive)' : 'var(--text-tertiary)' }}
-                >
-                  {isUnlocked ? 'открыто' : 'закрыто'}
-                </Typography.Label>
-              }
-              disabled={!isUnlocked}
-            />
-          );
-        })}
-      </CellList>
-
-      <ScenarioControls scenario={scenario} />
+              );
+            })}
+          </ListCard>
+        </Section>
+      </StateGate>
     </div>
   );
 }

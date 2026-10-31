@@ -1,45 +1,63 @@
-import { useEffect } from 'react';
-import { MaxUI } from '@maxhub/max-ui';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
+import { AppProviders } from '@/app/AppProviders';
+import { routeMeta } from '@/app/routes';
+import { AppHeader } from '@/widgets/AppHeader';
 import { TabBar } from '@/widgets/TabBar';
-import { DemoPanel } from '@/features/demo-panel/DemoPanel';
-import { ErrorBoundary } from '@/shared/ui/ErrorBoundary';
 import { Toaster } from '@/shared/ui/toast/Toaster';
-import { HomePage } from '@/pages/Home';
-import { TasksPage } from '@/pages/Tasks';
-import { GiveawaysPage } from '@/pages/Giveaways';
-import { ShopPage } from '@/pages/Shop';
-import { ProfilePage } from '@/pages/Profile';
-import { useDemoStore } from '@/store/demo';
+import { LoadingState } from '@/shared/ui/kit';
 
-export function App() {
-  const theme = useDemoStore((s) => s.theme);
+const HomePage = lazy(() => import('@/pages/Home').then((m) => ({ default: m.HomePage })));
+const TasksPage = lazy(() => import('@/pages/Tasks').then((m) => ({ default: m.TasksPage })));
+const GiveawaysPage = lazy(() =>
+  import('@/pages/Giveaways').then((m) => ({ default: m.GiveawaysPage })),
+);
+const ShopPage = lazy(() => import('@/pages/Shop').then((m) => ({ default: m.ShopPage })));
+const ProfilePage = lazy(() =>
+  import('@/pages/Profile').then((m) => ({ default: m.ProfilePage })),
+);
+const SettingsPage = lazy(() =>
+  import('@/pages/Settings').then((m) => ({ default: m.SettingsPage })),
+);
 
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme;
-  }, [theme]);
+function Shell() {
+  const { pathname } = useLocation();
+  const meta = routeMeta[pathname] ?? routeMeta['/'];
+  const showTabBar = pathname !== '/settings';
 
   return (
-    <MaxUI colorScheme={theme} className="appRoot">
-      <BrowserRouter>
-        <div className="app">
-          <ErrorBoundary>
+    <div className="shell">
+      <AppHeader title={meta.title} subtitle={meta.subtitle} back={meta.back} />
+
+      <main className="main">
+        <div className="mainInner">
+          <Suspense fallback={<LoadingState title="Открываем раздел" />}>
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/tasks" element={<TasksPage />} />
               <Route path="/giveaways" element={<GiveawaysPage />} />
               <Route path="/shop" element={<ShopPage />} />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/settings" element={<SettingsPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
-          </ErrorBoundary>
+          </Suspense>
         </div>
+      </main>
 
-        <TabBar />
-        <Toaster />
-        <DemoPanel />
+      {showTabBar ? <TabBar /> : null}
+      <Toaster />
+    </div>
+  );
+}
+
+export function App() {
+  return (
+    <AppProviders>
+      <BrowserRouter>
+        <Shell />
       </BrowserRouter>
-    </MaxUI>
+    </AppProviders>
   );
 }

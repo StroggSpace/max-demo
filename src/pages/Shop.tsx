@@ -1,8 +1,7 @@
-import { Button, Flex, Grid, Panel, Typography } from '@maxhub/max-ui';
+import { Button, Flex, Grid, Typography } from '@maxhub/max-ui';
 
-import { AppHeader } from '@/widgets/AppHeader';
 import { Lottie } from '@/shared/ui/Lottie';
-import { ScenarioControls } from '@/features/scenario/ScenarioControls';
+import { Balance, Card, Section, StateGate } from '@/shared/ui/kit';
 import { useSectionScenario } from '@/features/scenario/useSectionScenario';
 import { scenarios } from '@/scenarios';
 import { useDemoStore } from '@/store/demo';
@@ -10,14 +9,8 @@ import { platform } from '@/platform';
 import { toast } from '@/shared/ui/toast/toastStore';
 import styles from './Shop.module.css';
 
-const cardStyle = {
-  padding: 14,
-  borderRadius: 'var(--size-border-radius-semantic-border-radius-card)',
-  background: 'var(--background-surface-card)',
-} as const;
-
 export function ShopPage() {
-  const scenario = useSectionScenario(scenarios.shop);
+  useSectionScenario(scenarios.shop);
   const balance = useDemoStore((s) => s.balance);
   const rewards = useDemoStore((s) => s.rewards);
   const buyReward = useDemoStore((s) => s.buyReward);
@@ -32,80 +25,72 @@ export function ShopPage() {
     toast.reward('Награда ваша', reward.title);
   };
 
+  const owned = rewards.filter((item) => item.owned).length;
+
   return (
-    <div>
-      <AppHeader title="Магазин" subtitle={`Доступно ${balance.toLocaleString('ru-RU')} баллов`} />
-
-      <Panel style={{ ...cardStyle, marginTop: 12, padding: 16 }}>
-        <Flex justify="space-between" align="center">
-          <Flex direction="column" gap={4}>
-            <Typography.Body variant="small" style={{ color: 'var(--text-secondary)' }}>
-              Ваш баланс
-            </Typography.Body>
-            <div className="balance" style={{ fontSize: 30 }}>
-              {balance.toLocaleString('ru-RU')}
-              <small>баллов</small>
-            </div>
+    <div className={styles.page}>
+      <StateGate emptyTitle="Наград пока нет" emptyText="Партнёрские награды появятся к старту акции.">
+        <Card>
+          <Flex justify="space-between" align="center">
+            <Flex direction="column" gap={4}>
+              <Typography.Body variant="small" className={styles.muted}>
+                Ваш баланс
+              </Typography.Body>
+              <Balance value={balance} size="m" />
+            </Flex>
+            <Lottie src="/lottie/coins.lottie" className={styles.coins} />
           </Flex>
-          <Lottie src="/lottie/coins.lottie" className={styles.coins} />
-        </Flex>
-      </Panel>
+        </Card>
 
-      <Flex justify="space-between" align="center" style={{ margin: '20px 4px 10px' }}>
-        <Typography.Title variant="small-strong">Награды</Typography.Title>
-        <Typography.Body variant="small" style={{ color: 'var(--text-tertiary)' }}>
-          {rewards.filter((item) => item.owned).length} получено
-        </Typography.Body>
-      </Flex>
+        <Section title="Награды" after={`${owned} получено`}>
+          <Grid cols={2} gap={8}>
+            {rewards.map((reward) => {
+              const affordable = balance >= reward.price;
 
-      <Grid cols={2} gap={10}>
-        {rewards.map((reward) => {
-          const affordable = balance >= reward.price;
-          return (
-            <Panel
-              key={reward.id}
-              style={{
-                ...cardStyle,
-                minHeight: 172,
-                background: reward.owned
-                  ? 'var(--background-surface-secondary)'
-                  : 'var(--background-surface-card)',
-              }}
-            >
-              <Flex direction="column" gap={6} style={{ height: '100%' }}>
-                <span className={styles.emoji}>{reward.emoji}</span>
-                <Typography.Title variant="small-strong">{reward.title}</Typography.Title>
-                <Typography.Body variant="small" style={{ color: 'var(--text-secondary)' }}>
-                  {reward.subtitle}
-                </Typography.Body>
+              return (
+                <Card key={reward.id} className={styles.tile}>
+                  <Flex
+                    direction="column"
+                    align="stretch"
+                    gap={6}
+                    className={[styles.tileBody, reward.owned ? styles.owned : '']
+                      .filter(Boolean)
+                      .join(' ')}
+                  >
+                    <span className={styles.emoji}>{reward.emoji}</span>
 
-                <div style={{ flex: 1 }} />
+                    <Typography.Title variant="small-strong">{reward.title}</Typography.Title>
+                    <Typography.Body variant="small" className={styles.muted}>
+                      {reward.subtitle}
+                    </Typography.Body>
 
-                <Typography.Label
-                  variant="small-strong"
-                  style={{
-                    color: reward.owned ? 'var(--text-tertiary)' : 'var(--text-themed)',
-                  }}
-                >
-                  {reward.owned ? 'Получено' : `${reward.price.toLocaleString('ru-RU')} баллов`}
-                </Typography.Label>
+                    <div className={styles.spacer} />
 
-                <Button
-                  size="small"
-                  mode={reward.owned || !affordable ? 'secondary' : 'primary'}
-                  stretched
-                  disabled={reward.owned || !affordable}
-                  onClick={() => buy(reward.id)}
-                >
-                  {reward.owned ? 'В инвентаре' : affordable ? 'Обменять' : 'Не хватает'}
-                </Button>
-              </Flex>
-            </Panel>
-          );
-        })}
-      </Grid>
+                    <Typography.Label
+                      variant="small-strong"
+                      className={reward.owned ? styles.priceMuted : styles.price}
+                    >
+                      {reward.owned
+                        ? 'Получено'
+                        : `${reward.price.toLocaleString('ru-RU')} баллов`}
+                    </Typography.Label>
 
-      <ScenarioControls scenario={scenario} />
+                    <Button
+                      size="small"
+                      mode={reward.owned || !affordable ? 'secondary' : 'primary'}
+                      stretched
+                      disabled={reward.owned || !affordable}
+                      onClick={() => buy(reward.id)}
+                    >
+                      {reward.owned ? 'В инвентаре' : affordable ? 'Обменять' : 'Не хватает'}
+                    </Button>
+                  </Flex>
+                </Card>
+              );
+            })}
+          </Grid>
+        </Section>
+      </StateGate>
     </div>
   );
 }
