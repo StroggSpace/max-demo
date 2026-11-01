@@ -8,51 +8,172 @@
   color: var(--text-secondary);
 }
 
-.progressBlock {
-  margin: var(--spacing-size2xl) 0 var(--spacing-size-m);
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: var(--spacing-size3xl);
+  border-radius: var(--size-border-radius-semantic-border-radius-promo);
+  background: var(--gradient-blue);
+  color: var(--text-contrast-static);
 }
 
-.levelRow {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-size-xl);
-  padding: var(--spacing-size-xl) var(--spacing-size2xl);
+.heroGlow {
+  position: absolute;
+  top: -60px;
+  right: -30px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 16%);
 }
 
-.levelBadge {
+.heroBadge {
+  position: relative;
+  padding: var(--spacing-size-xs) var(--spacing-size-l);
+  border-radius: var(--size-border-radius-semantic-border-radius-rounded);
+  background: rgb(255 255 255 / 20%);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.heroLevel {
+  position: relative;
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.heroTitle {
+  position: relative;
+  margin: var(--spacing-size-xl) 0 var(--spacing-size2xl);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.heroBar {
+  position: relative;
+  height: 8px;
+  border-radius: var(--size-border-radius-semantic-border-radius-rounded);
+  background: rgb(255 255 255 / 26%);
+  overflow: hidden;
+}
+
+.heroBarFill {
+  height: 100%;
+  border-radius: inherit;
+  background: #fff;
+  transition: width 0.35s ease;
+}
+
+.heroMeta {
+  position: relative;
+  display: inline-block;
+  margin-top: var(--spacing-size-m);
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.rewardTile {
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   flex: none;
-  border-radius: 50%;
-  background: var(--background-surface-tertiary);
-  color: var(--text-secondary);
-  font-weight: 700;
-}
-
-.levelBadge[data-current='true'] {
+  border-radius: var(--size-border-radius-action-medium);
   background: var(--background-accent-themed);
   color: var(--text-contrast-static);
 }
 
-.levelCheck {
-  width: 20px;
-  height: 20px;
-  color: var(--icon-positive);
+.rewardIcon {
+  width: 22px;
+  height: 22px;
 }
 
-.levelBody {
+.rewardBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size2xs);
   flex: 1;
   min-width: 0;
 }
 
-.levelTitle {
+.roadmap {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-size-xs) 0;
+  border-radius: var(--size-border-radius-semantic-border-radius-card);
+  background: var(--background-surface-card);
+  overflow: hidden;
+}
+
+.step {
+  display: flex;
+  gap: var(--spacing-size-xl);
+  padding: var(--spacing-size-xl) var(--spacing-size2xl);
+}
+
+.step[data-current='true'] {
+  background: var(--background-surface-secondary);
+}
+
+.rail {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 36px;
+  flex: none;
+}
+
+.step:not(:last-child) .rail::after {
+  content: '';
+  position: absolute;
+  top: 40px;
+  bottom: calc(-1 * var(--spacing-size-xl));
+  width: 2px;
+  background: var(--stroke-subtle);
+}
+
+.dot {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--background-surface-tertiary);
+  color: var(--text-tertiary);
+}
+
+.dot[data-state='current'] {
+  background: var(--background-accent-themed);
+  color: var(--text-contrast-static);
+}
+
+.dot[data-state='reached'] {
+  background: var(--background-accent-positive);
+  color: var(--text-contrast-static);
+}
+
+.dotIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.stepBody {
+  flex: 1;
+  min-width: 0;
+  padding-top: var(--spacing-size2xs);
+}
+
+.stepTitle {
+  font-size: 14px;
   font-weight: 600;
 }
 
-.levelReward {
-  margin-top: var(--spacing-size2xs);
-  font-size: 12px;
+.stepReward {
+  margin-top: var(--spacing-size-xs);
   color: var(--text-secondary);
 }

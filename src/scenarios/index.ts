@@ -8,10 +8,10 @@ export const seasonScenario: Scenario = {
   title: 'Сезон',
   reset: () => s().resetSeason(),
   steps: [
-    { at: 700, run: () => s().addXp(60) },
+    { at: 700, run: () => s().addXp(100) },
     { at: 1500, run: () => s().pushHistory('Вы', 'получили 60 XP', 'level') },
-    { at: 2300, run: () => s().addXp(80) },
-    { at: 3000, run: () => s().addXp(40) },
+    { at: 2300, run: () => s().addXp(100) },
+    { at: 3000, run: () => s().addXp(60) },
     { at: 3600, run: () => s().pushHistory('Вы', 'получили 120 XP', 'level') },
   ],
 };

@@ -4,39 +4,107 @@
   gap: var(--page-gap);
 }
 
-.row {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-size-xl);
-  padding: var(--spacing-size-xl) var(--spacing-size2xl);
+.muted {
+  color: var(--text-secondary);
 }
 
-.badge {
+.summaryIcon {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   flex: none;
-  border-radius: var(--size-border-radius-semantic-border-radius-paper);
-  background: var(--background-surface-tertiary);
-  color: var(--text-tertiary);
-}
-
-.badge[data-unlocked='true'] {
+  border-radius: var(--size-border-radius-action-medium);
   background: var(--background-accent-themed);
   color: var(--text-contrast-static);
 }
 
-.icon {
+.summaryGlyph {
   width: 22px;
   height: 22px;
 }
 
-.body {
+.summaryBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size2xs);
   flex: 1;
   min-width: 0;
 }
 
-.hint {
+.summaryValue {
+  flex: none;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-themed);
+}
+
+.summaryProgress {
+  margin-top: var(--spacing-size-xl);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-size-m);
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size-s);
+  padding: var(--spacing-size-xl);
+  border-radius: var(--size-border-radius-semantic-border-radius-card);
+  background: var(--background-surface-card);
+}
+
+.tile[data-unlocked='true'] {
+  background: var(--background-surface-card);
+  box-shadow: inset 0 0 0 1px var(--background-accent-themed);
+}
+
+.tileIcon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--size-border-radius-action-medium);
+  background: var(--background-surface-tertiary);
+  color: var(--text-tertiary);
+}
+
+.tile[data-unlocked='true'] .tileIcon {
+  background: var(--background-accent-themed);
+  color: var(--text-contrast-static);
+}
+
+.tileGlyph {
+  width: 20px;
+  height: 20px;
+}
+
+.tileHint {
+  font-size: 12px;
+  line-height: 1.3;
   color: var(--text-secondary);
+  min-height: 31px;
+}
+
+.tileStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-size-xs);
+  margin-top: auto;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+
+.tile[data-unlocked='true'] .tileStatus {
+  color: var(--text-positive);
+}
+
+.statusIcon {
+  width: 13px;
+  height: 13px;
 }

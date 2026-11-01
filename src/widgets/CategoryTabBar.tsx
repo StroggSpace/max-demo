@@ -4,7 +4,7 @@ import styles from './CategoryTabBar.module.css';
 
 interface Props {
   categoryId: string;
-  tabs: { to: string; label: string }[];
+  tabs: { to: string; label: string; Icon: React.ComponentType<{ className?: string }> }[];
 }
 
 export function CategoryTabBar({ categoryId, tabs }: Props) {
@@ -13,16 +13,19 @@ export function CategoryTabBar({ categoryId, tabs }: Props) {
   return (
     <nav className={styles.bar} aria-label="Разделы категории">
       <div className={styles.inner}>
-        {tabs.map((tab) => {
-          const to = `/category/${categoryId}/${tab.to}`;
-          const active = pathname.startsWith(to);
+        {tabs.map(({ to, label, Icon }) => {
+          const href = `/category/${categoryId}/${to}`;
+          const active = pathname.startsWith(href);
           return (
             <NavLink
-              key={tab.to}
-              to={to}
+              key={to}
+              to={href}
               className={active ? `${styles.item} ${styles.active}` : styles.item}
             >
-              {tab.label}
+              <span className={styles.iconWrap}>
+                <Icon className={styles.icon} />
+              </span>
+              <span className={styles.label}>{label}</span>
             </NavLink>
           );
         })}

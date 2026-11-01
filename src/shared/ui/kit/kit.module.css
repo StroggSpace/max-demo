@@ -86,3 +86,19 @@
   border-top: 1px solid var(--stroke-subtle);
 }
 
+
+.ring {
+  display: grid;
+  place-items: center;
+  flex: none;
+  border-radius: 50%;
+}
+
+.ringInner {
+  display: grid;
+  place-items: center;
+  width: calc(100% - 16px);
+  height: calc(100% - 16px);
+  border-radius: 50%;
+  background: var(--background-surface-card);
+}

@@ -13,98 +13,179 @@
   min-width: 0;
 }
 
-.check {
-  width: 26px;
-  height: 26px;
-  flex: none;
-  color: var(--icon-positive);
+/* Summary */
+.ringText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
 }
 
+.ringValue {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.ringLabel {
+  margin-top: var(--spacing-size2xs);
+  font-size: 10px;
+  color: var(--text-tertiary);
+}
+
+.summaryBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size2xs);
+  flex: 1;
+  min-width: 0;
+}
+
+.breakpoints {
+  display: flex;
+  gap: var(--spacing-size-s);
+  margin-top: var(--spacing-size-m);
+}
+
+.breakpoint {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--size-border-radius-action-small);
+  background: var(--background-surface-tertiary);
+  color: var(--text-tertiary);
+}
+
+.breakpoint[data-unlocked='true'] {
+  background: var(--background-accent-positive);
+  color: var(--icon-contrast-static);
+}
+
+.breakpointIcon {
+  width: 13px;
+  height: 13px;
+}
+
+/* Tasks */
 .taskList {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-size-m);
 }
 
-.taskProgress {
-  margin-top: var(--spacing-size-xl);
-}
-
-.progressWrap {
-  position: relative;
-  margin: var(--spacing-size2xl) 0 var(--spacing-size-m);
-}
-
-.progress {
-  padding-top: var(--spacing-size-xl);
-}
-
-.markers {
-  position: absolute;
-  inset: 0 var(--spacing-size2xs);
-  pointer-events: none;
-}
-
-.marker {
-  position: absolute;
-  top: var(--spacing-size-m);
-  width: 10px;
-  height: 10px;
-  transform: translateX(-50%);
-  border-radius: 50%;
-  background: var(--background-surface-tertiary);
-  border: 2px solid var(--background-surface-card);
-}
-
-.marker[data-unlocked='true'] {
-  background: var(--background-accent-themed);
-}
-
-.promoRow {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-size-xl);
-  padding: var(--spacing-size-xl) var(--spacing-size2xl);
-}
-
-.promoIcon {
+.taskIcon {
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   flex: none;
-  border-radius: var(--size-border-radius-semantic-border-radius-paper);
+  border-radius: var(--size-border-radius-action-medium);
+  background: var(--background-accent-themed);
+  color: var(--text-contrast-static);
+}
+
+.taskIcon[data-done='true'] {
   background: var(--background-surface-tertiary);
   color: var(--text-tertiary);
 }
 
-.promoIcon[data-unlocked='true'] {
-  background: var(--background-accent-positive);
-  color: var(--icon-contrast-static);
+.taskGlyph {
+  width: 20px;
+  height: 20px;
 }
 
-.promoCheck {
-  width: 18px;
-  height: 18px;
+.check {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  color: var(--icon-positive);
 }
 
-.promoLock {
-  width: 16px;
-  height: 16px;
+.taskProgress {
+  margin-top: var(--spacing-size-xl);
 }
 
-.promoBody {
+.taskBar {
+  height: 6px;
+  border-radius: var(--size-border-radius-semantic-border-radius-rounded);
+  background: var(--background-surface-tertiary);
+  overflow: hidden;
+}
+
+.taskBarFill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--background-accent-themed);
+  transition: width 0.35s ease;
+}
+
+/* Promo tickets */
+.promoList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size-m);
+}
+
+.ticket {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-size-xl);
+  padding: var(--spacing-size-xl) var(--spacing-size2xl);
+  border: 1px dashed var(--stroke-secondary);
+  border-radius: var(--size-border-radius-semantic-border-radius-card);
+  background: var(--background-surface-card);
+  overflow: hidden;
+}
+
+.ticket[data-unlocked='true'] {
+  border-style: solid;
+  border-color: transparent;
+  background: var(--background-accent-themed);
+  color: var(--text-contrast-static);
+}
+
+.ticketMain {
   flex: 1;
   min-width: 0;
 }
 
-.promoTitle {
+.ticketLabel {
+  display: block;
+  font-size: 13px;
   font-weight: 600;
 }
 
-.promoCode {
-  margin-top: var(--spacing-size2xs);
-  font-size: 12px;
-  letter-spacing: 0.04em;
-  color: var(--text-secondary);
+.ticketCode {
+  display: block;
+  margin-top: var(--spacing-size-xs);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.ticketSide {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--spacing-size2xs);
+  flex: none;
+  padding-left: var(--spacing-size-xl);
+  border-left: 1px dashed var(--stroke-subtle);
+}
+
+.ticket[data-unlocked='true'] .ticketSide {
+  border-left-color: rgb(255 255 255 / 40%);
+}
+
+.ticketIcon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.9;
+}
+
+.ticketHint {
+  font-size: 10px;
+  opacity: 0.75;
+  white-space: nowrap;
 }

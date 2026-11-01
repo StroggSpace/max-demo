@@ -1,8 +1,12 @@
 import type { ComponentType } from 'react';
 import {
+  CalendarDaysIcon,
   ChatBubbleLeftRightIcon,
+  ClipboardDocumentListIcon,
   ShoppingBagIcon,
   SparklesIcon,
+  TrophyIcon,
+  UserCircleIcon,
 } from '@heroicons/react/24/outline';
 
 export type CategoryId = 'retention' | 'sales' | 'service';
@@ -14,7 +18,11 @@ export interface Category {
   Icon: ComponentType<{ className?: string; style?: React.CSSProperties }>;
   gradient: string;
   stub?: boolean;
-  tabs?: { to: string; label: string }[];
+  tabs?: {
+    to: string;
+    label: string;
+    Icon: ComponentType<{ className?: string; style?: React.CSSProperties }>;
+  }[];
 }
 
 export const categories: Category[] = [
@@ -25,10 +33,10 @@ export const categories: Category[] = [
     Icon: SparklesIcon,
     gradient: 'linear-gradient(135deg, #0a63ff, #7c5cff)',
     tabs: [
-      { to: 'season', label: 'Сезон' },
-      { to: 'tasks', label: 'Задания' },
-      { to: 'achievements', label: 'Достижения' },
-      { to: 'profile', label: 'Профиль' },
+      { to: 'season', label: 'Сезон', Icon: CalendarDaysIcon },
+      { to: 'tasks', label: 'Задания', Icon: ClipboardDocumentListIcon },
+      { to: 'achievements', label: 'Достижения', Icon: TrophyIcon },
+      { to: 'profile', label: 'Профиль', Icon: UserCircleIcon },
     ],
   },
   {

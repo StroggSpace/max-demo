@@ -1,8 +1,8 @@
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { motion } from 'motion/react';
+import { useNavigate } from 'react-router-dom';
 
 import { categories } from '@/app/categories';
-import { Card } from '@/shared/ui/kit';
-import { useNavigate } from 'react-router-dom';
 import styles from './CategorySelect.module.css';
 
 export function CategorySelect() {
@@ -16,26 +16,36 @@ export function CategorySelect() {
           type="button"
           className={styles.card}
           style={{ background: category.gradient }}
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.08, type: 'spring', stiffness: 260, damping: 24 }}
-          whileTap={{ scale: 0.98 }}
+          transition={{ delay: index * 0.07, type: 'spring', stiffness: 240, damping: 24 }}
+          whileTap={{ scale: 0.985 }}
           onClick={() => navigate(`/category/${category.id}`)}
         >
-          <category.Icon className={styles.icon} />
+          <span className={styles.glow} />
 
-          <div className={styles.cardBody}>
-            <div className={styles.cardTitle}>{category.title}</div>
-            <div className={styles.cardSubtitle}>{category.subtitle}</div>
-          </div>
+          <span className={styles.iconTile}>
+            <category.Icon className={styles.icon} />
+          </span>
 
-          {category.stub ? <span className={styles.stub}>скоро</span> : null}
+          <span className={styles.body}>
+            <span className={styles.title}>{category.title}</span>
+            <span className={styles.subtitle}>{category.subtitle}</span>
+          </span>
+
+          {category.stub ? (
+            <span className={styles.stub}>скоро</span>
+          ) : (
+            <span className={styles.arrow}>
+              <ArrowRightIcon className={styles.arrowIcon} />
+            </span>
+          )}
         </motion.button>
       ))}
 
-      <Card className={styles.hint}>
-        <span>Выберите категорию, чтобы посмотреть интерфейс модуля.</span>
-      </Card>
+      <p className={styles.hint}>
+        Выберите категорию, чтобы посмотреть интерфейс модуля.
+      </p>
     </div>
   );
 }
