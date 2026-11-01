@@ -31,16 +31,119 @@
   height: 22px;
 }
 
-.chips {
+.serviceGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-size-m);
+}
+
+.serviceTile {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-size-s);
+  flex-direction: column;
+  gap: var(--spacing-size2xs);
+  padding: var(--spacing-size-xl);
+  border: 0;
+  border-radius: var(--size-border-radius-semantic-border-radius-card);
+  background: var(--background-surface-card);
+  text-align: left;
+  cursor: pointer;
+}
+
+.serviceTile[data-selected='true'] {
+  box-shadow: inset 0 0 0 1.5px var(--background-accent-themed);
+}
+
+.serviceTitle {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+}
+
+.serviceMeta {
+  font-size: var(--font-size-2xs);
+  color: var(--text-secondary);
+}
+
+.masters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size-m);
+}
+
+.masterTile {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-size-xl);
+  padding: var(--spacing-size-l) var(--spacing-size-xl);
+  border: 0;
+  border-radius: var(--size-border-radius-semantic-border-radius-paper);
+  background: var(--background-surface-card);
+  text-align: left;
+  cursor: pointer;
+}
+
+.masterTile[data-selected='true'] {
+  box-shadow: inset 0 0 0 1.5px var(--background-accent-themed);
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--background-accent-themed);
+  color: var(--text-contrast-static);
+  font-weight: var(--font-weight-semibold);
+}
+
+.masterBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size2xs);
+  min-width: 0;
+}
+
+.masterName {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.masterRole {
+  font-size: var(--font-size-2xs);
+  color: var(--text-secondary);
 }
 
 .slots {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--spacing-size-s);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacing-size-m);
+}
+
+.slot {
+  height: 42px;
+  border: 0;
+  border-radius: var(--size-border-radius-action-medium);
+  background: var(--background-surface-card);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+}
+
+.slot[data-selected='true'] {
+  background: var(--background-accent-themed);
+  color: var(--text-contrast-static);
+}
+
+.hintCard {
+  background: var(--background-surface-secondary);
+}
+
+.summaryValue {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-align: right;
 }
 
 .successIcon {

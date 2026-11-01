@@ -9,21 +9,32 @@ import { scenarios } from '@/scenarios';
 import { useServiceStore } from '@/store/service';
 import styles from './BookingTab.module.css';
 
+const priceLabel = (price: number) =>
+  price ? `${price.toLocaleString('ru-RU')} ₽` : 'бесплатно';
+
 export function BookingTab() {
   useSectionScenario(scenarios['service-booking']);
   const { get } = useMotionControls();
 
   const services = useServiceStore((s) => s.services);
-  const specialists = useServiceStore((s) => s.specialists);
-  const slots = useServiceStore((s) => s.slots);
+  const masters = useServiceStore((s) => s.masters);
   const booking = useServiceStore((s) => s.booking);
-  const selectBooking = useServiceStore((s) => s.selectBooking);
+  const selectService = useServiceStore((s) => s.selectService);
+  const selectMaster = useServiceStore((s) => s.selectMaster);
+  const selectSlot = useServiceStore((s) => s.selectSlot);
   const confirmBooking = useServiceStore((s) => s.confirmBooking);
   const resetBooking = useServiceStore((s) => s.resetBooking);
 
-  const ready = Boolean(booking.service && booking.specialist && booking.slot);
+  const service = services.find((item) => item.id === booking.serviceId) ?? null;
+  const master = masters.find((item) => item.id === booking.masterId) ?? null;
 
-  if (booking.confirmed) {
+  const availableMasters = booking.serviceId
+    ? masters.filter((item) => item.services.includes(booking.serviceId as string))
+    : [];
+  const slots = master?.slots ?? [];
+  const ready = Boolean(service && master && booking.slot);
+
+  if (booking.confirmed && service && master && booking.slot) {
     return (
       <div className={styles.page}>
         <motion.div {...get('pop')}>
@@ -34,8 +45,12 @@ export function BookingTab() {
               </span>
               <Typography.Title variant="medium-strong">Вы записаны</Typography.Title>
               <Typography.Body variant="small" className={styles.muted}>
-                {booking.service} · {booking.specialist} · {booking.slot}
+                {service.title} · {master.name} · {booking.slot}
               </Typography.Body>
+              <Flex gap={6}>
+                <Chip>{service.duration} мин</Chip>
+                <Chip tone="accent">{priceLabel(service.price)}</Chip>
+              </Flex>
               <Chip tone="success">Напомним за час в MAX</Chip>
               <Button size="small" mode="secondary" onClick={resetBooking}>
                 Записаться ещё
@@ -58,61 +73,109 @@ export function BookingTab() {
             <div className={styles.intro}>
               <Typography.Title variant="medium-strong">Онлайн-запись</Typography.Title>
               <Typography.Body variant="small" className={styles.muted}>
-                Выберите услугу, специалиста и время
+                Услуга подбирает мастеров, мастер — свободное время
               </Typography.Body>
             </div>
           </Flex>
         </Card>
 
-        <Section title="Услуга" after={booking.service ?? undefined}>
-          <div className={styles.chips}>
-            {services.map((service) => (
-              <Button
-                key={service}
-                size="small"
-                mode={booking.service === service ? 'primary' : 'secondary'}
-                onClick={() => selectBooking({ service })}
+        <Section title="1. Услуга" after={service ? service.title : undefined}>
+          <div className={styles.serviceGrid}>
+            {services.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                className={styles.serviceTile}
+                data-selected={booking.serviceId === item.id ? 'true' : undefined}
+                onClick={() => selectService(item.id)}
               >
-                {service}
-              </Button>
+                <span className={styles.serviceTitle}>{item.title}</span>
+                <span className={styles.serviceMeta}>
+                  {item.duration} мин · {priceLabel(item.price)}
+                </span>
+              </button>
             ))}
           </div>
         </Section>
 
-        <Section title="Специалист" after={booking.specialist ?? undefined}>
-          <div className={styles.chips}>
-            {specialists.map((specialist) => (
-              <Button
-                key={specialist}
-                size="small"
-                mode={booking.specialist === specialist ? 'primary' : 'secondary'}
-                onClick={() => selectBooking({ specialist })}
-              >
-                {specialist}
-              </Button>
-            ))}
-          </div>
+        <Section title="2. Мастер" after={master ? master.name : undefined}>
+          {booking.serviceId ? (
+            <div className={styles.masters}>
+              {availableMasters.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  className={styles.masterTile}
+                  data-selected={booking.masterId === item.id ? 'true' : undefined}
+                  onClick={() => selectMaster(item.id)}
+                >
+                  <span className={styles.avatar}>{item.name.slice(0, 1)}</span>
+                  <span className={styles.masterBody}>
+                    <span className={styles.masterName}>{item.name}</span>
+                    <span className={styles.masterRole}>{item.role}</span>
+                  </span>
+                </button>
+              ))}
+            </div>
+          ) : (
+            <Card className={styles.hintCard}>
+              <Typography.Body variant="small" className={styles.muted}>
+                Сначала выберите услугу — покажем только тех, кто её делает.
+              </Typography.Body>
+            </Card>
+          )}
         </Section>
 
-        <Section title="Время" after={booking.slot ?? undefined}>
-          <div className={styles.slots}>
-            {slots.map((slot) => (
-              <Button
-                key={slot}
-                size="small"
-                mode={booking.slot === slot ? 'primary' : 'secondary'}
-                stretched
-                onClick={() => selectBooking({ slot })}
-              >
-                {slot}
-              </Button>
-            ))}
-          </div>
+        <Section title="3. Время" after={booking.slot ?? undefined}>
+          {master ? (
+            <div className={styles.slots}>
+              {slots.map((slot) => (
+                <button
+                  key={slot}
+                  type="button"
+                  className={styles.slot}
+                  data-selected={booking.slot === slot ? 'true' : undefined}
+                  onClick={() => selectSlot(slot)}
+                >
+                  {slot}
+                </button>
+              ))}
+            </div>
+          ) : (
+            <Card className={styles.hintCard}>
+              <Typography.Body variant="small" className={styles.muted}>
+                Выберите мастера — покажем его свободные окна.
+              </Typography.Body>
+            </Card>
+          )}
         </Section>
 
-        <Button mode="primary" stretched disabled={!ready} onClick={confirmBooking}>
-          Подтвердить запись
-        </Button>
+        {service ? (
+          <Card>
+            <Flex direction="column" align="stretch" gap={10}>
+              <Flex justify="space-between" gap={12}>
+                <span className={styles.muted}>Услуга</span>
+                <span className={styles.summaryValue}>{service.title}</span>
+              </Flex>
+              <Flex justify="space-between" gap={12}>
+                <span className={styles.muted}>Мастер</span>
+                <span className={styles.summaryValue}>{master ? master.name : 'не выбран'}</span>
+              </Flex>
+              <Flex justify="space-between" gap={12}>
+                <span className={styles.muted}>Время</span>
+                <span className={styles.summaryValue}>{booking.slot ?? 'не выбрано'}</span>
+              </Flex>
+              <Flex justify="space-between" gap={12}>
+                <span className={styles.muted}>Стоимость</span>
+                <span className={styles.summaryValue}>{priceLabel(service.price)}</span>
+              </Flex>
+
+              <Button mode="primary" stretched disabled={!ready} onClick={confirmBooking}>
+                Подтвердить запись
+              </Button>
+            </Flex>
+          </Card>
+        ) : null}
       </StateGate>
     </div>
   );

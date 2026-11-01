@@ -11,6 +11,21 @@ export interface ServiceRequest {
   document?: string;
 }
 
+export interface Service {
+  id: string;
+  title: string;
+  duration: number;
+  price: number;
+}
+
+export interface Master {
+  id: string;
+  name: string;
+  role: string;
+  services: string[];
+  slots: string[];
+}
+
 export type MessageFrom = 'bot' | 'user';
 
 export interface ChatMessage {
@@ -21,12 +36,11 @@ export interface ChatMessage {
 
 interface ServiceState {
   requests: ServiceRequest[];
-  services: string[];
-  specialists: string[];
-  slots: string[];
+  services: Service[];
+  masters: Master[];
   booking: {
-    service: string | null;
-    specialist: string | null;
+    serviceId: string | null;
+    masterId: string | null;
     slot: string | null;
     confirmed: boolean;
   };
@@ -42,7 +56,9 @@ interface ServiceState {
 
   setRequestStatus: (id: string, status: RequestStatus) => void;
   addDocument: (id: string, document: string) => void;
-  selectBooking: (patch: Partial<ServiceState['booking']>) => void;
+  selectService: (serviceId: string) => void;
+  selectMaster: (masterId: string) => void;
+  selectSlot: (slot: string) => void;
   confirmBooking: () => void;
   resetBooking: () => void;
   pushMessage: (from: MessageFrom, text: string) => void;
@@ -71,6 +87,55 @@ const initialRequests: ServiceRequest[] = [
   },
 ];
 
+const services: Service[] = [
+  { id: 's1', title: 'Стрижка', duration: 60, price: 2500 },
+  { id: 's2', title: 'Окрашивание', duration: 120, price: 6900 },
+  { id: 's3', title: 'Маникюр', duration: 60, price: 2200 },
+  { id: 's4', title: 'Педикюр', duration: 90, price: 3100 },
+  { id: 's5', title: 'Консультация', duration: 30, price: 0 },
+  { id: 's6', title: 'Диагностика', duration: 45, price: 1500 },
+  { id: 's7', title: 'Массаж', duration: 60, price: 3500 },
+  { id: 's8', title: 'Брови', duration: 40, price: 1800 },
+];
+
+const masters: Master[] = [
+  {
+    id: 'm1',
+    name: 'Анна',
+    role: 'стилист',
+    services: ['s1', 's2', 's8'],
+    slots: ['10:00', '12:30', '15:00', '18:30'],
+  },
+  {
+    id: 'm2',
+    name: 'Игорь',
+    role: 'барбер',
+    services: ['s1', 's8'],
+    slots: ['11:00', '13:00', '16:00', '19:00'],
+  },
+  {
+    id: 'm3',
+    name: 'Марина',
+    role: 'мастер маникюра',
+    services: ['s3', 's4'],
+    slots: ['10:30', '12:00', '14:30', '17:00'],
+  },
+  {
+    id: 'm4',
+    name: 'Ольга',
+    role: 'косметолог',
+    services: ['s5', 's6', 's7'],
+    slots: ['09:30', '11:30', '15:30', '18:00'],
+  },
+  {
+    id: 'm5',
+    name: 'Дмитрий',
+    role: 'массажист',
+    services: ['s7'],
+    slots: ['10:00', '13:30', '17:30', '20:00'],
+  },
+];
+
 const initialMessages: ChatMessage[] = [
   {
     id: 'm1',
@@ -87,17 +152,16 @@ const initialCard = {
 };
 
 const initialBooking: ServiceState['booking'] = {
-  service: null,
-  specialist: null,
+  serviceId: null,
+  masterId: null,
   slot: null,
   confirmed: false,
 };
 
 export const useServiceStore = create<ServiceState>((set) => ({
   requests: initialRequests,
-  services: ['Консультация', 'Стрижка', 'Диагностика'],
-  specialists: ['Анна', 'Игорь', 'Марина'],
-  slots: ['10:00', '12:30', '15:00', '18:30'],
+  services,
+  masters,
   booking: { ...initialBooking },
   messages: initialMessages,
   quickReplies: ['Статус заявки', 'Записаться', 'Позвать оператора'],
@@ -118,13 +182,41 @@ export const useServiceStore = create<ServiceState>((set) => ({
       ),
     })),
 
-  selectBooking: (patch) =>
-    set((state) => ({ booking: { ...state.booking, ...patch } })),
+  selectService: (serviceId) =>
+    set((state) => {
+      const master = state.masters.find((item) => item.id === state.booking.masterId);
+      const masterFits = Boolean(master?.services.includes(serviceId));
+
+      return {
+        booking: {
+          serviceId,
+          masterId: masterFits ? state.booking.masterId : null,
+          slot: masterFits ? state.booking.slot : null,
+          confirmed: false,
+        },
+      };
+    }),
+
+  selectMaster: (masterId) =>
+    set((state) => {
+      const master = state.masters.find((item) => item.id === masterId);
+      const slotFits = Boolean(master?.slots.includes(state.booking.slot ?? ''));
+
+      return {
+        booking: {
+          ...state.booking,
+          masterId,
+          slot: slotFits ? state.booking.slot : null,
+          confirmed: false,
+        },
+      };
+    }),
+
+  selectSlot: (slot) =>
+    set((state) => ({ booking: { ...state.booking, slot, confirmed: false } })),
 
   confirmBooking: () =>
-    set((state) => ({
-      booking: { ...state.booking, confirmed: true },
-    })),
+    set((state) => ({ booking: { ...state.booking, confirmed: true } })),
 
   resetBooking: () => set({ booking: { ...initialBooking } }),
 

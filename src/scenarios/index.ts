@@ -106,9 +106,9 @@ export const bookingScenario: Scenario = {
   title: 'Запись',
   reset: () => svc().resetBooking(),
   steps: [
-    { at: 500, run: () => svc().selectBooking({ service: 'Консультация' }) },
-    { at: 1000, run: () => svc().selectBooking({ specialist: 'Анна' }) },
-    { at: 1500, run: () => svc().selectBooking({ slot: '12:30' }) },
+    { at: 500, run: () => svc().selectService('s3') },
+    { at: 1000, run: () => svc().selectMaster('m3') },
+    { at: 1500, run: () => svc().selectSlot('14:30') },
     { at: 2200, run: () => svc().confirmBooking() },
   ],
 };
