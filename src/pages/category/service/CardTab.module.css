@@ -1,0 +1,105 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--page-gap);
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  padding: var(--spacing-size3xl);
+  border-radius: var(--size-border-radius-semantic-border-radius-promo);
+  background: var(--gradient-blue);
+  color: var(--text-contrast-static);
+}
+
+.cardGlow {
+  position: absolute;
+  top: -70px;
+  right: -30px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 16%);
+}
+
+.cardTop {
+  position: relative;
+}
+
+.cardLabel {
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-wider);
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.cardNumber {
+  position: relative;
+  margin: var(--spacing-size3xl) 0 var(--spacing-size2xl);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-code);
+}
+
+.cardCaption {
+  font-size: var(--font-size-2xs);
+  opacity: 0.8;
+}
+
+.cardRight {
+  text-align: right;
+}
+
+.cardExpires {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+}
+
+.qrCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-size-xl);
+}
+
+.qrTile {
+  display: grid;
+  place-items: center;
+  padding: var(--spacing-size-xl);
+  border-radius: var(--size-border-radius-semantic-border-radius-card);
+  background: #fff;
+}
+
+.hint {
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.tipBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size2xs);
+  min-width: 0;
+}
+
+.tipText {
+  color: var(--text-secondary);
+}
+
+.tipIcon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: var(--size-border-radius-action-medium);
+  background: var(--background-surface-secondary);
+  color: var(--text-themed);
+}
+
+.tipGlyph {
+  width: 20px;
+  height: 20px;
+}

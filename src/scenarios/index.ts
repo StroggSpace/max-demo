@@ -1,9 +1,11 @@
 import { useDemoStore } from '@/store/demo';
 import { useSalesStore } from '@/store/sales';
+import { useServiceStore } from '@/store/service';
 import type { Scenario } from './types';
 
 const s = () => useDemoStore.getState();
 const sales = () => useSalesStore.getState();
+const svc = () => useServiceStore.getState();
 
 export const seasonScenario: Scenario = {
   id: 'season',
@@ -88,6 +90,64 @@ export const referralScenario: Scenario = {
   ],
 };
 
+export const requestsScenario: Scenario = {
+  id: 'service-requests',
+  title: 'Заявки',
+  reset: () => svc().resetRequests(),
+  steps: [
+    { at: 900, run: () => svc().setRequestStatus('r1', 'progress') },
+    { at: 2000, run: () => svc().setRequestStatus('r1', 'done') },
+    { at: 2300, run: () => svc().addDocument('r1', 'Акт выполненных работ.pdf') },
+  ],
+};
+
+export const bookingScenario: Scenario = {
+  id: 'service-booking',
+  title: 'Запись',
+  reset: () => svc().resetBooking(),
+  steps: [
+    { at: 500, run: () => svc().selectBooking({ service: 'Консультация' }) },
+    { at: 1000, run: () => svc().selectBooking({ specialist: 'Анна' }) },
+    { at: 1500, run: () => svc().selectBooking({ slot: '12:30' }) },
+    { at: 2200, run: () => svc().confirmBooking() },
+  ],
+};
+
+export const botScenario: Scenario = {
+  id: 'service-bot',
+  title: 'Чат-бот',
+  reset: () => svc().resetBot(),
+  steps: [
+    { at: 700, run: () => svc().setTyping(true) },
+    {
+      at: 1400,
+      run: () => {
+        svc().setTyping(false);
+        svc().pushMessage('bot', 'Заявка №4821 в работе. Мастер свяжется до 18:00.');
+      },
+    },
+    { at: 2400, run: () => svc().pushMessage('user', 'Статус заявки') },
+    { at: 2900, run: () => svc().setTyping(true) },
+    {
+      at: 3500,
+      run: () => {
+        svc().setTyping(false);
+        svc().pushMessage('bot', 'Проверил: статус «в работе». Могу записать вас на удобное время.');
+      },
+    },
+  ],
+};
+
+export const cardScenario: Scenario = {
+  id: 'service-card',
+  title: 'Карта',
+  reset: () => svc().resetCard(),
+  steps: [
+    { at: 700, run: () => svc().refreshToken() },
+    { at: 4200, run: () => svc().refreshToken() },
+  ],
+};
+
 export const scenarios: Record<string, Scenario> = {
   season: seasonScenario,
   achievements: achievementsScenario,
@@ -96,4 +156,8 @@ export const scenarios: Record<string, Scenario> = {
   'sales-cart': cartScenario,
   'sales-giveaway': salesGiveawayScenario,
   'sales-referral': referralScenario,
+  'service-requests': requestsScenario,
+  'service-booking': bookingScenario,
+  'service-bot': botScenario,
+  'service-card': cardScenario,
 };

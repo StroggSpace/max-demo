@@ -4,6 +4,8 @@ import {
   ChatBubbleLeftRightIcon,
   ClipboardDocumentListIcon,
   GiftIcon,
+  InboxIcon,
+  QrCodeIcon,
   ShoppingBagIcon,
   ShoppingCartIcon,
   SparklesIcon,
@@ -59,10 +61,15 @@ export const categories: Category[] = [
   {
     id: 'service',
     title: 'Сервис / коммуникация',
-    subtitle: 'Личный кабинет, бот-сценарии, QR',
+    subtitle: 'Заявки, запись, бот, карта',
     Icon: ChatBubbleLeftRightIcon,
     gradient: 'linear-gradient(135deg, #f79009, #f04438)',
-    stub: true,
+    tabs: [
+      { to: 'requests', label: 'Заявки', Icon: InboxIcon },
+      { to: 'booking', label: 'Запись', Icon: CalendarDaysIcon },
+      { to: 'bot', label: 'Чат-бот', Icon: ChatBubbleLeftRightIcon },
+      { to: 'card', label: 'Карта', Icon: QrCodeIcon },
+    ],
   },
 ];
 

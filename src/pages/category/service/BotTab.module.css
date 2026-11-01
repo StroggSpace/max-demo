@@ -1,0 +1,90 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--page-gap);
+}
+
+.chatCard {
+  padding: 0;
+  overflow: hidden;
+}
+
+.header {
+  padding: var(--spacing-size-xl) var(--spacing-size2xl);
+  border-bottom: 1px solid var(--stroke-subtle);
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--background-accent-themed);
+  color: var(--text-contrast-static);
+}
+
+.avatarGlyph {
+  width: 18px;
+  height: 18px;
+}
+
+.headerBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size2xs);
+  min-width: 0;
+}
+
+.status {
+  color: var(--text-secondary);
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size-m);
+  max-height: 52vh;
+  padding: var(--spacing-size2xl);
+  overflow-y: auto;
+}
+
+.bubble {
+  max-width: 82%;
+  padding: var(--spacing-size-l) var(--spacing-size-xl);
+  border-radius: 14px 14px 14px 4px;
+  background: var(--background-surface-secondary);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+  align-self: flex-start;
+}
+
+.bubble[data-from='user'] {
+  align-self: flex-end;
+  border-radius: 14px 14px 4px 14px;
+  background: var(--background-accent-themed);
+  color: var(--text-contrast-static);
+}
+
+.bubble[data-typing='true'] {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: var(--spacing-size-m) var(--spacing-size-xl);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-tertiary);
+  opacity: 0.6;
+}
+
+.quick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-size-s);
+}

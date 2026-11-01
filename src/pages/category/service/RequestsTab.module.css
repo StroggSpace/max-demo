@@ -1,0 +1,99 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--page-gap);
+}
+
+.muted {
+  color: var(--text-secondary);
+}
+
+.grow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size2xs);
+  flex: 1;
+  min-width: 0;
+}
+
+.summaryIcon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: var(--size-border-radius-action-medium);
+  background: var(--background-accent-themed);
+  color: var(--text-contrast-static);
+}
+
+.summaryGlyph {
+  width: 22px;
+  height: 22px;
+}
+
+.summaryBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size2xs);
+  min-width: 0;
+}
+
+.meta {
+  color: var(--text-secondary);
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacing-size-s);
+  margin-top: var(--spacing-size-xl);
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size-xs);
+}
+
+.stepBar {
+  height: 4px;
+  border-radius: var(--size-border-radius-semantic-border-radius-rounded);
+  background: var(--background-surface-tertiary);
+}
+
+.stepBar[data-done='true'] {
+  background: var(--background-accent-themed);
+}
+
+.stepLabel {
+  font-size: var(--font-size-3xs);
+  color: var(--text-tertiary);
+}
+
+.stepLabel[data-done='true'] {
+  color: var(--text-secondary);
+}
+
+.document {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-size-m);
+  margin-top: var(--spacing-size-xl);
+  padding: var(--spacing-size-m) var(--spacing-size-l);
+  border-radius: var(--size-border-radius-semantic-border-radius-paper);
+  background: var(--background-surface-secondary);
+}
+
+.documentIcon {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  color: var(--text-secondary);
+}
+
+.documentName {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--font-size-xs);
+}
