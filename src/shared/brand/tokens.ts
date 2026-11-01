@@ -2,7 +2,7 @@ import type { CSSProperties } from 'react';
 
 import type { Theme } from '@/store/demo';
 
-export type Brand = 'store' | 'bank' | 'services';
+export type Brand = 'max' | 'store' | 'bank' | 'services';
 
 interface BrandPalette {
   /** Акцент: кнопки, активные вкладки, прогресс */
@@ -27,16 +27,37 @@ export interface BrandDefinition {
 
 export const brands: BrandDefinition[] = [
   {
+    id: 'max',
+    title: 'MAX',
+    swatch: '#0055ff',
+    light: {
+      accent: '#0062d6',
+      accentContrast: '#ffffff',
+      themedText: '#0062d6',
+      gradient: 'linear-gradient(135deg, #0b4ecc, #1a63e0)',
+      hovered: '#1877e6',
+      pressed: '#0b4ecc',
+    },
+    dark: {
+      accent: '#1a73e8',
+      accentContrast: '#ffffff',
+      themedText: '#6aaefc',
+      gradient: 'linear-gradient(135deg, #0b4ecc, #1a73e8)',
+      hovered: '#2f7bff',
+      pressed: '#145cc0',
+    },
+  },
+  {
     id: 'store',
     title: 'Магазин',
     swatch: '#12b76a',
     light: {
-      accent: '#0e9f6e',
+      accent: '#067647',
       accentContrast: '#ffffff',
-      themedText: '#0e9f6e',
-      gradient: 'linear-gradient(135deg, #0b8f5a, #12b76a)',
-      hovered: '#12b76a',
-      pressed: '#0b8f5a',
+      themedText: '#067647',
+      gradient: 'linear-gradient(135deg, #05603a, #067647)',
+      hovered: '#0e9f6e',
+      pressed: '#05603a',
     },
     dark: {
       accent: '#32d583',

@@ -171,7 +171,7 @@ export const useDemoStore = create<DemoState>()(
   persist(
     (set, get) => ({
       theme: 'light',
-      brand: 'store',
+      brand: 'max',
       autoplay: true,
       motionEnabled: true,
       demoState: 'normal',

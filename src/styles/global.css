@@ -1,5 +1,5 @@
 :root {
-  --text-on-positive: #ffffff;
+  --text-on-positive: #06281b;
   --text-on-negative: #ffffff;
   --app-max-width: 1024px;
   --content-max-width: 640px;
@@ -21,8 +21,17 @@ html[data-theme='light'] {
   --stroke-subtle: rgb(13 18 32 / 6%);
 }
 
+html[data-theme='light'] .appRoot {
+  --text-tertiary: #667085;
+  --text-negative: #b42318;
+}
+
 html[data-theme='dark'] {
   --stroke-subtle: rgb(255 255 255 / 8%);
+}
+
+html[data-theme='dark'] .appRoot {
+  --text-negative: #ff9aa8;
 }
 
 body {

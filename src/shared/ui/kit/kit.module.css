@@ -75,7 +75,7 @@
 }
 
 .chipAccent {
-  background: var(--background-accent-themed);
+  background: color-mix(in srgb, var(--background-accent-themed) 86%, #000);
   color: var(--text-contrast-static);
 }
 

@@ -45,7 +45,7 @@
   height: 16px;
   padding: 0 4px;
   border-radius: var(--size-border-radius-semantic-border-radius-rounded);
-  background: var(--background-accent-negative);
+  background: color-mix(in srgb, var(--background-accent-negative) 82%, #000);
   color: var(--text-on-negative, #fff);
   font-size: var(--font-size-3xs);
   font-weight: var(--font-weight-semibold);
