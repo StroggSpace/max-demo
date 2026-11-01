@@ -81,7 +81,7 @@
 
 .chipSuccess {
   background: var(--background-accent-positive);
-  color: var(--text-contrast-static);
+  color: var(--text-on-positive, #fff);
 }
 
 .listCard {

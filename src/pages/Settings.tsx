@@ -2,6 +2,7 @@ import { Button, CellSimple, Flex, Switch, Typography } from '@maxhub/max-ui';
 
 import { Card, ListCard, Section } from '@/shared/ui/kit';
 import { useDemoStore, type DemoStateMode } from '@/store/demo';
+import { brands } from '@/shared/brand/tokens';
 import styles from './Settings.module.css';
 
 const states: { id: DemoStateMode; title: string }[] = [
@@ -14,6 +15,8 @@ const states: { id: DemoStateMode; title: string }[] = [
 export function SettingsPage() {
   const theme = useDemoStore((s) => s.theme);
   const setTheme = useDemoStore((s) => s.setTheme);
+  const brand = useDemoStore((s) => s.brand);
+  const setBrand = useDemoStore((s) => s.setBrand);
   const autoplay = useDemoStore((s) => s.autoplay);
   const setAutoplay = useDemoStore((s) => s.setAutoplay);
   const motionEnabled = useDemoStore((s) => s.motionEnabled);
@@ -25,6 +28,26 @@ export function SettingsPage() {
   return (
     <div className={styles.page}>
       <Section title="Оформление">
+        <Card>
+          <Typography.Label variant="small-caps" className={styles.label}>
+            Бренд
+          </Typography.Label>
+          <div className={styles.brands}>
+            {brands.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                className={styles.brand}
+                data-selected={brand === item.id ? 'true' : undefined}
+                onClick={() => setBrand(item.id)}
+              >
+                <span className={styles.swatch} style={{ background: item.swatch }} />
+                <span className={styles.brandTitle}>{item.title}</span>
+              </button>
+            ))}
+          </div>
+        </Card>
+
         <Card>
           <Typography.Label variant="small-caps" className={styles.label}>
             Тема

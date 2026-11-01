@@ -20,3 +20,37 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--spacing-size-m);
 }
+
+.brands {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacing-size-m);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-size-s);
+  padding: var(--spacing-size-l);
+  border: 0;
+  border-radius: var(--size-border-radius-action-medium);
+  background: var(--background-surface-secondary);
+  cursor: pointer;
+}
+
+.brand[data-selected='true'] {
+  box-shadow: inset 0 0 0 1.5px var(--background-accent-themed);
+}
+
+.swatch {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  border-radius: 50%;
+}
+
+.brandTitle {
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+}

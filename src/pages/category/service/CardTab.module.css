@@ -9,7 +9,7 @@
   overflow: hidden;
   padding: var(--spacing-size3xl);
   border-radius: var(--size-border-radius-semantic-border-radius-promo);
-  background: var(--gradient-blue);
+  background: var(--brand-gradient, var(--gradient-blue));
   color: var(--text-contrast-static);
 }
 

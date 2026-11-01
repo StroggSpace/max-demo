@@ -46,7 +46,7 @@
   padding: 0 4px;
   border-radius: var(--size-border-radius-semantic-border-radius-rounded);
   background: var(--background-accent-negative);
-  color: var(--text-contrast-static);
+  color: var(--text-on-negative, #fff);
   font-size: var(--font-size-3xs);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-none);

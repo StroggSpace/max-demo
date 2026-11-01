@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+import type { Brand } from '@/shared/brand/tokens';
+
 export type Theme = 'light' | 'dark';
 export type DemoStateMode = 'normal' | 'loading' | 'empty' | 'error';
 export type HistoryKind = 'task' | 'promo' | 'level' | 'achievement' | 'points';
@@ -40,6 +42,7 @@ export interface HistoryItem {
 
 interface DemoState {
   theme: Theme;
+  brand: Brand;
   autoplay: boolean;
   motionEnabled: boolean;
   demoState: DemoStateMode;
@@ -59,6 +62,7 @@ interface DemoState {
 
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
+  setBrand: (brand: Brand) => void;
   setAutoplay: (value: boolean) => void;
   setMotionEnabled: (value: boolean) => void;
   setDemoState: (value: DemoStateMode) => void;
@@ -167,6 +171,7 @@ export const useDemoStore = create<DemoState>()(
   persist(
     (set, get) => ({
       theme: 'light',
+      brand: 'store',
       autoplay: true,
       motionEnabled: true,
       demoState: 'normal',
@@ -186,6 +191,7 @@ export const useDemoStore = create<DemoState>()(
 
       setTheme: (theme) => set({ theme }),
       toggleTheme: () => set({ theme: get().theme === 'light' ? 'dark' : 'light' }),
+      setBrand: (brand) => set({ brand }),
       setAutoplay: (autoplay) => set({ autoplay }),
       setMotionEnabled: (motionEnabled) => set({ motionEnabled }),
       setDemoState: (demoState) => set({ demoState }),
@@ -286,6 +292,7 @@ export const useDemoStore = create<DemoState>()(
       name: 'max-demo',
       partialize: (s) => ({
         theme: s.theme,
+        brand: s.brand,
         autoplay: s.autoplay,
         motionEnabled: s.motionEnabled,
         demoState: s.demoState,
