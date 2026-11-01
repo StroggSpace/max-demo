@@ -9,6 +9,23 @@
   background: var(--background-overlay);
 }
 
+.sheet::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  width: 260px;
+  height: 260px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--background-accent-themed) 26%, transparent),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
 .sheet {
   position: relative;
   width: 100%;
@@ -17,20 +34,31 @@
   border-radius: var(--size-border-radius-semantic-border-radius-promo);
   background: var(--background-surface-primary);
   text-align: center;
+  overflow: hidden;
 }
 
 .confetti {
   position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  overflow: hidden;
+  top: -10px;
+  left: 0;
+  right: 0;
+  height: 220px;
   pointer-events: none;
+  opacity: 0.8;
+  mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
 }
 
-.close {
-  position: absolute;
-  top: var(--spacing-size-m);
-  right: var(--spacing-size-m);
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  margin: 0;
 }
 
 .description {
@@ -39,7 +67,7 @@
 }
 
 .code {
-  position: relative;
+  width: 100%;
   margin: var(--spacing-size2xl) 0;
   padding: var(--spacing-size-xl);
   border-radius: var(--size-border-radius-semantic-border-radius-paper);
@@ -47,4 +75,11 @@
   font-size: 22px;
   font-weight: 700;
   letter-spacing: 0.06em;
+}
+
+.close {
+  position: absolute;
+  top: var(--spacing-size-m);
+  right: var(--spacing-size-m);
+  z-index: 2;
 }

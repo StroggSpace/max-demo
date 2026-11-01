@@ -16,25 +16,6 @@ export const seasonScenario: Scenario = {
   ],
 };
 
-export const tasksScenario: Scenario = {
-  id: 'tasks',
-  title: 'Задания',
-  reset: () => s().resetTasks(),
-  steps: [
-    { at: 600, run: () => s().completeTask(0) },
-    { at: 900, run: () => s().pushHistory('Вы', 'выполнили задание «Подписка»', 'task') },
-    { at: 1700, run: () => s().completeTask(3) },
-    { at: 2000, run: () => s().pushHistory('Вы', 'выполнили задание «Профиль»', 'task') },
-    { at: 2700, run: () => s().advanceTask(2, 1) },
-    { at: 3200, run: () => s().advanceTask(2, 1) },
-    { at: 3700, run: () => s().advanceTask(2, 1) },
-    { at: 4200, run: () => s().completeTask(2) },
-    { at: 4500, run: () => s().pushHistory('Вы', 'выполнили задание «3 покупки»', 'task') },
-    { at: 5100, run: () => s().completeTask(1) },
-    { at: 5400, run: () => s().pushHistory('Вы', 'выполнили задание «Пригласить друга»', 'task') },
-  ],
-};
-
 export const achievementsScenario: Scenario = {
   id: 'achievements',
   title: 'Достижения',
@@ -53,7 +34,7 @@ export const profileScenario: Scenario = {
   title: 'Профиль',
   reset: () => s().resetProfile(),
   steps: [
-    { at: 700, run: () => s().pushHistory('Вы', 'вошли в приложение', 'points') },
+    { at: 700, run: () => s().pushHistory('Вы', 'открыли сезон «Весенний марафон»', 'level') },
     { at: 1500, run: () => s().addPoints(120) },
     { at: 2200, run: () => s().pushHistory('Вы', 'получили 120 баллов', 'points') },
     { at: 2900, run: () => s().unlockAchievement('a_active') },
@@ -63,7 +44,6 @@ export const profileScenario: Scenario = {
 
 export const scenarios: Record<string, Scenario> = {
   season: seasonScenario,
-  tasks: tasksScenario,
   achievements: achievementsScenario,
   profile: profileScenario,
 };

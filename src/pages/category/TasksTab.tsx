@@ -9,15 +9,14 @@ import { CheckCircleIcon as CheckSolid, LockClosedIcon as LockSolid } from '@her
 import { Flex, Typography } from '@maxhub/max-ui';
 
 import { Card, Chip, RingProgress, Section, StateGate } from '@/shared/ui/kit';
-import { useSectionScenario } from '@/features/scenario/useSectionScenario';
-import { scenarios } from '@/scenarios';
+import { useTaskSequence } from '@/features/scenario/useTaskSequence';
 import { useDemoStore } from '@/store/demo';
 import styles from './TasksTab.module.css';
 
 const taskIcons = [BellIcon, UserPlusIcon, ShoppingBagIcon, UserCircleIcon];
 
 export function TasksTab() {
-  useSectionScenario(scenarios.tasks);
+  useTaskSequence();
 
   const tasks = useDemoStore((s) => s.tasks);
   const promos = useDemoStore((s) => s.promos);

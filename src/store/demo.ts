@@ -156,9 +156,9 @@ const initialTasks: Task[] = [
 ];
 
 const initialHistory: HistoryItem[] = [
-  { id: 'h1', name: 'Анна', action: 'получила 200 баллов за покупку', time: '5 мин', kind: 'points' },
-  { id: 'h2', name: 'Игорь', action: 'выиграл сертификат 1000 ₽', time: '18 мин', kind: 'promo' },
-  { id: 'h3', name: 'Вы', action: 'активировали промокод START10', time: '1 ч', kind: 'promo' },
+  { id: 'h1', name: 'Вы', action: 'активировали промокод START10', time: '1 ч', kind: 'promo' },
+  { id: 'h2', name: 'Вы', action: 'получили 120 баллов за вход', time: '2 ч', kind: 'points' },
+  { id: 'h3', name: 'Вы', action: 'вошли в приложение', time: '3 ч', kind: 'points' },
 ];
 
 export const useDemoStore = create<DemoState>()(
