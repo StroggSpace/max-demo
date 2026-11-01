@@ -51,7 +51,7 @@ export function PromoModal() {
             onClick={(event) => event.stopPropagation()}
           >
             <div className={styles.confetti}>
-              <Lottie src="/lottie/confetti.lottie" loop={false} speed={0.85} />
+              <Lottie src={`${import.meta.env.BASE_URL}lottie/confetti.lottie`} loop={false} speed={0.85} />
             </div>
 
             <IconButton

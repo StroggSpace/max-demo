@@ -120,7 +120,7 @@ function AppLayout() {
 export function App() {
   return (
     <AppProviders>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '') || '/'}>
         <AppLayout />
         <PromoModal />
       </BrowserRouter>

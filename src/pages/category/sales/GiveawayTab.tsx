@@ -53,7 +53,7 @@ export function GiveawayTab() {
     <div className={styles.page}>
       <StateGate emptyTitle="Розыгрышей пока нет" emptyText="Следующий розыгрыш анонсируем в канале бренда.">
         {showConfetti ? (
-          <Lottie src="/lottie/confetti.lottie" className={styles.confetti} loop={false} />
+          <Lottie src={`${import.meta.env.BASE_URL}lottie/confetti.lottie`} className={styles.confetti} loop={false} />
         ) : null}
 
         <div className={styles.hero}>
