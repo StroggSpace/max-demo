@@ -1,0 +1,42 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--page-gap);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-size-xl);
+  padding: var(--spacing-size-xl) var(--spacing-size2xl);
+}
+
+.badge {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: var(--size-border-radius-semantic-border-radius-paper);
+  background: var(--background-surface-tertiary);
+  color: var(--text-tertiary);
+}
+
+.badge[data-unlocked='true'] {
+  background: var(--background-accent-themed);
+  color: var(--text-contrast-static);
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+}
+
+.hint {
+  color: var(--text-secondary);
+}

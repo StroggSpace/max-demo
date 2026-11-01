@@ -1,6 +1,4 @@
-import { ArrowLeftIcon } from '@heroicons/react/24/outline';
-import { useNavigate } from 'react-router-dom';
-import { Button, CellSimple, Flex, IconButton, Switch, Typography } from '@maxhub/max-ui';
+import { Button, CellSimple, Flex, Switch, Typography } from '@maxhub/max-ui';
 
 import { Card, ListCard, Section } from '@/shared/ui/kit';
 import { useDemoStore, type DemoStateMode } from '@/store/demo';
@@ -14,7 +12,6 @@ const states: { id: DemoStateMode; title: string }[] = [
 ];
 
 export function SettingsPage() {
-  const navigate = useNavigate();
   const theme = useDemoStore((s) => s.theme);
   const setTheme = useDemoStore((s) => s.setTheme);
   const autoplay = useDemoStore((s) => s.autoplay);
@@ -25,23 +22,6 @@ export function SettingsPage() {
 
   return (
     <div className={styles.page}>
-      <div className={styles.top}>
-        <IconButton
-          size="medium"
-          mode="tertiary"
-          aria-label="Назад"
-          onClick={() => navigate(-1)}
-        >
-          <ArrowLeftIcon className={styles.icon} />
-        </IconButton>
-        <div>
-          <Typography.Title variant="large-strong">Настройки</Typography.Title>
-          <Typography.Body variant="small" className={styles.subtitle}>
-            Демо-режим
-          </Typography.Body>
-        </div>
-      </div>
-
       <Section title="Оформление">
         <Card>
           <Typography.Label variant="small-caps" className={styles.label}>
@@ -67,7 +47,7 @@ export function SettingsPage() {
         <ListCard>
           <CellSimple
             title="Автопроигрывание"
-            subtitle="Сценарий запускается при входе в раздел"
+            subtitle="Процесс запускается при входе во вкладку"
             after={
               <Switch
                 checked={autoplay}

@@ -1,0 +1,58 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--page-gap);
+}
+
+.muted {
+  color: var(--text-secondary);
+}
+
+.progressBlock {
+  margin: var(--spacing-size2xl) 0 var(--spacing-size-m);
+}
+
+.levelRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-size-xl);
+  padding: var(--spacing-size-xl) var(--spacing-size2xl);
+}
+
+.levelBadge {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--background-surface-tertiary);
+  color: var(--text-secondary);
+  font-weight: 700;
+}
+
+.levelBadge[data-current='true'] {
+  background: var(--background-accent-themed);
+  color: var(--text-contrast-static);
+}
+
+.levelCheck {
+  width: 20px;
+  height: 20px;
+  color: var(--icon-positive);
+}
+
+.levelBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.levelTitle {
+  font-weight: 600;
+}
+
+.levelReward {
+  margin-top: var(--spacing-size2xs);
+  font-size: 12px;
+  color: var(--text-secondary);
+}

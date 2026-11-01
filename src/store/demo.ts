@@ -3,10 +3,7 @@ import { persist } from 'zustand/middleware';
 
 export type Theme = 'light' | 'dark';
 export type DemoStateMode = 'normal' | 'loading' | 'empty' | 'error';
-export type SectionId = 'home' | 'tasks' | 'giveaways' | 'shop' | 'profile';
-export type GiveawayPhase = 'idle' | 'lobby' | 'countdown' | 'result';
-export type GiveawayResult = 'win' | 'lose' | null;
-export type FeedKind = 'win' | 'reward';
+export type HistoryKind = 'task' | 'promo' | 'level' | 'achievement' | 'points';
 
 export interface Task {
   id: string;
@@ -18,21 +15,27 @@ export interface Task {
   done: boolean;
 }
 
-export interface FeedItem {
+export interface Promo {
+  id: string;
+  code: string;
+  title: string;
+  description: string;
+  /** Сколько заданий нужно выполнить, чтобы открыть промокод */
+  threshold: number;
+}
+
+export interface SeasonLevel {
+  level: number;
+  title: string;
+  reward: string;
+}
+
+export interface HistoryItem {
   id: string;
   name: string;
   action: string;
   time: string;
-  kind?: FeedKind;
-}
-
-export interface Reward {
-  id: string;
-  title: string;
-  subtitle: string;
-  price: number;
-  emoji: string;
-  owned: boolean;
+  kind: HistoryKind;
 }
 
 interface DemoState {
@@ -46,40 +49,72 @@ interface DemoState {
   xpMax: number;
 
   tasks: Task[];
-  feed: FeedItem[];
-  rewards: Reward[];
+  promos: Promo[];
+  unlockedPromos: string[];
+  seasonLevels: SeasonLevel[];
   achievements: string[];
-
-  giveaway: {
-    phase: GiveawayPhase;
-    secondsLeft: number;
-    participants: number;
-    joined: boolean;
-    result: GiveawayResult;
-    prize: string;
-  };
+  history: HistoryItem[];
+  activePromo: Promo | null;
 
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
   setAutoplay: (value: boolean) => void;
   setDemoState: (value: DemoStateMode) => void;
 
-  resetHome: () => void;
-  resetTasks: () => void;
-  resetGiveaway: () => void;
-  resetShop: () => void;
-  resetProfile: () => void;
-  resetAll: () => void;
-
   addPoints: (value: number) => void;
   addXp: (value: number) => void;
-  pushFeed: (name: string, action: string, kind?: FeedKind) => void;
   advanceTask: (index: number, by?: number) => void;
   completeTask: (index: number) => void;
-  setGiveaway: (patch: Partial<DemoState['giveaway']>) => void;
-  buyReward: (id: string) => void;
-  unlock: (title: string) => void;
+  unlockAchievement: (id: string) => void;
+  pushHistory: (name: string, action: string, kind: HistoryKind) => void;
+  openPromo: (promo: Promo) => void;
+  closePromo: () => void;
+
+  resetTasks: () => void;
+  resetSeason: () => void;
+  resetAchievements: () => void;
+  resetProfile: () => void;
+  resetAll: () => void;
 }
+
+export const seasonLevels: SeasonLevel[] = [
+  { level: 1, title: 'Новичок', reward: 'Базовые задания' },
+  { level: 2, title: 'Участник', reward: 'Участие в розыгрышах' },
+  { level: 3, title: 'Активный', reward: 'Кэшбэк 5%' },
+  { level: 4, title: 'Привилегированный', reward: 'Промокод 500 ₽' },
+  { level: 5, title: 'Амбассадор', reward: 'Скидка 15% и статус' },
+];
+
+export const promos: Promo[] = [
+  {
+    id: 'p1',
+    code: 'START10',
+    title: 'Скидка 10%',
+    description: 'На первый заказ у партнёра.',
+    threshold: 1,
+  },
+  {
+    id: 'p2',
+    code: 'BONUS500',
+    title: '500 баллов',
+    description: 'Зачисляются на баланс сразу после активации.',
+    threshold: 2,
+  },
+  {
+    id: 'p3',
+    code: 'FREESHIP',
+    title: 'Бесплатная доставка',
+    description: 'Один заказ без стоимости доставки.',
+    threshold: 3,
+  },
+  {
+    id: 'p4',
+    code: 'VIP15',
+    title: 'Скидка 15% и статус',
+    description: 'Особые условия на весь сезон.',
+    threshold: 4,
+  },
+];
 
 const initialTasks: Task[] = [
   {
@@ -120,29 +155,11 @@ const initialTasks: Task[] = [
   },
 ];
 
-const initialRewards: Reward[] = [
-  { id: 'r1', title: 'Кофе в подарок', subtitle: 'Партнёр рядом с вами', price: 300, emoji: '☕️', owned: false },
-  { id: 'r2', title: 'Скидка 15%', subtitle: 'На следующий заказ', price: 500, emoji: '🏷️', owned: false },
-  { id: 'r3', title: 'Сертификат 1000 ₽', subtitle: 'Магазин партнёра', price: 1200, emoji: '🎁', owned: false },
-  { id: 'r4', title: 'Доставка бесплатно', subtitle: 'Один заказ', price: 400, emoji: '🚀', owned: false },
-  { id: 'r5', title: 'Мерч бренда', subtitle: 'Ограниченная серия', price: 2000, emoji: '🧢', owned: false },
-  { id: 'r6', title: 'Билет на событие', subtitle: 'Закрытый показ', price: 3000, emoji: '🎟️', owned: false },
+const initialHistory: HistoryItem[] = [
+  { id: 'h1', name: 'Анна', action: 'получила 200 баллов за покупку', time: '5 мин', kind: 'points' },
+  { id: 'h2', name: 'Игорь', action: 'выиграл сертификат 1000 ₽', time: '18 мин', kind: 'promo' },
+  { id: 'h3', name: 'Вы', action: 'активировали промокод START10', time: '1 ч', kind: 'promo' },
 ];
-
-const initialFeed: FeedItem[] = [
-  { id: 'f1', name: 'Анна', action: 'получила 200 баллов за покупку', time: '5 мин' },
-  { id: 'f2', name: 'Игорь', action: 'выиграл сертификат 1000 ₽', time: '18 мин', kind: 'win' },
-  { id: 'f3', name: 'Марафон', action: 'новый сезон «Весенний марафон»', time: '1 ч' },
-];
-
-const baseGiveaway: DemoState['giveaway'] = {
-  phase: 'idle',
-  secondsLeft: 42,
-  participants: 128,
-  joined: false,
-  result: null,
-  prize: 'Сертификат 1000 ₽',
-};
 
 export const useDemoStore = create<DemoState>()(
   persist(
@@ -152,62 +169,38 @@ export const useDemoStore = create<DemoState>()(
       demoState: 'normal',
 
       balance: 1240,
-      level: 3,
-      xp: 140,
+      level: 1,
+      xp: 120,
       xpMax: 300,
 
       tasks: initialTasks,
-      feed: initialFeed,
-      rewards: initialRewards,
+      promos,
+      unlockedPromos: [],
+      seasonLevels,
       achievements: [],
-      giveaway: baseGiveaway,
+      history: initialHistory,
+      activePromo: null,
 
       setTheme: (theme) => set({ theme }),
       toggleTheme: () => set({ theme: get().theme === 'light' ? 'dark' : 'light' }),
       setAutoplay: (autoplay) => set({ autoplay }),
       setDemoState: (demoState) => set({ demoState }),
 
-      resetHome: () => set({ balance: 1240, level: 3, xp: 140, xpMax: 300, feed: initialFeed }),
-      resetTasks: () => set({ tasks: initialTasks.map((t) => ({ ...t })) }),
-      resetGiveaway: () => set({ giveaway: { ...baseGiveaway } }),
-      resetShop: () => set({ rewards: initialRewards.map((r) => ({ ...r })), balance: 1240 }),
-      resetProfile: () => set({ achievements: [] }),
-
-      resetAll: () =>
-        set({
-          balance: 1240,
-          level: 3,
-          xp: 140,
-          xpMax: 300,
-          tasks: initialTasks.map((t) => ({ ...t })),
-          feed: initialFeed,
-          rewards: initialRewards.map((r) => ({ ...r })),
-          achievements: [],
-          giveaway: { ...baseGiveaway },
-        }),
-
       addPoints: (value) => set((s) => ({ balance: Math.max(0, s.balance + value) })),
+
       addXp: (value) =>
         set((s) => {
           const total = s.xp + value;
           if (total >= s.xpMax) {
-            return { xp: total - s.xpMax, level: s.level + 1 };
+            const nextLevel = Math.min(5, s.level + 1);
+            const leveled = s.level < 5;
+            return {
+              xp: leveled ? total - s.xpMax : s.xpMax,
+              level: nextLevel,
+            };
           }
           return { xp: total };
         }),
-      pushFeed: (name, action, kind) =>
-        set((s) => ({
-          feed: [
-            {
-              id: `f-${Date.now()}-${Math.random().toString(16).slice(2)}`,
-              name,
-              action,
-              time: 'только что',
-              kind,
-            },
-            ...s.feed,
-          ].slice(0, 12),
-        })),
 
       advanceTask: (index, by = 1) =>
         set((s) => ({
@@ -217,30 +210,73 @@ export const useDemoStore = create<DemoState>()(
             return { ...task, progress, done: progress >= task.goal };
           }),
         })),
+
       completeTask: (index) =>
         set((s) => {
           const task = s.tasks[index];
           if (!task || task.done) return {};
+
           const tasks = s.tasks.map((t, i) =>
             i === index ? { ...t, progress: t.goal, done: true } : t,
           );
-          return { tasks, balance: s.balance + task.reward, xp: s.xp + Math.round(task.reward / 2) };
-        }),
+          const doneCount = tasks.filter((t) => t.done).length;
 
-      setGiveaway: (patch) => set((s) => ({ giveaway: { ...s.giveaway, ...patch } })),
+          // Промокод открывается по числу выполненных заданий.
+          const newlyUnlocked = s.promos.filter(
+            (promo) => promo.threshold <= doneCount && !s.unlockedPromos.includes(promo.id),
+          );
+          const unlockedPromos = [...s.unlockedPromos, ...newlyUnlocked.map((promo) => promo.id)];
+          const activePromo = newlyUnlocked[0] ?? null;
 
-      buyReward: (id) =>
-        set((s) => {
-          const reward = s.rewards.find((r) => r.id === id);
-          if (!reward || reward.owned || s.balance < reward.price) return {};
           return {
-            balance: s.balance - reward.price,
-            rewards: s.rewards.map((r) => (r.id === id ? { ...r, owned: true } : r)),
+            tasks,
+            balance: s.balance + task.reward,
+            xp: s.xp + Math.round(task.reward / 2),
+            unlockedPromos,
+            activePromo,
           };
         }),
 
-      unlock: (title) =>
-        set((s) => (s.achievements.includes(title) ? {} : { achievements: [...s.achievements, title] })),
+      unlockAchievement: (id) =>
+        set((s) =>
+          s.achievements.includes(id) ? {} : { achievements: [...s.achievements, id] },
+        ),
+
+      pushHistory: (name, action, kind) =>
+        set((s) => ({
+          history: [
+            {
+              id: `h-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+              name,
+              action,
+              time: 'только что',
+              kind,
+            },
+            ...s.history,
+          ].slice(0, 20),
+        })),
+
+      openPromo: (promo) => set({ activePromo: promo }),
+      closePromo: () => set({ activePromo: null }),
+
+      resetTasks: () =>
+        set({ tasks: initialTasks.map((t) => ({ ...t })), unlockedPromos: [], activePromo: null }),
+      resetSeason: () => set({ level: 1, xp: 120, xpMax: 300 }),
+      resetAchievements: () => set({ achievements: [] }),
+      resetProfile: () => set({ history: initialHistory }),
+
+      resetAll: () =>
+        set({
+          balance: 1240,
+          level: 1,
+          xp: 120,
+          xpMax: 300,
+          tasks: initialTasks.map((t) => ({ ...t })),
+          unlockedPromos: [],
+          achievements: [],
+          history: initialHistory,
+          activePromo: null,
+        }),
     }),
     {
       name: 'max-demo',

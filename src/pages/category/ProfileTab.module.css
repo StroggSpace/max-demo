@@ -1,0 +1,56 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--page-gap);
+}
+
+.historyCard {
+  padding: 0;
+  overflow: hidden;
+}
+
+.historyRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-size-xl);
+  padding: var(--spacing-size-xl) var(--spacing-size2xl);
+}
+
+.historyRow + .historyRow {
+  border-top: 1px solid var(--stroke-subtle);
+}
+
+.historyIcon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--background-surface-secondary);
+}
+
+.historyGlyph {
+  width: 16px;
+  height: 16px;
+}
+
+.historyBody {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+}
+
+.historyName {
+  font-weight: 600;
+}
+
+.historyAction {
+  margin-left: var(--spacing-size-s);
+  color: var(--text-secondary);
+}
+
+.historyTime {
+  flex: none;
+  color: var(--text-tertiary);
+}

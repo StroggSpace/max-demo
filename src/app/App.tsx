@@ -1,57 +1,56 @@
-import { lazy, Suspense } from 'react';
-import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { AppProviders } from '@/app/AppProviders';
-import { TabBar } from '@/widgets/TabBar';
-import { Toaster } from '@/shared/ui/toast/Toaster';
-import { LoadingState } from '@/shared/ui/kit';
+import { Shell } from '@/app/Shell';
+import { PromoModal } from '@/shared/ui/PromoModal';
+import { CategorySelect } from '@/pages/CategorySelect';
+import { SettingsPage } from '@/pages/Settings';
+import { CategoryShell } from '@/pages/category/CategoryShell';
+import { SeasonTab } from '@/pages/category/SeasonTab';
+import { TasksTab } from '@/pages/category/TasksTab';
+import { AchievementsTab } from '@/pages/category/AchievementsTab';
+import { ProfileTab } from '@/pages/category/ProfileTab';
 
-const HomePage = lazy(() => import('@/pages/Home').then((m) => ({ default: m.HomePage })));
-const TasksPage = lazy(() => import('@/pages/Tasks').then((m) => ({ default: m.TasksPage })));
-const GiveawaysPage = lazy(() =>
-  import('@/pages/Giveaways').then((m) => ({ default: m.GiveawaysPage })),
-);
-const ShopPage = lazy(() => import('@/pages/Shop').then((m) => ({ default: m.ShopPage })));
-const ProfilePage = lazy(() =>
-  import('@/pages/Profile').then((m) => ({ default: m.ProfilePage })),
-);
-const SettingsPage = lazy(() =>
-  import('@/pages/Settings').then((m) => ({ default: m.SettingsPage })),
-);
-
-function Shell() {
-  const { pathname } = useLocation();
-  const showTabBar = pathname !== '/settings';
-
+function HomeScreen() {
   return (
-    <div className="shell">
-      <main className="main">
-        <div className="mainInner">
-          <Suspense fallback={<LoadingState />}>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/tasks" element={<TasksPage />} />
-              <Route path="/giveaways" element={<GiveawaysPage />} />
-              <Route path="/shop" element={<ShopPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
-              <Route path="/settings" element={<SettingsPage />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </Suspense>
-        </div>
-      </main>
-
-      {showTabBar ? <TabBar /> : null}
-      <Toaster />
-    </div>
+    <Shell title="Модули демо" subtitle="Мини-приложения MAX">
+      <CategorySelect />
+    </Shell>
   );
+}
+
+function SettingsScreen() {
+  return (
+    <Shell title="Настройки" subtitle="Глобальные настройки" back hideSettings>
+      <SettingsPage />
+    </Shell>
+  );
+}
+
+function CategoryIndex() {
+  return <Navigate to="season" replace />;
 }
 
 export function App() {
   return (
     <AppProviders>
       <BrowserRouter>
-        <Shell />
+        <Routes>
+          <Route path="/" element={<HomeScreen />} />
+          <Route path="/settings" element={<SettingsScreen />} />
+
+          <Route path="/category/:id" element={<CategoryShell />}>
+            <Route index element={<CategoryIndex />} />
+            <Route path="season" element={<SeasonTab />} />
+            <Route path="tasks" element={<TasksTab />} />
+            <Route path="achievements" element={<AchievementsTab />} />
+            <Route path="profile" element={<ProfileTab />} />
+          </Route>
+
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+
+        <PromoModal />
       </BrowserRouter>
     </AppProviders>
   );
