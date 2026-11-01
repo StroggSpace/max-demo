@@ -38,24 +38,10 @@
   background: var(--background-surface-tertiary);
 }
 
-.skeleton::after {
-  content: '';
+.shimmer {
   position: absolute;
   inset: 0;
-  transform: translateX(-100%);
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgb(255 255 255 / 35%),
-    transparent
-  );
-  animation: shimmer 1.4s infinite;
-}
-
-@keyframes shimmer {
-  to {
-    transform: translateX(100%);
-  }
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 35%), transparent);
 }
 
 .skeletonPage {

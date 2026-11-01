@@ -82,12 +82,3 @@ html[data-theme='dark'] body {
     box-shadow: 0 24px 60px rgb(0 0 0 / 18%);
   }
 }
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    transition-duration: 0.001ms !important;
-  }
-}

@@ -56,17 +56,6 @@
 
 .heroBar {
   position: relative;
-  height: 8px;
-  border-radius: var(--size-border-radius-semantic-border-radius-rounded);
-  background: rgb(255 255 255 / 26%);
-  overflow: hidden;
-}
-
-.heroBarFill {
-  height: 100%;
-  border-radius: inherit;
-  background: #fff;
-  transition: width 0.35s ease;
 }
 
 .heroMeta {

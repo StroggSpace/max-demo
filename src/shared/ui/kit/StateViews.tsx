@@ -1,12 +1,27 @@
 import type { ReactNode } from 'react';
+import { motion } from 'motion/react';
 import { ExclamationTriangleIcon, InboxIcon } from '@heroicons/react/24/outline';
 import { Button, Typography } from '@maxhub/max-ui';
 
 import { useDemoStore } from '@/store/demo';
+import { useMotionControls } from '@/shared/motion/useMotionControls';
 import styles from './StateViews.module.css';
 
 function Skeleton({ className }: { className?: string }) {
-  return <span className={[styles.skeleton, className].filter(Boolean).join(' ')} />;
+  const { enabled } = useMotionControls();
+
+  return (
+    <span className={[styles.skeleton, className].filter(Boolean).join(' ')}>
+      {enabled ? (
+        <motion.span
+          className={styles.shimmer}
+          initial={{ x: '-100%' }}
+          animate={{ x: '100%' }}
+          transition={{ duration: 1.4, repeat: Infinity, ease: 'linear' }}
+        />
+      ) : null}
+    </span>
+  );
 }
 
 export function LoadingState() {

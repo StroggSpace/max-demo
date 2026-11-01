@@ -37,7 +37,14 @@
   height: 100%;
   border-radius: inherit;
   background: var(--background-accent-themed);
-  transition: width 0.35s ease;
+}
+
+.progress[data-tone='contrast'] {
+  background: rgb(255 255 255 / 26%);
+}
+
+.progressBar[data-tone='contrast'] {
+  background: #fff;
 }
 
 .stat {

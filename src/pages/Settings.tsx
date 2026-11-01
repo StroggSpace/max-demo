@@ -16,6 +16,8 @@ export function SettingsPage() {
   const setTheme = useDemoStore((s) => s.setTheme);
   const autoplay = useDemoStore((s) => s.autoplay);
   const setAutoplay = useDemoStore((s) => s.setAutoplay);
+  const motionEnabled = useDemoStore((s) => s.motionEnabled);
+  const setMotionEnabled = useDemoStore((s) => s.setMotionEnabled);
   const demoState = useDemoStore((s) => s.demoState);
   const setDemoState = useDemoStore((s) => s.setDemoState);
   const resetAll = useDemoStore((s) => s.resetAll);
@@ -41,6 +43,21 @@ export function SettingsPage() {
             ))}
           </Flex>
         </Card>
+      </Section>
+
+      <Section title="Анимации">
+        <ListCard>
+          <CellSimple
+            title="Анимации интерфейса"
+            subtitle="Переходы, появление и закрытие экранов"
+            after={
+              <Switch
+                checked={motionEnabled}
+                onChange={(event) => setMotionEnabled(event.target.checked)}
+              />
+            }
+          />
+        </ListCard>
       </Section>
 
       <Section title="Сценарии">

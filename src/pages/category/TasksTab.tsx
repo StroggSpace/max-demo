@@ -8,7 +8,7 @@ import {
 import { CheckCircleIcon as CheckSolid, LockClosedIcon as LockSolid } from '@heroicons/react/24/solid';
 import { Flex, Typography } from '@maxhub/max-ui';
 
-import { Card, Chip, RingProgress, Section, StateGate } from '@/shared/ui/kit';
+import { Card, Chip, Progress, RingProgress, Section, StateGate } from '@/shared/ui/kit';
 import { useTaskSequence } from '@/features/scenario/useTaskSequence';
 import { useDemoStore } from '@/store/demo';
 import styles from './TasksTab.module.css';
@@ -92,12 +92,7 @@ export function TasksTab() {
                   </Flex>
 
                   <div className={styles.taskProgress}>
-                    <div className={styles.taskBar}>
-                      <div
-                        className={styles.taskBarFill}
-                        style={{ width: `${(task.progress / task.goal) * 100}%` }}
-                      />
-                    </div>
+                    <Progress value={(task.progress / task.goal) * 100} height="s" />
                   </div>
                 </Card>
               );

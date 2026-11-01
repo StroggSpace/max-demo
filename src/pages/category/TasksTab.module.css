@@ -105,20 +105,6 @@
   margin-top: var(--spacing-size-xl);
 }
 
-.taskBar {
-  height: 6px;
-  border-radius: var(--size-border-radius-semantic-border-radius-rounded);
-  background: var(--background-surface-tertiary);
-  overflow: hidden;
-}
-
-.taskBarFill {
-  height: 100%;
-  border-radius: inherit;
-  background: var(--background-accent-themed);
-  transition: width 0.35s ease;
-}
-
 /* Promo tickets */
 .promoList {
   display: flex;

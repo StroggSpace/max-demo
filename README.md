@@ -81,9 +81,22 @@ npm run typecheck
   `Flex`, `Avatar`, `Switch`, `Spinner`
 - токены MAX: `--background-surface-*`, `--text-*`, `--background-accent-*`,
   `--spacing-size-*`, `--size-border-radius-*`
-- `motion` (`motion/react`) — вход карточек категорий, тап-состояния, модалка
 - иконки `@heroicons/react`, инлайновых SVG нет
 - Lottie `.lottie`, WASM-плеер локально (`public/lottie`)
+
+### Motion
+
+Все анимации описаны в одном месте — `src/shared/motion/config.ts`:
+переходы страниц, появление карточек, модалка, поп-апы, тап-состояния.
+Компоненты берут пресеты через `useMotionControls()`.
+
+- включение/выключение — в настройках, флаг хранится в localStorage;
+- при выключении пресеты становятся мгновенными (`duration: 0`);
+- переходы страниц работают в обе стороны через `AnimatePresence`:
+  старый экран уезжает, новый появляется;
+- CSS-анимаций и transition в проекте нет — только motion.
+
+Кнопка «Назад» в хедере всегда возвращает на выбор категорий.
 
 ## Лэйаут
 

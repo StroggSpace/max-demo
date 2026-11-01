@@ -41,6 +41,7 @@ export interface HistoryItem {
 interface DemoState {
   theme: Theme;
   autoplay: boolean;
+  motionEnabled: boolean;
   demoState: DemoStateMode;
 
   balance: number;
@@ -59,6 +60,7 @@ interface DemoState {
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
   setAutoplay: (value: boolean) => void;
+  setMotionEnabled: (value: boolean) => void;
   setDemoState: (value: DemoStateMode) => void;
 
   addPoints: (value: number) => void;
@@ -166,6 +168,7 @@ export const useDemoStore = create<DemoState>()(
     (set, get) => ({
       theme: 'light',
       autoplay: true,
+      motionEnabled: true,
       demoState: 'normal',
 
       balance: 1240,
@@ -184,6 +187,7 @@ export const useDemoStore = create<DemoState>()(
       setTheme: (theme) => set({ theme }),
       toggleTheme: () => set({ theme: get().theme === 'light' ? 'dark' : 'light' }),
       setAutoplay: (autoplay) => set({ autoplay }),
+      setMotionEnabled: (motionEnabled) => set({ motionEnabled }),
       setDemoState: (demoState) => set({ demoState }),
 
       addPoints: (value) => set((s) => ({ balance: Math.max(0, s.balance + value) })),
@@ -280,7 +284,12 @@ export const useDemoStore = create<DemoState>()(
     }),
     {
       name: 'max-demo',
-      partialize: (s) => ({ theme: s.theme, autoplay: s.autoplay, demoState: s.demoState }),
+      partialize: (s) => ({
+        theme: s.theme,
+        autoplay: s.autoplay,
+        motionEnabled: s.motionEnabled,
+        demoState: s.demoState,
+      }),
     },
   ),
 );

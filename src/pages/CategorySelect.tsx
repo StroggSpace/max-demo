@@ -3,10 +3,12 @@ import { motion } from 'motion/react';
 import { useNavigate } from 'react-router-dom';
 
 import { categories } from '@/app/categories';
+import { useMotionControls } from '@/shared/motion/useMotionControls';
 import styles from './CategorySelect.module.css';
 
 export function CategorySelect() {
   const navigate = useNavigate();
+  const { get, tap } = useMotionControls();
 
   return (
     <div className={styles.list}>
@@ -16,10 +18,8 @@ export function CategorySelect() {
           type="button"
           className={styles.card}
           style={{ background: category.gradient }}
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.07, type: 'spring', stiffness: 240, damping: 24 }}
-          whileTap={{ scale: 0.985 }}
+          {...get('card', index * 0.06)}
+          {...tap}
           onClick={() => navigate(`/category/${category.id}`)}
         >
           <span className={styles.glow} />

@@ -7,7 +7,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { Flex, Typography } from '@maxhub/max-ui';
 
-import { Card, Chip, Section, StateGate } from '@/shared/ui/kit';
+import { Card, Chip, Progress, Section, StateGate } from '@/shared/ui/kit';
 import { useSectionScenario } from '@/features/scenario/useSectionScenario';
 import { scenarios } from '@/scenarios';
 import { useDemoStore } from '@/store/demo';
@@ -41,7 +41,7 @@ export function SeasonTab() {
           <h2 className={styles.heroTitle}>Весенний марафон</h2>
 
           <div className={styles.heroBar}>
-            <div className={styles.heroBarFill} style={{ width: `${progress}%` }} />
+            <Progress value={progress} tone="contrast" />
           </div>
 
           <Flex justify="space-between">

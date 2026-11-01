@@ -4,6 +4,7 @@ import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Button, IconButton, Typography } from '@maxhub/max-ui';
 
 import { Lottie } from '@/shared/ui/Lottie';
+import { useMotionControls } from '@/shared/motion/useMotionControls';
 import { useDemoStore } from '@/store/demo';
 import styles from './PromoModal.module.css';
 
@@ -12,6 +13,7 @@ const AUTO_CLOSE_MS = 2000;
 export function PromoModal() {
   const activePromo = useDemoStore((s) => s.activePromo);
   const closePromo = useDemoStore((s) => s.closePromo);
+  const { get } = useMotionControls();
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -23,7 +25,7 @@ export function PromoModal() {
     setCopied(false);
     const timer = window.setTimeout(() => closePromo(), AUTO_CLOSE_MS);
     return () => window.clearTimeout(timer);
-  }, [activePromo?.id, activePromo, closePromo]);
+  }, [activePromo, closePromo]);
 
   const copy = async () => {
     if (!activePromo) return;
@@ -40,18 +42,12 @@ export function PromoModal() {
       {activePromo ? (
         <motion.div
           className={styles.overlay}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.18 }}
+          {...get('backdrop')}
           onClick={closePromo}
         >
           <motion.div
             className={styles.sheet}
-            initial={{ y: 28, opacity: 0, scale: 0.95 }}
-            animate={{ y: 0, opacity: 1, scale: 1 }}
-            exit={{ y: 20, opacity: 0, scale: 0.97 }}
-            transition={{ type: 'spring', stiffness: 380, damping: 32, mass: 0.9 }}
+            {...get('modal')}
             onClick={(event) => event.stopPropagation()}
           >
             <div className={styles.confetti}>

@@ -22,7 +22,7 @@ export function AppHeader({ title, subtitle, back, hideSettings }: Props) {
             size="medium"
             mode="tertiary"
             aria-label="Назад"
-            onClick={() => navigate(-1)}
+            onClick={() => navigate('/')}
           >
             <ArrowLeftIcon className={styles.icon} />
           </IconButton>

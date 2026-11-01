@@ -1,55 +1,129 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { AnimatePresence, motion } from 'motion/react';
+import { BrowserRouter, Navigate, Route, Routes, useLocation, useParams } from 'react-router-dom';
 
 import { AppProviders } from '@/app/AppProviders';
-import { Shell } from '@/app/Shell';
+import { categoryById } from '@/app/categories';
+import { AppHeader } from '@/widgets/AppHeader';
+import { CategoryTabBar } from '@/widgets/CategoryTabBar';
 import { PromoModal } from '@/shared/ui/PromoModal';
+import { useMotionControls } from '@/shared/motion/useMotionControls';
 import { CategorySelect } from '@/pages/CategorySelect';
 import { SettingsPage } from '@/pages/Settings';
-import { CategoryShell } from '@/pages/category/CategoryShell';
+import { StubCategory } from '@/pages/category/StubCategory';
 import { SeasonTab } from '@/pages/category/SeasonTab';
 import { TasksTab } from '@/pages/category/TasksTab';
 import { AchievementsTab } from '@/pages/category/AchievementsTab';
 import { ProfileTab } from '@/pages/category/ProfileTab';
+import type { CategoryId } from '@/app/categories';
 
-function HomeScreen() {
-  return (
-    <Shell title="Модули демо" subtitle="Мини-приложения MAX">
-      <CategorySelect />
-    </Shell>
-  );
+function CategoryEntry() {
+  const { id = '' } = useParams();
+  const category = categoryById(id);
+
+  if (!category) return <Navigate to="/" replace />;
+  if (category.stub) return <StubCategory category={category} />;
+
+  return <Navigate to={`/category/${category.id}/season`} replace />;
 }
 
-function SettingsScreen() {
-  return (
-    <Shell title="Настройки" subtitle="Глобальные настройки" back hideSettings>
-      <SettingsPage />
-    </Shell>
-  );
+function CategoryTab() {
+  const { id = '', tab = '' } = useParams();
+  const category = categoryById(id);
+
+  if (!category) return <Navigate to="/" replace />;
+  if (category.stub) return <Navigate to={`/category/${category.id}`} replace />;
+
+  switch (tab) {
+    case 'season':
+      return <SeasonTab />;
+    case 'tasks':
+      return <TasksTab />;
+    case 'achievements':
+      return <AchievementsTab />;
+    case 'profile':
+      return <ProfileTab />;
+    default:
+      return <Navigate to={`/category/${category.id}/season`} replace />;
+  }
 }
 
-function CategoryIndex() {
-  return <Navigate to="season" replace />;
+interface Meta {
+  title: string;
+  subtitle?: string;
+  back?: boolean;
+  hideSettings?: boolean;
+  categoryId?: CategoryId;
+}
+
+function resolveMeta(pathname: string): Meta {
+  if (pathname === '/settings') {
+    return {
+      title: 'Настройки',
+      subtitle: 'Глобальные настройки',
+      back: true,
+      hideSettings: true,
+    };
+  }
+
+  const match = pathname.match(/^\/category\/([^/]+)/);
+  const category = match ? categoryById(match[1]) : undefined;
+
+  if (category) {
+    return {
+      title: category.title,
+      subtitle: category.subtitle,
+      back: true,
+      categoryId: category.id,
+    };
+  }
+
+  return { title: 'Модули демо', subtitle: 'Мини-приложения MAX' };
+}
+
+function AppLayout() {
+  const location = useLocation();
+  const { get } = useMotionControls();
+  const meta = resolveMeta(location.pathname);
+  const category = meta.categoryId ? categoryById(meta.categoryId) : undefined;
+  const tabs = category && !category.stub ? category.tabs : undefined;
+
+  return (
+    <div className="shell">
+      <AppHeader
+        title={meta.title}
+        subtitle={meta.subtitle}
+        back={meta.back}
+        hideSettings={meta.hideSettings}
+      />
+
+      <main className="main">
+        <div className="mainInner">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div key={location.pathname} {...get('page')}>
+              <Routes location={location}>
+                <Route path="/" element={<CategorySelect />} />
+                <Route path="/settings" element={<SettingsPage />} />
+                <Route path="/category/:id" element={<CategoryEntry />} />
+                <Route path="/category/:id/:tab" element={<CategoryTab />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </main>
+
+      {tabs && category ? (
+        <CategoryTabBar categoryId={category.id} tabs={tabs} />
+      ) : null}
+    </div>
+  );
 }
 
 export function App() {
   return (
     <AppProviders>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomeScreen />} />
-          <Route path="/settings" element={<SettingsScreen />} />
-
-          <Route path="/category/:id" element={<CategoryShell />}>
-            <Route index element={<CategoryIndex />} />
-            <Route path="season" element={<SeasonTab />} />
-            <Route path="tasks" element={<TasksTab />} />
-            <Route path="achievements" element={<AchievementsTab />} />
-            <Route path="profile" element={<ProfileTab />} />
-          </Route>
-
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-
+        <AppLayout />
         <PromoModal />
       </BrowserRouter>
     </AppProviders>
