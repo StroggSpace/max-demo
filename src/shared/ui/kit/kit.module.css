@@ -69,8 +69,8 @@
   border-radius: var(--size-border-radius-semantic-border-radius-rounded);
   background: var(--background-surface-tertiary);
   color: var(--text-secondary);
-  font-size: 12px;
-  font-weight: 600;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
   white-space: nowrap;
 }
 

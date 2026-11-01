@@ -67,16 +67,12 @@
 
 .title {
   display: block;
-  font-size: 17px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
 }
 
 .subtitle {
   display: block;
   margin-top: var(--spacing-size-xs);
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   opacity: 0.85;
 }
 
@@ -100,15 +96,15 @@
   padding: var(--spacing-size-s) var(--spacing-size-l);
   border-radius: var(--size-border-radius-semantic-border-radius-rounded);
   background: rgb(255 255 255 / 20%);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-wider);
   text-transform: uppercase;
 }
 
 .hint {
   margin: var(--spacing-size-m) 0 0;
   color: var(--text-tertiary);
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   text-align: center;
 }

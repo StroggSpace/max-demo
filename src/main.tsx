@@ -2,6 +2,7 @@ import { createRoot } from 'react-dom/client';
 import { setWasmUrl } from '@lottiefiles/dotlottie-react';
 
 import '@maxhub/max-ui/dist/styles.css';
+import '@/styles/typography.css';
 import '@/styles/global.css';
 
 import { App } from '@/app/App';

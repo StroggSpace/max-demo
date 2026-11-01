@@ -33,7 +33,7 @@ export function AchievementsTab() {
               </Typography.Body>
             </div>
 
-            <span className={styles.summaryValue}>
+            <span className={`${styles.summaryValue} type-stat`}>
               {Math.round(progress)}%
             </span>
           </Flex>

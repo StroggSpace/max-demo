@@ -30,7 +30,7 @@ export function CategoryTabBar({ categoryId, tabs }: Props) {
                 <span className={styles.iconWrap}>
                   <Icon className={styles.icon} />
                 </span>
-                <span className={styles.label}>{label}</span>
+                <span className={`${styles.label} type-tab`}>{label}</span>
               </motion.span>
             </NavLink>
           );

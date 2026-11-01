@@ -72,9 +72,9 @@
   padding: var(--spacing-size-xl);
   border-radius: var(--size-border-radius-semantic-border-radius-paper);
   background: var(--background-surface-secondary);
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-widest);
 }
 
 .close {

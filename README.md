@@ -84,6 +84,21 @@ npm run typecheck
 - иконки `@heroicons/react`, инлайновых SVG нет
 - Lottie `.lottie`, WASM-плеер локально (`public/lottie`)
 
+### Типографика
+
+Единый слой токенов — `src/styles/typography.css`:
+
+- размеры: `--font-size-3xs … --font-size-6xl`
+- насыщенность: `--font-weight-regular … --font-weight-extrabold`
+- интерлиньяж: `--line-height-none … --line-height-relaxed`
+- трекинг: `--letter-spacing-tight … --letter-spacing-code`
+
+Семантические классы для новых категорий: `.type-display`, `.type-title`,
+`.type-stat`, `.type-code`, `.type-tab`, `.type-overline`.
+
+Правило: в CSS-модулях и компонентах нет литеральных `font-size`, `font-weight`,
+`line-height`, `letter-spacing` — только переменные.
+
 ### Motion
 
 Все анимации описаны в одном месте — `src/shared/motion/config.ts`:

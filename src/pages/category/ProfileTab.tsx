@@ -91,7 +91,7 @@ export function ProfileTab() {
                 <span className={styles.statIcon}>
                   <Icon className={styles.statGlyph} />
                 </span>
-                <span className={styles.statValue}>{value}</span>
+                <span className={`${styles.statValue} type-stat`}>{value}</span>
                 <span className={styles.statLabel}>{label}</span>
               </div>
             ))}

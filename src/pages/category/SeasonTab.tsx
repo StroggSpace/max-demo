@@ -38,7 +38,7 @@ export function SeasonTab() {
             <span className={styles.heroLevel}>Уровень {level}</span>
           </Flex>
 
-          <h2 className={styles.heroTitle}>Весенний марафон</h2>
+          <h2 className={`${styles.heroTitle} type-display`}>Весенний марафон</h2>
 
           <div className={styles.heroBar}>
             <Progress value={progress} tone="contrast" />

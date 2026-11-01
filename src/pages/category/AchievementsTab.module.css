@@ -34,8 +34,6 @@
 
 .summaryValue {
   flex: none;
-  font-size: 20px;
-  font-weight: 700;
   color: var(--text-themed);
 }
 
@@ -84,8 +82,8 @@
 }
 
 .tileHint {
-  font-size: 12px;
-  line-height: 1.3;
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-normal);
   color: var(--text-secondary);
   min-height: 31px;
 }
@@ -95,8 +93,8 @@
   align-items: center;
   gap: var(--spacing-size-xs);
   margin-top: auto;
-  font-size: 11px;
-  font-weight: 600;
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-semibold);
   color: var(--text-tertiary);
 }
 

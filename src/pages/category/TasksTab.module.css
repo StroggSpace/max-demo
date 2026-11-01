@@ -18,17 +18,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  line-height: 1;
+  line-height: var(--line-height-none);
 }
 
 .ringValue {
-  font-size: 20px;
-  font-weight: 700;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
 }
 
 .ringLabel {
   margin-top: var(--spacing-size2xs);
-  font-size: 10px;
+  font-size: var(--font-size-3xs);
   color: var(--text-tertiary);
 }
 
@@ -138,16 +138,13 @@
 
 .ticketLabel {
   display: block;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
 }
 
 .ticketCode {
   display: block;
   margin-top: var(--spacing-size-xs);
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
 }
 
 .ticketSide {
@@ -171,7 +168,7 @@
 }
 
 .ticketHint {
-  font-size: 10px;
+  font-size: var(--font-size-3xs);
   opacity: 0.75;
   white-space: nowrap;
 }

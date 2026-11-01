@@ -29,7 +29,7 @@ export function CategorySelect() {
           </span>
 
           <span className={styles.body}>
-            <span className={styles.title}>{category.title}</span>
+            <span className={`${styles.title} type-title`}>{category.title}</span>
             <span className={styles.subtitle}>{category.subtitle}</span>
           </span>
 

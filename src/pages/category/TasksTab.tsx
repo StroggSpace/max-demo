@@ -112,7 +112,7 @@ export function TasksTab() {
                 >
                   <div className={styles.ticketMain}>
                     <span className={styles.ticketLabel}>{promo.title}</span>
-                    <span className={styles.ticketCode}>
+                    <span className={`${styles.ticketCode} type-code`}>
                       {unlocked ? promo.code : '••••••'}
                     </span>
                   </div>

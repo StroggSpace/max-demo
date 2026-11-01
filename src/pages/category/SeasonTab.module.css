@@ -32,26 +32,22 @@
   padding: var(--spacing-size-xs) var(--spacing-size-l);
   border-radius: var(--size-border-radius-semantic-border-radius-rounded);
   background: rgb(255 255 255 / 20%);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-wide);
   text-transform: uppercase;
 }
 
 .heroLevel {
   position: relative;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
   opacity: 0.9;
 }
 
 .heroTitle {
   position: relative;
   margin: var(--spacing-size-xl) 0 var(--spacing-size2xl);
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
 }
 
 .heroBar {
@@ -62,7 +58,7 @@
   position: relative;
   display: inline-block;
   margin-top: var(--spacing-size-m);
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   opacity: 0.85;
 }
 
@@ -158,8 +154,8 @@
 }
 
 .stepTitle {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
 }
 
 .stepReward {
