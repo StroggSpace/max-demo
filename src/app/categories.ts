@@ -5,6 +5,7 @@ import {
   ClipboardDocumentListIcon,
   GiftIcon,
   ShoppingBagIcon,
+  ShoppingCartIcon,
   SparklesIcon,
   TrophyIcon,
   UserCircleIcon,
@@ -24,6 +25,7 @@ export interface Category {
     to: string;
     label: string;
     Icon: ComponentType<{ className?: string; style?: React.CSSProperties }>;
+    badge?: boolean;
   }[];
 }
 
@@ -49,6 +51,7 @@ export const categories: Category[] = [
     gradient: 'linear-gradient(135deg, #12b76a, #0a63ff)',
     tabs: [
       { to: 'shop', label: 'Витрина', Icon: ShoppingBagIcon },
+      { to: 'cart', label: 'Корзина', Icon: ShoppingCartIcon, badge: true },
       { to: 'giveaway', label: 'Розыгрыши', Icon: GiftIcon },
       { to: 'referral', label: 'Рефералка', Icon: UserGroupIcon },
     ],

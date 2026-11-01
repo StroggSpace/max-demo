@@ -27,11 +27,29 @@
 }
 
 .iconWrap {
+  position: relative;
   display: grid;
   place-items: center;
   width: 40px;
   height: 28px;
   border-radius: var(--size-border-radius-semantic-border-radius-rounded);
+}
+
+.badge {
+  position: absolute;
+  top: -4px;
+  right: 0;
+  display: grid;
+  place-items: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: var(--size-border-radius-semantic-border-radius-rounded);
+  background: var(--background-accent-negative);
+  color: var(--text-contrast-static);
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-none);
 }
 
 .icon {

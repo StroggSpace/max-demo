@@ -6,10 +6,16 @@ import styles from './CategoryTabBar.module.css';
 
 interface Props {
   categoryId: string;
-  tabs: { to: string; label: string; Icon: React.ComponentType<{ className?: string }> }[];
+  tabs: {
+    to: string;
+    label: string;
+    Icon: React.ComponentType<{ className?: string }>;
+    badge?: boolean;
+  }[];
+  badges?: Record<string, number>;
 }
 
-export function CategoryTabBar({ categoryId, tabs }: Props) {
+export function CategoryTabBar({ categoryId, tabs, badges }: Props) {
   const { pathname } = useLocation();
   const { tap } = useMotionControls();
 
@@ -19,9 +25,10 @@ export function CategoryTabBar({ categoryId, tabs }: Props) {
         className={styles.inner}
         style={{ gridTemplateColumns: `repeat(${tabs.length}, minmax(0, 1fr))` }}
       >
-        {tabs.map(({ to, label, Icon }) => {
+        {tabs.map(({ to, label, Icon, badge }) => {
           const href = `/category/${categoryId}/${to}`;
           const active = pathname.startsWith(href);
+          const count = badge ? (badges?.[to] ?? 0) : 0;
 
           return (
             <NavLink
@@ -32,6 +39,7 @@ export function CategoryTabBar({ categoryId, tabs }: Props) {
               <motion.span className={styles.tab} {...tap}>
                 <span className={styles.iconWrap}>
                   <Icon className={styles.icon} />
+                  {count > 0 ? <span className={styles.badge}>{count}</span> : null}
                 </span>
                 <span className={`${styles.label} type-tab`}>{label}</span>
               </motion.span>

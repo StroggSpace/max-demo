@@ -1,0 +1,97 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--page-gap);
+}
+
+.muted {
+  color: var(--text-secondary);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-size-xl);
+}
+
+.emoji {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: var(--size-border-radius-action-medium);
+  background: var(--background-surface-secondary);
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-none);
+}
+
+.itemBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.itemTitle {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+}
+
+.itemPrice {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.qty {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-size-xs);
+  flex: none;
+}
+
+.qtyValue {
+  min-width: 18px;
+  text-align: center;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.divider {
+  height: 1px;
+  background: var(--stroke-subtle);
+}
+
+.total {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.successIcon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--background-accent-positive);
+  color: var(--icon-contrast-static);
+}
+
+.successGlyph {
+  width: 28px;
+  height: 28px;
+}
+
+.emptyIcon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--background-surface-secondary);
+  color: var(--text-secondary);
+}
+
+.emptyGlyph {
+  width: 26px;
+  height: 26px;
+}

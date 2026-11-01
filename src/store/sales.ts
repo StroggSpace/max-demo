@@ -48,12 +48,14 @@ interface SalesState {
 
   addToCart: (productId: string) => void;
   removeFromCart: (productId: string) => void;
+  decrementItem: (productId: string) => void;
   clearCart: () => void;
   applyPromo: (code: string) => boolean;
   placeOrder: () => void;
   addInvite: (name: string) => void;
   setGiveaway: (patch: Partial<SalesState['giveaway']>) => void;
   resetShop: () => void;
+  resetCheckout: () => void;
   resetGiveaway: () => void;
   resetReferral: () => void;
 }
@@ -150,6 +152,15 @@ export const useSalesStore = create<SalesState>((set) => ({
   removeFromCart: (productId) =>
     set((s) => ({ cart: s.cart.filter((item) => item.productId !== productId) })),
 
+  decrementItem: (productId) =>
+    set((s) => ({
+      cart: s.cart.flatMap((item) => {
+        if (item.productId !== productId) return [item];
+        if (item.qty <= 1) return [];
+        return [{ ...item, qty: item.qty - 1 }];
+      }),
+    })),
+
   clearCart: () => set({ cart: [], promoApplied: false }),
 
   applyPromo: (code) => {
@@ -200,6 +211,7 @@ export const useSalesStore = create<SalesState>((set) => ({
   setGiveaway: (patch) => set((s) => ({ giveaway: { ...s.giveaway, ...patch } })),
 
   resetShop: () => set({ cart: [], promoApplied: false, order: null }),
+  resetCheckout: () => set({ promoApplied: false, order: null }),
   resetGiveaway: () => set({ giveaway: { ...initialGiveaway } }),
   resetReferral: () => set({ invites: initialInvites }),
 }));

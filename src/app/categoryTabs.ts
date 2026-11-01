@@ -5,6 +5,7 @@ import { TasksTab } from '@/pages/category/TasksTab';
 import { AchievementsTab } from '@/pages/category/AchievementsTab';
 import { ProfileTab } from '@/pages/category/ProfileTab';
 import { ShopTab } from '@/pages/category/sales/ShopTab';
+import { CartTab } from '@/pages/category/sales/CartTab';
 import { GiveawayTab } from '@/pages/category/sales/GiveawayTab';
 import { ReferralTab } from '@/pages/category/sales/ReferralTab';
 
@@ -20,6 +21,7 @@ export const categoryTabs: Record<string, Record<string, ComponentType>> = {
   },
   sales: {
     shop: ShopTab,
+    cart: CartTab,
     giveaway: GiveawayTab,
     referral: ReferralTab,
   },

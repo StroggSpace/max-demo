@@ -50,8 +50,17 @@ export const shopScenario: Scenario = {
   reset: () => sales().resetShop(),
   steps: [
     { at: 500, run: () => sales().addToCart('s1') },
-    { at: 1200, run: () => sales().applyPromo('START10') },
-    { at: 2200, run: () => sales().placeOrder() },
+    { at: 1200, run: () => sales().addToCart('s4') },
+  ],
+};
+
+export const cartScenario: Scenario = {
+  id: 'sales-cart',
+  title: 'Корзина',
+  reset: () => sales().resetCheckout(),
+  steps: [
+    { at: 800, run: () => sales().applyPromo('START10') },
+    { at: 4200, run: () => sales().placeOrder() },
   ],
 };
 
@@ -84,6 +93,7 @@ export const scenarios: Record<string, Scenario> = {
   achievements: achievementsScenario,
   profile: profileScenario,
   'sales-shop': shopScenario,
+  'sales-cart': cartScenario,
   'sales-giveaway': salesGiveawayScenario,
   'sales-referral': referralScenario,
 };

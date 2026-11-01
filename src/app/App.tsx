@@ -7,6 +7,7 @@ import { AppHeader } from '@/widgets/AppHeader';
 import { CategoryTabBar } from '@/widgets/CategoryTabBar';
 import { PromoModal } from '@/shared/ui/PromoModal';
 import { useMotionControls } from '@/shared/motion/useMotionControls';
+import { getCartCount, useSalesStore } from '@/store/sales';
 import { CategorySelect } from '@/pages/CategorySelect';
 import { SettingsPage } from '@/pages/Settings';
 import { StubCategory } from '@/pages/category/StubCategory';
@@ -81,6 +82,8 @@ function AppLayout() {
   const meta = resolveMeta(location.pathname);
   const category = meta.categoryId ? categoryById(meta.categoryId) : undefined;
   const tabs = category && !category.stub ? category.tabs : undefined;
+  const cartCount = useSalesStore(getCartCount);
+  const badges = category?.id === 'sales' ? { cart: cartCount } : undefined;
 
   return (
     <div className="shell">
@@ -108,7 +111,7 @@ function AppLayout() {
       </main>
 
       {tabs && category ? (
-        <CategoryTabBar categoryId={category.id} tabs={tabs} />
+        <CategoryTabBar categoryId={category.id} tabs={tabs} badges={badges} />
       ) : null}
     </div>
   );
