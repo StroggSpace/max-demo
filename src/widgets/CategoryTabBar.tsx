@@ -15,7 +15,10 @@ export function CategoryTabBar({ categoryId, tabs }: Props) {
 
   return (
     <nav className={styles.bar} aria-label="Разделы категории">
-      <div className={styles.inner}>
+      <div
+        className={styles.inner}
+        style={{ gridTemplateColumns: `repeat(${tabs.length}, minmax(0, 1fr))` }}
+      >
         {tabs.map(({ to, label, Icon }) => {
           const href = `/category/${categoryId}/${to}`;
           const active = pathname.startsWith(href);

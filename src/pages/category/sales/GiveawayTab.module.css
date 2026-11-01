@@ -1,0 +1,115 @@
+.page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--page-gap);
+}
+
+.muted {
+  color: var(--text-secondary);
+}
+
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.confetti {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  pointer-events: none;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: var(--spacing-size3xl);
+  border-radius: var(--size-border-radius-semantic-border-radius-promo);
+  background: var(--gradient-green);
+  color: var(--text-contrast-static);
+}
+
+.heroGlow {
+  position: absolute;
+  top: -60px;
+  right: -30px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 16%);
+}
+
+.heroLabel {
+  position: relative;
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-wider);
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.heroPrize {
+  position: relative;
+  margin: var(--spacing-size-s) 0 0;
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-tight);
+  line-height: var(--line-height-snug);
+}
+
+.heroBottom {
+  position: relative;
+  margin-top: var(--spacing-size-xl);
+}
+
+.heroTimer {
+  font-variant-numeric: tabular-nums;
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-tight);
+  line-height: var(--line-height-none);
+}
+
+.heroMeta {
+  margin-top: var(--spacing-size-xs);
+  opacity: 0.85;
+}
+
+.participants {
+  align-items: flex-end;
+}
+
+.heroButton {
+  position: relative;
+  margin-top: var(--spacing-size2xl);
+}
+
+.resultIcon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--background-surface-tertiary);
+  color: var(--icon-secondary);
+}
+
+.resultIcon[data-win='true'] {
+  background: var(--background-accent-positive);
+  color: var(--icon-contrast-static);
+}
+
+.resultGlyph {
+  width: 28px;
+  height: 28px;
+}
+
+.progress {
+  margin: var(--spacing-size-xl) 0 var(--spacing-size-m);
+}
+
+.note {
+  color: var(--text-tertiary);
+}

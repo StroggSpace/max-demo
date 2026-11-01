@@ -3,10 +3,12 @@ import {
   CalendarDaysIcon,
   ChatBubbleLeftRightIcon,
   ClipboardDocumentListIcon,
+  GiftIcon,
   ShoppingBagIcon,
   SparklesIcon,
   TrophyIcon,
   UserCircleIcon,
+  UserGroupIcon,
 } from '@heroicons/react/24/outline';
 
 export type CategoryId = 'retention' | 'sales' | 'service';
@@ -45,7 +47,11 @@ export const categories: Category[] = [
     subtitle: 'Витрина, промокоды, розыгрыши',
     Icon: ShoppingBagIcon,
     gradient: 'linear-gradient(135deg, #12b76a, #0a63ff)',
-    stub: true,
+    tabs: [
+      { to: 'shop', label: 'Витрина', Icon: ShoppingBagIcon },
+      { to: 'giveaway', label: 'Розыгрыши', Icon: GiftIcon },
+      { to: 'referral', label: 'Рефералка', Icon: UserGroupIcon },
+    ],
   },
   {
     id: 'service',

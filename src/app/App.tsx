@@ -10,10 +10,7 @@ import { useMotionControls } from '@/shared/motion/useMotionControls';
 import { CategorySelect } from '@/pages/CategorySelect';
 import { SettingsPage } from '@/pages/Settings';
 import { StubCategory } from '@/pages/category/StubCategory';
-import { SeasonTab } from '@/pages/category/SeasonTab';
-import { TasksTab } from '@/pages/category/TasksTab';
-import { AchievementsTab } from '@/pages/category/AchievementsTab';
-import { ProfileTab } from '@/pages/category/ProfileTab';
+import { categoryTabs } from '@/app/categoryTabs';
 import type { CategoryId } from '@/app/categories';
 
 function CategoryEntry() {
@@ -23,7 +20,10 @@ function CategoryEntry() {
   if (!category) return <Navigate to="/" replace />;
   if (category.stub) return <StubCategory category={category} />;
 
-  return <Navigate to={`/category/${category.id}/season`} replace />;
+  const first = category.tabs?.[0]?.to;
+  return first
+    ? <Navigate to={`/category/${category.id}/${first}`} replace />
+    : <Navigate to="/" replace />;
 }
 
 function CategoryTab() {
@@ -33,18 +33,13 @@ function CategoryTab() {
   if (!category) return <Navigate to="/" replace />;
   if (category.stub) return <Navigate to={`/category/${category.id}`} replace />;
 
-  switch (tab) {
-    case 'season':
-      return <SeasonTab />;
-    case 'tasks':
-      return <TasksTab />;
-    case 'achievements':
-      return <AchievementsTab />;
-    case 'profile':
-      return <ProfileTab />;
-    default:
-      return <Navigate to={`/category/${category.id}/season`} replace />;
-  }
+  const Tab = categoryTabs[category.id]?.[tab];
+  if (Tab) return <Tab />;
+
+  const first = category.tabs?.[0]?.to;
+  return first
+    ? <Navigate to={`/category/${category.id}/${first}`} replace />
+    : <Navigate to="/" replace />;
 }
 
 interface Meta {

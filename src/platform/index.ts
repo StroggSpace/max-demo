@@ -9,6 +9,7 @@ export interface PlatformAdapter {
   name: 'max' | 'web';
   user: PlatformUser;
   haptic: (type?: 'light' | 'medium' | 'success') => void;
+  share: (text: string) => Promise<void>;
 }
 
 interface MaxWebApp {
@@ -24,6 +25,7 @@ interface MaxWebApp {
     impactOccurred: (style: 'light' | 'medium' | 'heavy') => Promise<unknown>;
     notificationOccurred: (type: 'success' | 'error' | 'warning') => Promise<unknown>;
   };
+  shareContent?: (params: { text?: string; link?: string }) => Promise<unknown>;
 }
 
 declare global {
@@ -39,10 +41,19 @@ const mockUser: PlatformUser = {
   username: 'igor',
 };
 
+async function webShare(text: string) {
+  if (typeof navigator !== 'undefined' && navigator.share) {
+    await navigator.share({ text });
+    return;
+  }
+  await navigator.clipboard?.writeText(text);
+}
+
 const webAdapter: PlatformAdapter = {
   name: 'web',
   user: mockUser,
   haptic: () => {},
+  share: webShare,
 };
 
 function detectMax(): PlatformAdapter | null {
@@ -69,6 +80,13 @@ function detectMax(): PlatformAdapter | null {
       } catch {
         // Вне клиента MAX вибрация недоступна — молча игнорируем.
       }
+    },
+    share: async (text: string) => {
+      if (app.shareContent) {
+        await app.shareContent({ text });
+        return;
+      }
+      await webShare(text);
     },
   };
 }

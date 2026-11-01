@@ -1,7 +1,9 @@
 import { useDemoStore } from '@/store/demo';
+import { useSalesStore } from '@/store/sales';
 import type { Scenario } from './types';
 
 const s = () => useDemoStore.getState();
+const sales = () => useSalesStore.getState();
 
 export const seasonScenario: Scenario = {
   id: 'season',
@@ -42,8 +44,46 @@ export const profileScenario: Scenario = {
   ],
 };
 
+export const shopScenario: Scenario = {
+  id: 'sales-shop',
+  title: 'Витрина',
+  reset: () => sales().resetShop(),
+  steps: [
+    { at: 500, run: () => sales().addToCart('s1') },
+    { at: 1200, run: () => sales().applyPromo('START10') },
+    { at: 2200, run: () => sales().placeOrder() },
+  ],
+};
+
+export const salesGiveawayScenario: Scenario = {
+  id: 'sales-giveaway',
+  title: 'Розыгрыши',
+  reset: () => sales().resetGiveaway(),
+  steps: [
+    { at: 400, run: () => sales().setGiveaway({ phase: 'countdown', secondsLeft: 38 }) },
+    { at: 1200, run: () => sales().setGiveaway({ participants: 268 }) },
+    { at: 1800, run: () => sales().setGiveaway({ joined: true }) },
+    { at: 3200, run: () => sales().setGiveaway({ participants: 341 }) },
+    { at: 6200, run: () => sales().setGiveaway({ phase: 'result', result: 'win', secondsLeft: 0 }) },
+  ],
+};
+
+export const referralScenario: Scenario = {
+  id: 'sales-referral',
+  title: 'Рефералка',
+  reset: () => sales().resetReferral(),
+  steps: [
+    { at: 700, run: () => sales().addInvite('Ольга') },
+    { at: 1700, run: () => sales().addInvite('Дмитрий') },
+    { at: 2700, run: () => sales().addInvite('Софья') },
+  ],
+};
+
 export const scenarios: Record<string, Scenario> = {
   season: seasonScenario,
   achievements: achievementsScenario,
   profile: profileScenario,
+  'sales-shop': shopScenario,
+  'sales-giveaway': salesGiveawayScenario,
+  'sales-referral': referralScenario,
 };
